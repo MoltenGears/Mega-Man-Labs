@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MM_TT-StageClear.ogg-42e8f20c12109d567f95a39caf58fd50.oggstr"
+
+[deps]
+
+source_file="res://music/MM_TT-StageClear.ogg"
+dest_files=[ "res://.import/MM_TT-StageClear.ogg-42e8f20c12109d567f95a39caf58fd50.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

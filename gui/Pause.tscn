@@ -1,0 +1,104 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://gui/pause.gd" type="Script" id=1]
+[ext_resource path="res://effects/ShaderEffects.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gui/themes/menu_theme.tres" type="Theme" id=3]
+[ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://items/extra_life/ExtraLife.png" type="Texture" id=5]
+[ext_resource path="res://items/tanks/EnergyTank.png" type="Texture" id=6]
+[ext_resource path="res://gui/textures/FocusFrameAnimated1.png" type="Texture" id=7]
+[ext_resource path="res://gui/textures/FocusFrameAnimated2.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 4 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AnimatedTexture" id=3]
+frames = 2
+fps = 0.0
+frame_0/texture = ExtResource( 7 )
+frame_0/delay_sec = 0.25
+frame_1/texture = ExtResource( 8 )
+frame_1/delay_sec = 0.25
+
+[node name="Pause" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ShaderEffects" parent="." instance=ExtResource( 2 )]
+
+[node name="Tween" type="Tween" parent="ShaderEffects"]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Menu" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 90.0
+margin_top = 82.0
+margin_right = 166.0
+margin_bottom = 142.0
+theme = ExtResource( 3 )
+custom_constants/separation = 10
+
+[node name="MenuLabel" type="Label" parent="CenterContainer/Menu"]
+margin_right = 76.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "MENU"
+align = 1
+
+[node name="LifeContainer" type="HBoxContainer" parent="CenterContainer/Menu"]
+margin_top = 18.0
+margin_right = 76.0
+margin_bottom = 34.0
+
+[node name="LifeIcon" type="TextureRect" parent="CenterContainer/Menu/LifeContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 5 )
+
+[node name="LifeLabel" type="Label" parent="CenterContainer/Menu/LifeContainer"]
+margin_left = 20.0
+margin_top = 4.0
+margin_right = 76.0
+margin_bottom = 12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = " 03 /09"
+align = 1
+
+[node name="EnergyTankContainer" type="HBoxContainer" parent="CenterContainer/Menu"]
+margin_top = 44.0
+margin_right = 76.0
+margin_bottom = 60.0
+
+[node name="EnergyTankButton" type="Button" parent="CenterContainer/Menu/EnergyTankContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+icon = SubResource( 2 )
+align = 0
+
+[node name="EnergyTankLabel" type="Label" parent="CenterContainer/Menu/EnergyTankContainer"]
+margin_left = 20.0
+margin_top = 4.0
+margin_right = 76.0
+margin_bottom = 12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = " 04 /09"
+align = 1
+
+[node name="FocusFrame" type="Control" parent="."]
+visible = false
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="Sprite" type="Sprite" parent="FocusFrame"]
+position = Vector2( 8, 8 )
+texture = SubResource( 3 )
