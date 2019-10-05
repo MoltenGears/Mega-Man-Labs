@@ -43,10 +43,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Menu" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 90.0
-margin_top = 82.0
-margin_right = 166.0
-margin_bottom = 142.0
+margin_left = 122.0
+margin_top = 66.0
+margin_right = 198.0
+margin_bottom = 126.0
 theme = ExtResource( 3 )
 custom_constants/separation = 10
 

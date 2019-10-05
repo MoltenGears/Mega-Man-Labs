@@ -12,7 +12,7 @@ func _ready() -> void:
     if not OS.is_debug_build():
         switch_scene("res://menus/TitleScreen.tscn")
     else:
-        switch_scene("res://stages/test_lab/TestLab.tscn")
+        switch_scene("res://stages/heat/HeatStage.tscn")
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("action_screenshot"):

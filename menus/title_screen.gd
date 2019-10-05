@@ -27,7 +27,7 @@ func _new_game() -> void:
     $TitleMusic.stop()
     $FadeEffects.fade_out(0.15)
     yield($FadeEffects, "screen_faded_out")
-    Global.main_scene.switch_scene("res://stages/test_lab/TestLab.tscn")
+    Global.main_scene.switch_scene("res://stages/heat/HeatStage.tscn")
 
 func _options() -> void:
     pass
