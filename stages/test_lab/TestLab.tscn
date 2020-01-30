@@ -45,10 +45,8 @@ tile_data = PoolIntArray( -1900472, 1, 196608, -1835008, 1, 196608, -1835007, 1,
 script = ExtResource( 3 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-editor/display_folded = true
 motion_mirroring = Vector2( 512, 448 )
 
 [node name="Background" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
@@ -57,7 +55,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 512, 448 )
 
 [node name="CameraTransitions" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="CameraTransition01" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 0, -112 )
@@ -199,7 +196,6 @@ position = Vector2( 2560, 784 )
 position = Vector2( 3328, 784 )
 
 [node name="BossDoors" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="BossDoor01" parent="BossDoors" instance=ExtResource( 6 )]
 position = Vector2( 2560, 832 )
@@ -214,10 +210,8 @@ position = Vector2( 3072, 832 )
 position = Vector2( 3328, 832 )
 
 [node name="Checkpoints" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Checkpoint01" parent="Checkpoints" instance=ExtResource( 7 )]
-editor/display_folded = true
 position = Vector2( 992, -348 )
 direction = "Right"
 
@@ -226,7 +220,6 @@ position = Vector2( -67, 5 )
 shape = SubResource( 1 )
 
 [node name="Checkpoint02" parent="Checkpoints" instance=ExtResource( 7 )]
-editor/display_folded = true
 position = Vector2( 2944, 628 )
 direction = "Right"
 
@@ -235,7 +228,6 @@ position = Vector2( 0, -100 )
 shape = SubResource( 2 )
 
 [node name="Checkpoint03" parent="Checkpoints" instance=ExtResource( 7 )]
-editor/display_folded = true
 position = Vector2( 2688, 852 )
 direction = "Right"
 
@@ -244,7 +236,6 @@ position = Vector2( -64, -20 )
 shape = SubResource( 2 )
 
 [node name="Checkpoint04" parent="Checkpoints" instance=ExtResource( 7 )]
-editor/display_folded = true
 position = Vector2( 3200, 852 )
 direction = "Left"
 
@@ -256,7 +247,6 @@ shape = SubResource( 2 )
 position = Vector2( 48, 180 )
 
 [node name="PickUps" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="LifeEnergyBig01" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 1040, 152 )
@@ -313,7 +303,6 @@ position = Vector2( 3504, 748 )
 position = Vector2( 3520, 748 )
 
 [node name="Enemies" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="EnemyMetall01" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 408, 155 )
@@ -440,7 +429,6 @@ flip_direction = false
 max_distance = 64
 
 [node name="Specials" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="DeathWall" parent="Specials" instance=ExtResource( 15 )]
 position = Vector2( 47, -344 )
@@ -450,11 +438,9 @@ travel_distance_tiles = 50
 position = Vector2( 3024, 852 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="Bar" parent="GUI" instance=ExtResource( 17 )]
 visible = false
-color = Color( 0.905882, 0.905882, 0.580392, 1 )
 
 [node name="BossBar" parent="GUI" instance=ExtResource( 17 )]
 visible = false
@@ -474,7 +460,6 @@ visible = false
 visible = false
 
 [node name="Music" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 22 )
 
 [node name="BGM" type="AudioStreamPlayer" parent="Music"]

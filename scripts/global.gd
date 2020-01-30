@@ -14,6 +14,9 @@ func _ready() -> void:
     var root := get_tree().get_root()
     main_scene = root.get_child(root.get_child_count() - 1)
 
+    # Hide mouse
+    Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
 func get_current_stage() -> Stage:
     if main_scene is Stage:
         return main_scene as Stage

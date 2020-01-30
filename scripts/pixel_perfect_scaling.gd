@@ -23,12 +23,10 @@ func _ready() -> void:
 func set_fullscreen(value: bool) -> void:
     if not fullscreen and value:
         fullscreen = value
-        OS.set_borderless_window(true)
-        OS.set_window_maximized(true)
+        OS.window_fullscreen = true
     elif fullscreen and not value:
         fullscreen = value
-        OS.set_window_maximized(false)
-        OS.set_borderless_window(false)
+        OS.window_fullscreen = false
 
 func _on_screen_resized() -> void:
     var window_size: Vector2 = OS.get_window_size()

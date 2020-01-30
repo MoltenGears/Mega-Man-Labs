@@ -55,4 +55,4 @@ func _set_current_hp_bar(hit_points: int) -> void:
     _overlay["rect_size"].y = clamp(2 * (Constants.HIT_POINTS_MAX - hit_points) - 1, 0, 2 * Constants.HIT_POINTS_MAX - 1)
 
 func _get_current_hp_bar() -> int:
-    return Constants.HIT_POINTS_MAX - (_overlay["rect_size"].y + 1) / 2
+    return int(round(Constants.HIT_POINTS_MAX - (_overlay["rect_size"].y + 1) / 2))
