@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://gui/textures/touchLeft.png" type="Texture" id=1]
+[ext_resource path="res://gui/textures/touchShoot.png" type="Texture" id=2]
+[ext_resource path="res://gui/textures/touchRight.png" type="Texture" id=3]
+[ext_resource path="res://gui/textures/touchUp.png" type="Texture" id=4]
+[ext_resource path="res://gui/textures/touchDown.png" type="Texture" id=5]
+[ext_resource path="res://gui/textures/touchJump.png" type="Texture" id=6]
+
+[node name="TouchControls" type="Node"]
+
+[node name="touchShoot" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 157.164, 135.87 )
+scale = Vector2( 0.268173, 0.268173 )
+normal = ExtResource( 2 )
+action = "action_shoot"
+
+[node name="touchLeft" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 24.0681, 139.221 )
+scale = Vector2( 0.258268, 0.258268 )
+normal = ExtResource( 1 )
+action = "action_left"
+
+[node name="touchRight" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 76.636, 139.176 )
+scale = Vector2( 0.249544, 0.249544 )
+normal = ExtResource( 3 )
+action = "action_right"
+
+[node name="touchJump" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 212.725, 136.203 )
+scale = Vector2( 0.246002, 0.246002 )
+normal = ExtResource( 6 )
+action = "action_jump"
+
+[node name="touchDown" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 52.1283, 175.119 )
+scale = Vector2( 0.242765, 0.242765 )
+normal = ExtResource( 5 )
+action = "action_down"
+
+[node name="TouchUp" type="TouchScreenButton" parent="."]
+modulate = Color( 0.176471, 0.172549, 0.796078, 0.270588 )
+position = Vector2( 52.1283, 101.813 )
+scale = Vector2( 0.242765, 0.242765 )
+normal = ExtResource( 4 )
+action = "action_up"

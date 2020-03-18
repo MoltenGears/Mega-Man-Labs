@@ -26,6 +26,8 @@
 [ext_resource path="res://music/MM_TT-BossFight.ogg" type="AudioStream" id=24]
 [ext_resource path="res://music/MM_TT-StageClear.ogg" type="AudioStream" id=25]
 [ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=26]
+[ext_resource path="res://gui/touch/TouchControl.tscn" type="PackedScene" id=26]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 84 )
