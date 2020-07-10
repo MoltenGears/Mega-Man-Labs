@@ -41,7 +41,7 @@ create something playable.
 ## Installation and Usage
 
 To be able to take a look at, edit, test, and build this project, you need
-**version 3.2** of the Godot Engine Editor, which you can download from the
+**version 3.2.2** of the Godot Engine Editor, which you can download from the
 [official website](https://godotengine.org/download). Just clone or download
 this repository and import its `project.godot` file from within the Godot
 editor project manager. Other versions might work, but it is recommended to

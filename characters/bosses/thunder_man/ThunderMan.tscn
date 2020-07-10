@@ -34,9 +34,9 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "shoot",
+"name": "jump_shoot",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -44,14 +44,14 @@ animations = [ {
 "name": "dash",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "shoot",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "jump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "jump_shoot",
 "speed": 5.0
 } ]
 
@@ -220,7 +220,6 @@ buster_damage = 1
 shape = SubResource( 1 )
 
 [node name="Area2D" parent="." index="1"]
-editor/display_folded = true
 visible = false
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
@@ -251,11 +250,7 @@ pause_mode = 2
 anims/strike_prep = SubResource( 5 )
 anims/taunt = SubResource( 6 )
 
-[node name="SFX" parent="." index="9"]
-editor/display_folded = true
-
 [node name="StateMachine" parent="." index="10"]
-editor/display_folded = true
 script = ExtResource( 11 )
 
 [node name="Idle" parent="StateMachine" index="2"]

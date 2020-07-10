@@ -58,19 +58,28 @@ region_rect = Rect2( 0, 0, 512, 448 )
 
 [node name="CameraTransition01" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 0, -112 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
 size = 3
 
 [node name="CameraTransition02" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 640, 112 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition03" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 768, 0 )
+is_one_way = false
 is_rotated = true
+is_death_pit = false
 size = 6
 
 [node name="CameraTransition04" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 768, 224 )
+is_one_way = false
 is_rotated = true
 is_death_pit = true
 size = 6
@@ -78,48 +87,76 @@ size = 6
 [node name="CameraTransition05" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 896, 112 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition06" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1152, 0 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
 size = 2
 
 [node name="CameraTransition07" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 896, -112 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition08" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 896, -224 )
+is_one_way = false
 is_rotated = true
+is_death_pit = false
 size = 7
 
 [node name="CameraTransition09" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1536, -448 )
+is_one_way = false
 is_rotated = true
+is_death_pit = false
 size = 12
 
 [node name="CameraTransition10" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 896, -336 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition11" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1152, -336 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition12" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1408, -448 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
 size = 2
 
 [node name="CameraTransition13" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1408, 112 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition14" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 1792, -448 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
 size = 2
 
 [node name="CameraTransition15" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2304, -224 )
+is_one_way = false
 is_rotated = true
 is_death_pit = true
 size = 4
@@ -127,73 +164,114 @@ size = 4
 [node name="CameraTransition16" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2560, -336 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition17" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 3072, 112 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
 size = 5
 
 [node name="CameraTransition24" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 3072, 112 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
 size = 5
 
 [node name="CameraTransition18" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2816, 224 )
 is_one_way = true
+is_rotated = false
+is_death_pit = false
 size = 4
 
 [node name="CameraTransition19" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, -224 )
 is_one_way = true
 is_rotated = true
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition20" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, 0 )
 is_one_way = true
 is_rotated = true
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition21" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, 224 )
 is_one_way = true
 is_rotated = true
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition22" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, 448 )
 is_one_way = true
 is_rotated = true
+is_death_pit = false
 size = 7
 
 [node name="CameraTransition23" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, 672 )
+is_one_way = false
 is_rotated = true
+is_death_pit = false
 size = 7
 
 [node name="CameraTransition25" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 3840, 672 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
 size = 2
 
 [node name="CameraTransition26" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2048, 672 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
 size = 2
 
 [node name="CameraTransition27" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2816, 784 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition28" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 3072, 784 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition29" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2944, 896 )
+is_one_way = false
 is_rotated = true
 is_death_pit = true
 size = 7
 
 [node name="CameraTransition30" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2560, 784 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="CameraTransition31" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 3328, 784 )
+is_one_way = false
+is_rotated = false
+is_death_pit = false
+size = 1
 
 [node name="BossDoors" type="Node2D" parent="."]
 
@@ -306,42 +384,86 @@ position = Vector2( 3520, 748 )
 
 [node name="EnemyMetall01" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 408, 155 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall02" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 816, 187 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall03" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 1064, 123 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall04" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 1064, 59 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall05" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 600, -293 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall06" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 3464, 603 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall07" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 2536, 491 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
 flip_direction = true
 
 [node name="EnemyMetall08" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 2392, 523 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
 flip_direction = true
 
 [node name="EnemyMetall09" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 2248, 491 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
 flip_direction = true
 
 [node name="EnemyMetall10" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 2280, 779 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall11" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 2392, 779 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
+flip_direction = false
 
 [node name="EnemyMetall12" parent="Enemies" instance=ExtResource( 13 )]
 position = Vector2( 3432, 795 )
+contact_damage = 5
+buster_damage = 5
+can_respawn = true
 flip_direction = true
 
 [node name="EnemyShieldAttacker01" parent="Enemies" instance=ExtResource( 14 )]

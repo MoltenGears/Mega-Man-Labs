@@ -10,7 +10,7 @@ onready var _shoot_pos: Position2D = $"../../Position2D"
 onready var _ray_cast: RayCast2D = $"../../RayCast2D"
 onready var _ray_cast_length: float = _ray_cast.cast_to.length()
 onready var timer_cooldown: Timer = $"../../TimerCooldown"
-onready var animated_sprite: AnimationPlayer = $"../../CharacterSprites/AnimatedSprite"
+onready var animated_sprite: AnimatedSprite = $"../../CharacterSprites/AnimatedSprite"
 onready var effects: AnimationPlayer = $"../../AnimationEffects"
 
 func _handle_input(event: InputEvent) -> void:
