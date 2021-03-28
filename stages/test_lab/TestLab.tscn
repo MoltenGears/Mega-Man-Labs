@@ -413,6 +413,7 @@ position = Vector2( 3024, 852 )
 
 [node name="Bar" parent="GUI" instance=ExtResource( 17 )]
 visible = false
+color = Color( 0.905882, 0.905882, 0.580392, 1 )
 
 [node name="BossBar" parent="GUI" instance=ExtResource( 17 )]
 visible = false

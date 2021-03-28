@@ -76,10 +76,6 @@ func _restart() -> void:
     get_tree().paused = true
     _set_stage_start_pos()
 
-    # Since Godot 3.2 the camera breaks if the 'restarted' signal is emitted
-    # at stage load without waiting at least a physics frame.
-    yield(get_tree(), "physics_frame")
-
     emit_signal("restarted")
     yield(get_tree().create_timer(0.0 if OS.is_debug_build() else START_DELAY), "timeout")
     emit_signal("player_ready")
