@@ -9,16 +9,16 @@ class_name State
 signal finished(next_state_name)
 
 func _enter() -> void:
-	return
+    return
 
 func _exit() -> void:
-	return
+    return
 
 func _handle_input(event: InputEvent) -> void:
-	return
+    return
 
 func _update(delta: float) -> void:
-	return
+    return
 
 func _on_animation_finished(anim_name: String) -> void:
-	return
+    return

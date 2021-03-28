@@ -52,3 +52,36 @@ func take_screenshot() -> void:
     var image := get_viewport().get_texture().get_data()
     image.flip_y()
     image.save_png(screenshot_filename)
+
+func is_action_pressed(action: String) -> bool:
+    # Temporary workaround until the following engine issue will be fixed.
+    # https://github.com/godotengine/godot/issues/45628
+
+    var is_pressed := false
+    for event in InputMap.get_action_list(action):
+        if event is InputEventKey:
+            is_pressed = Input.is_key_pressed(event.scancode)
+        elif event is InputEventJoypadButton:
+            is_pressed = Input.is_joy_button_pressed(event.device, event.button_index)
+        elif event is InputEventMouseButton:
+            is_pressed = Input.is_mouse_button_pressed(event.button_index)
+        elif event is InputEventJoypadMotion:
+            is_pressed = true if Input.get_action_strength(action) > 0 else false
+        # Add more elif to treat the type accordingly.
+        else:
+            continue
+        
+        if is_pressed:
+            break
+
+    return is_pressed
+
+func get_action_strength(action: String) -> float:
+    # Temporary workaround until the following engine issue will be fixed.
+    # https://github.com/godotengine/godot/issues/45628
+    
+    var action_strength := Input.get_action_strength(action)
+    if action_strength == 0:
+        action_strength = 1 if is_action_pressed(action) else 0
+    
+    return action_strength
