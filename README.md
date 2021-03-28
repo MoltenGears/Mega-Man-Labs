@@ -41,11 +41,11 @@ create something playable.
 ## Installation and Usage
 
 To be able to take a look at, edit, test, and build this project, you need
-**version 3.2.2** of the Godot Engine Editor, which you can download from the
+**version 3.3** of the Godot Engine Editor, which you can download from the
 [official website](https://godotengine.org/download). Just clone or download
 this repository and import its `project.godot` file from within the Godot
 editor project manager. Other versions might work, but it is recommended to
-use the currently used version of this project.
+use the above-mentioned version of the Godot Engine.
 
 ## Contributing
 
@@ -83,5 +83,5 @@ This project and its owner is not affiliated with Capcom in any way.
 [Thunder Man Deviant Art]: https://www.deviantart.com/boberatu/art/MPN-001-Thunder-man-313453472
 [CC BY-NC-SA 3.0]: https://creativecommons.org/licenses/by-nc-sa/3.0/
 [CC BY-NC 3.0]: https://creativecommons.org/licenses/by-nc/3.0/
-[Best Practices]: https://docs.godotengine.org/en/latest/getting_started/workflow/best_practices/index.html
-[Style Guide]: https://docs.godotengine.org/en/latest/getting_started/scripting/gdscript/gdscript_styleguide.html
+[Best Practices]: https://docs.godotengine.org/en/stable/getting_started/workflow/best_practices/index.html
+[Style Guide]: https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_styleguide.html
