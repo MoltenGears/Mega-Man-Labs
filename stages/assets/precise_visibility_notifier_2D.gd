@@ -19,8 +19,7 @@ signal camera_exited()
 
 func _ready() -> void:
     set_enabled(enabled)
-    _base_size = Vector2(ProjectSettings.get_setting("display/window/size/width"),
-            ProjectSettings.get_setting("display/window/size/height"))
+    _base_size = Vector2(Global.base_size.x, Global.base_size.y)
     force_visibility_update()
     _was_on_screen = is_on_screen()
 

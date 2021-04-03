@@ -11,7 +11,7 @@ var is_invincible: bool
 var is_dead: bool
 var is_restarting: bool
 
-onready var _base_width: int = ProjectSettings.get_setting("display/window/size/width")
+onready var _base_width: int = Global.base_size.x
 onready var _animated_sprite: AnimatedSprite = $"CharacterSprites/AnimatedSprite"
 onready var life_bar: Control = Global.get_current_stage().get_node("GUI/BossBar")
 

@@ -20,10 +20,10 @@ func _ready() -> void:
         state.connect("finished", self, "_change_state")
     initialize(start_state)
 
-func initialize(start_state: NodePath) -> void:
+func initialize(state: NodePath) -> void:
     set_active(true)
     states_stack = []
-    states_stack.push_front(get_node(start_state))
+    states_stack.push_front(get_node(state))
     current_state = states_stack[0]
     current_state._enter()
 

@@ -10,8 +10,8 @@ extends Node
 var fullscreen: bool = false setget set_fullscreen
 
 onready var _viewport: Viewport = get_viewport()
-onready var _base_width: int = ProjectSettings.get_setting("display/window/size/width")
-onready var _base_height: int = ProjectSettings.get_setting("display/window/size/height")
+onready var _base_width: int = Global.base_size.x
+onready var _base_height: int = Global.base_size.y
 onready var _base_size := Vector2(_base_width, _base_height)
 
 func _ready() -> void:
@@ -19,6 +19,8 @@ func _ready() -> void:
     if not OS.is_debug_build():
         VisualServer.set_default_clear_color(Color("000000"))
         set_fullscreen(true)
+    
+    _on_screen_resized()
 
 func set_fullscreen(value: bool) -> void:
     if not fullscreen and value:

@@ -8,6 +8,8 @@ var main_scene: Node
 var current_stage: Stage setget , get_current_stage
 var player: Player setget , get_player
 var can_toggle_pause := true
+var base_size: Vector2 setget , get_base_size
+var wide_screen := false
 
 func _ready() -> void:
     # Last child of root is always main scene
@@ -85,3 +87,9 @@ func get_action_strength(action: String) -> float:
         action_strength = 1 if is_action_pressed(action) else 0
     
     return action_strength
+
+func get_base_size() -> Vector2:
+    if wide_screen:
+        return Vector2(Constants.WIDTH_WIDE, Constants.HEIGHT_WIDE)
+    else:
+        return Vector2(Constants.WIDTH, Constants.HEIGHT)

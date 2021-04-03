@@ -12,8 +12,8 @@ onready var _player: Player = owner
 onready var _player_collision_extents: Vector2 = _player.get_node("CollisionShape2D").shape.extents
 onready var _player_animations: AnimationPlayer = _player.get_node("AnimationPlayer")
 onready var _ray: RayCast2D = $TransitionFinder
-onready var _base_width: int = ProjectSettings.get_setting("display/window/size/width")
-onready var _base_height: int = ProjectSettings.get_setting("display/window/size/height")
+onready var _base_width: int = Global.base_size.x
+onready var _base_height: int = Global.base_size.y
 onready var _death_distance: float = sqrt(pow(_base_width, 2) + pow(_base_height, 2)) / 1.5
 
 func _ready() -> void:

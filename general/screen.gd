@@ -4,8 +4,9 @@ var _current_scene_path: String
 var current_scene: Node = null
 
 func _ready() -> void:
-    $"ViewportContainer/Viewport".size.x = ProjectSettings.get_setting("display/window/size/width")
-    $"ViewportContainer/Viewport".size.y = ProjectSettings.get_setting("display/window/size/height")
+    $"ViewportContainer/Viewport".size.x = Global.base_size.x
+    $"ViewportContainer/Viewport".size.y = Global.base_size.y
+    $"ViewportContainer".material.set_shader_param("screen_base_size", Global.base_size.y)
     $ViewportContainer.set_process_unhandled_input(true)
 
     if not OS.is_debug_build():

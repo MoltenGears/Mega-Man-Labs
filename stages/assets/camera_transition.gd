@@ -10,9 +10,8 @@ export(bool) var is_one_way := false
 export(bool) var is_rotated := false setget _set_rotation
 export(bool) var is_death_pit := false
 export(int) var size := 1 setget set_extents
+export(Vector2) var base_size := Vector2(Constants.WIDTH, Constants.HEIGHT)
 
-var _base_width: int = ProjectSettings.get_setting("display/window/size/width")
-var _base_height: int = ProjectSettings.get_setting("display/window/size/height")
 var _has_enough_space_to_transition := true
 var _reset_one_way := true
 var _is_open_ceiling := false
@@ -81,9 +80,9 @@ func set_extents(value: int) -> void:
         return
     size = value
     if is_rotated:
-        $CollisionShape2D.shape.extents = Vector2(_base_width / 2 * size, WIDTH)
+        $CollisionShape2D.shape.extents = Vector2(base_size.x / 2 * size, WIDTH)
     else:
-        $CollisionShape2D.shape.extents = Vector2(WIDTH, _base_height / 2 * size)
+        $CollisionShape2D.shape.extents = Vector2(WIDTH, base_size.y / 2 * size)
     $"StaticBody2D/CollisionShape2D".shape.extents = $CollisionShape2D.shape.extents
 
 func _set_rotation(value: bool) -> void:

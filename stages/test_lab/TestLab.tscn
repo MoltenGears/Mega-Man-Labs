@@ -32,7 +32,7 @@ extents = Vector2( 10, 84 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 32 )
 
-[node name="Stage" type="Node"]
+[node name="TestLabStage" type="Node"]
 pause_mode = 1
 script = ExtResource( 1 )
 
@@ -413,7 +413,6 @@ position = Vector2( 3024, 852 )
 
 [node name="Bar" parent="GUI" instance=ExtResource( 17 )]
 visible = false
-color = Color( 0.905882, 0.905882, 0.580392, 1 )
 
 [node name="BossBar" parent="GUI" instance=ExtResource( 17 )]
 visible = false

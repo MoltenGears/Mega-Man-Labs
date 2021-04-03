@@ -11,8 +11,13 @@ script = ExtResource( 1 )
 material = ExtResource( 2 )
 margin_right = 256.0
 margin_bottom = 224.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 256, 224 )
+handle_input_locally = false
 hdr = false
 usage = 0
+render_target_update_mode = 3
