@@ -9,6 +9,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -33,24 +36,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Buttons" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 48.0
+margin_left = 40.0
 margin_top = 100.0
-margin_right = 208.0
+margin_right = 216.0
 margin_bottom = 123.0
 custom_constants/separation = 7
 
 [node name="ContinueButton" type="Button" parent="CenterContainer/Buttons"]
-margin_right = 160.0
+margin_right = 176.0
 margin_bottom = 8.0
 mouse_filter = 2
 text = "Continue"
 
 [node name="TitleScreenButton" type="Button" parent="CenterContainer/Buttons"]
 margin_top = 15.0
-margin_right = 160.0
+margin_right = 176.0
 margin_bottom = 23.0
 mouse_filter = 2
-text = "Exit to Title Screen"
+text = "Return to Title Screen"
 
 [node name="GameOverMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )

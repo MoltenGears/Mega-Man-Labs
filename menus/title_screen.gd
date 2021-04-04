@@ -13,16 +13,16 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
     if (event is InputEventJoypadButton or event is InputEventKey) and not event.pressed:
         set_process_input(false)
-        $"MarginContainer/VBoxContainer/Buttons".remove_child($"MarginContainer/VBoxContainer/Buttons/StartLabel")
+        $"VBoxContainer/Buttons".remove_child($"VBoxContainer/Buttons/StartLabel")
         _show_main_buttons()
     
 func _show_main_buttons() -> void:
     for button in main_buttons:
-        $"MarginContainer/VBoxContainer/Buttons".add_child(button)
+        $"VBoxContainer/Buttons".add_child(button)
     new_game_button.grab_focus()
 
 func _new_game() -> void:
-    for button in $"MarginContainer/VBoxContainer/Buttons".get_children():
+    for button in $"VBoxContainer/Buttons".get_children():
         button.disabled = true
     $TitleMusic.stop()
     $FadeEffects.fade_out(0.15)
