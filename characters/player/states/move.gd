@@ -45,7 +45,9 @@ func _update(delta: float) -> void:
     
     _velocity.y += owner.gravity
 
-    if _frame_count < 1 or _frame_count > _stall_frame_count:
+    if _frame_count < 1:
+        _velocity.x = Constants.STEP_SPEED * _direction.x
+    elif _frame_count > _stall_frame_count:
         _velocity.x = Constants.WALK_SPEED * _direction.x
     else:
         _velocity.x = 0
