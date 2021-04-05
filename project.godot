@@ -78,11 +78,11 @@ gdscript/warnings/integer_division=false
 
 [display]
 
-window/size/width=320
-window/size/height=192
+window/size/width=512
+window/size/height=288
 window/size/always_on_top=true
-window/size/test_width=1280
-window/size/test_height=768
+window/size/test_width=1536
+window/size/test_height=864
 window/dpi/allow_hidpi=true
 window/vsync/vsync_via_compositor=true
 window/stretch/mode="2d"

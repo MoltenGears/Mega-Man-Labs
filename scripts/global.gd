@@ -9,7 +9,7 @@ var current_stage: Stage setget , get_current_stage
 var player: Player setget , get_player
 var can_toggle_pause := true
 var base_size: Vector2 setget , get_base_size
-var wide_screen := false
+var wide_screen := true
 
 func _ready() -> void:
     # Last child of root is always main scene
