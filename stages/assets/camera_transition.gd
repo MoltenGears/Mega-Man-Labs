@@ -10,7 +10,7 @@ export(bool) var is_one_way := false
 export(bool) var is_rotated := false setget _set_rotation
 export(bool) var is_death_pit := false
 export(int) var size := 1 setget set_extents
-export(Vector2) var base_size := Vector2(Constants.WIDTH, Constants.HEIGHT)
+export(Vector2) var base_size := Vector2(Constants.WIDTH, Constants.HEIGHT) setget set_base_size
 
 var _has_enough_space_to_transition := true
 var _reset_one_way := true
@@ -84,6 +84,10 @@ func set_extents(value: int) -> void:
     else:
         $CollisionShape2D.shape.extents = Vector2(WIDTH, base_size.y / 2 * size)
     $"StaticBody2D/CollisionShape2D".shape.extents = $CollisionShape2D.shape.extents
+
+func set_base_size(value: Vector2) -> void:
+    base_size = value
+    set_extents(size)
 
 func _set_rotation(value: bool) -> void:
     is_rotated = value

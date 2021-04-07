@@ -8,7 +8,7 @@ func _ready() -> void:
     $ShootSFX.play()
 
 func _physics_process(delta: float) -> void:
-    move_and_collide(direction.normalized() * Constants.PROJECTILE_SPEED * delta)
+    move_and_collide(direction.normalized() * Global.get_projectile_speed() * delta)
 
 func reflect() -> void:
     $ReflectSFX.play()

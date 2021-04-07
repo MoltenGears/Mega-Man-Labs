@@ -48,7 +48,7 @@ func _update(delta: float) -> void:
     if _frame_count < 1:
         _velocity.x = Constants.STEP_SPEED * _direction.x
     elif _frame_count > _stall_frame_count:
-        _velocity.x = Constants.WALK_SPEED * _direction.x
+        _velocity.x = Global.get_walk_speed() * _direction.x
     else:
         _velocity.x = 0
 

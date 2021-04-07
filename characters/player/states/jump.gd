@@ -35,7 +35,7 @@ func _update(delta: float) -> void:
     velocity.y = clamp(velocity.y + owner.gravity, -Constants.FALL_SPEED_MAX, Constants.FALL_SPEED_MAX)
     if owner.is_on_ceiling() and velocity.y < 0:
         velocity.y = 0
-    velocity.x = Constants.WALK_SPEED * direction.x
+    velocity.x = Global.get_walk_speed() * direction.x
     owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
 
     if owner.is_on_floor():

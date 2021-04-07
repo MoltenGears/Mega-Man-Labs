@@ -5,6 +5,7 @@
 [node name="PlayerCamera" type="Camera2D"]
 pause_mode = 2
 current = true
+process_mode = 0
 limit_left = -1000000
 limit_top = -1000000
 limit_right = 1000000

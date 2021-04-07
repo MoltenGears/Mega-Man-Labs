@@ -93,3 +93,15 @@ func get_base_size() -> Vector2:
         return Vector2(Constants.WIDTH_WIDE, Constants.HEIGHT_WIDE)
     else:
         return Vector2(Constants.WIDTH, Constants.HEIGHT)
+
+func get_walk_speed() -> float:
+    if wide_screen:
+        return Constants.WALK_SPEED_WIDE
+    else:
+        return Constants.WALK_SPEED
+
+func get_projectile_speed() -> float:
+    if wide_screen:
+        return Constants.PROJECTILE_SPEED_WIDE
+    else:
+        return Constants.PROJECTILE_SPEED
