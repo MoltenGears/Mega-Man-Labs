@@ -58,7 +58,7 @@ func _on_hit(body: PhysicsBody2D) -> void:
     if is_invincible:
         return
 
-    if body.is_in_group("PlayerWeapons"):
+    if body and body.is_in_group("PlayerWeapons"):
         if _is_blocking:
             body.reflect()
         else:

@@ -25,10 +25,6 @@ onready var _gui_fade_effects := $"GUI/FadeEffects"
 onready var _gui_bar := $"GUI/Bar"
 onready var _gui_pause := $"GUI/Pause"
 onready var _gui_game_over := $"GUI/GameOver"
-onready var _music := $Music
-onready var _boss := $"Specials/ThunderMan"
-onready var _boss_door_left := $"BossDoors/BossDoor02"
-onready var _boss_door_right := $"BossDoors/BossDoor03"
 
 signal restarted()
 signal player_ready()
@@ -55,6 +51,8 @@ func _ready() -> void:
 func _get_configuration_warning() -> String:
     if not player:
         return "This stage has no Player. Consider adding a Player node to have a controllable character."
+    if not get_current_camera():
+        return "This stage has no camera. Consider adding a camera node to have a view on the stage."
     else:
         return ""
 
@@ -138,8 +136,6 @@ func _connect_signals() -> void:
     _try_connect(self, "restarted", _gui_ready, "on_restarted")
     _try_connect(self, "restarted", _gui_fade_effects, "fade_in", [FADE_IN_DURATION])
     _try_connect(self, "restarted", _gui_bar, "on_restarted")
-    _try_connect(self, "restarted", _boss, "reset")
-    _try_connect(self, "restarted", _music, "on_restarted")
 
     if has_node("CameraTransitions"):
         for transition in $CameraTransitions.get_children():
@@ -149,42 +145,21 @@ func _connect_signals() -> void:
                 for checkpoint in $Checkpoints.get_children():
                     _try_connect(checkpoint, "checkpoint_reached", transition, "on_checkpoint_reached")
 
-    if has_node("BossDoors"):
-        for boss_door in $BossDoors.get_children():
-            _try_connect(self, "restarted", boss_door, "on_restarted")
-            if has_node("Checkpoints"):
-                for checkpoint in $Checkpoints.get_children():
-                    _try_connect(checkpoint, "checkpoint_reached", boss_door, "on_checkpoint_reached")
-
     _try_connect(self, "player_ready", player, "on_ready")
     _try_connect(self, "player_ready", _gui_ready, "on_ready")
     _try_connect(self, "player_ready", _gui_pause, "set_can_pause", [true])
-
     _try_connect(self, "player_died", _gui_fade_effects, "fade_out", [FADE_OUT_DURATION])
-
     _try_connect(self, "stage_cleared", player, "on_stage_cleared")
     
     # Connect children signals to stage methods.
     _try_connect(player, "died", self, "_on_died")
     _try_connect(_gui_fade_effects, "screen_faded_out", self, "_on_screen_faded_out")
-    _try_connect(_boss, "boss_died", self, "_on_boss_died")
     _try_connect(player, "exited", self, "_on_stage_exited")
 
     # Connect children signals to other children methods.
     _try_connect(player, "hit_points_changed", _gui_bar, "on_hit_points_changed")
-    _try_connect(player, "died", _music, "on_died")
-    _try_connect(_gui_pause, "game_paused", _music, "on_game_paused")
-    _try_connect(_gui_pause, "game_resumed", _music, "on_game_resumed")
-    _try_connect(_boss, "boss_ready", _music, "on_boss_ready")
     _try_connect(player, "died", _gui_pause, "set_can_pause", [false])
-    _try_connect(_boss_door_left, "closed", _music, "on_boss_entered")
-    _try_connect(_boss_door_left, "closed", _boss, "on_boss_entered")
-    _try_connect(_boss_door_left, "closed", player, "on_boss_entered")
-    _try_connect(_boss_door_right, "closed", _music, "on_boss_entered")
-    _try_connect(_boss_door_right, "closed", _boss, "on_boss_entered")
-    _try_connect(_boss_door_right, "closed", player, "on_boss_entered")
-    _try_connect(_boss, "boss_died", player, "on_boss_died")
-    _try_connect(_boss, "boss_died", _music, "on_boss_died")
+
     _try_connect(GameState, "extra_life_count_changed", _gui_pause, "on_extra_life_count_changed")
     _try_connect(GameState, "energy_tank_count_changed", _gui_pause, "on_energy_tank_count_changed")
 

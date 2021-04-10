@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=2]
 
-[ext_resource path="res://stages/stage.gd" type="Script" id=1]
+[ext_resource path="res://stages/test_lab/test_lab.gd" type="Script" id=1]
 [ext_resource path="res://stages/test_lab/TestLabTileSet.tres" type="TileSet" id=2]
 [ext_resource path="res://stages/tile_map_extended.gd" type="Script" id=3]
 [ext_resource path="res://stages/test_lab/TestLabBackground.png" type="Texture" id=4]
