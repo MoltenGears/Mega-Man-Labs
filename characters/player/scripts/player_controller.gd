@@ -17,6 +17,7 @@ var ladder: StaticBody2D
 var gravity: float = Constants.GRAVITY
 
 onready var _ray_cast: RayCast2D = $"CollisionShape2D/RayCast2D";
+onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
 signal change_state(state_name)
 signal hit_points_changed(hit_points)
@@ -27,12 +28,20 @@ func _ready() -> void:
     connect("change_state", $StateMachine, "_change_state")
 
 func on_restarted() -> void:
-    $PlayerCamera.init_limits()
     visible = false
 
 func on_ready() -> void:
     hit_points = Constants.HIT_POINTS_MAX
     $StateMachine.initialize($StateMachine.start_state)
+
+func on_camera_transition_start() -> void:
+    if _animation_player.current_animation == "move" or is_climbing:
+        _animation_player.pause_mode = PAUSE_MODE_PROCESS
+    if is_climbing:
+        _animation_player.play("climb_move")
+
+func on_camera_transition_end() -> void:
+    _animation_player.pause_mode = PAUSE_MODE_INHERIT
 
 func on_boss_entered() -> void:
     if is_on_floor():

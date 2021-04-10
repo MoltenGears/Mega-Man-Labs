@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://stages/stage.gd" type="Script" id=1]
 [ext_resource path="res://stages/heat/textures/HeatBG.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://gui/Bar.tscn" type="PackedScene" id=10]
 [ext_resource path="res://gui/Ready.tscn" type="PackedScene" id=11]
 [ext_resource path="res://gui/GameOver.tscn" type="PackedScene" id=12]
+[ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=13]
 
 [sub_resource type="TileSet" id=1]
 0/name = "HeatFullBG01"
@@ -406,6 +407,9 @@ script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 80, 212 )
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 13 )]
+player_target_node = NodePath("../Player")
 
 [node name="CameraTransitions" type="Node2D" parent="."]
 

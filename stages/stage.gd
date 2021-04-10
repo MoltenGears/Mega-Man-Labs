@@ -61,6 +61,14 @@ func _get_configuration_warning() -> String:
 # Returns the first Camera2D found in the stage. Should not be used in _ready() callbacks,
 # since some nodes' _ready() callbacks are called before the camera is instantiated.
 func get_current_camera() -> Camera2D:
+    # Search stage nodes.
+    if not current_camera:
+        for child in get_children():
+            if child is Camera2D:
+                current_camera = child
+                break
+
+    # Search player nodes if not found in stage.
     if not current_camera and player:
         for child in player.get_children():
             if child is Camera2D:
@@ -126,6 +134,7 @@ func _set_stage_start_pos() -> void:
 func _connect_signals() -> void:
     # Connect various stage signals to children methods.
     _try_connect(self, "restarted", player, "on_restarted")
+    _try_connect(self, "restarted", get_current_camera(), "on_restarted")
     _try_connect(self, "restarted", _gui_ready, "on_restarted")
     _try_connect(self, "restarted", _gui_fade_effects, "fade_in", [FADE_IN_DURATION])
     _try_connect(self, "restarted", _gui_bar, "on_restarted")

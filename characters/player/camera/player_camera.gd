@@ -3,36 +3,41 @@ extends Camera2D
 const RAYCAST_LENGTH: int = 100000
 const RAYCAST_OFFSET: int = 32
 
+export(NodePath) var player_target_node
 export(float) var transition_time := 1.0
 
 var _transition_pos: int
 var _direction: Vector2
 
-onready var _player: Player = owner
+onready var _player: Node2D = get_node(player_target_node) as Node2D
 onready var _player_collision_extents: Vector2 = _player.get_node("CollisionShape2D").shape.extents
-onready var _player_animations: AnimationPlayer = _player.get_node("AnimationPlayer")
 onready var _ray: RayCast2D = $TransitionFinder
 onready var _base_width: int = Global.base_size.x
 onready var _base_height: int = Global.base_size.y
 onready var _death_distance: float = sqrt(pow(_base_width, 2) + pow(_base_height, 2)) / 1.5
 
+signal transition_start()
+signal transition_end()
+
 func _ready() -> void:
     $CameraTween.connect("tween_completed", self, "_on_tween_completed")
+    connect("transition_start", _player, "on_camera_transition_start")
+    connect("transition_end", _player, "on_camera_transition_end")
+    global_position = _player.global_position
     init_limits()
 
 func _physics_process(delta: float) -> void:
     if _player.global_position.distance_to(get_camera_screen_center()) > _death_distance:
         _player.die(false)
 
+    position = _player.position
+
 func transition(dir: Vector2, transition: CameraTransition) -> void:
     if _get_transition_position(dir, true) == _ray.cast_to:
         transition.turn_on_wall()
         return
     
-    if _player_animations.current_animation == "move" or _player.is_climbing:
-        _player_animations.pause_mode = PAUSE_MODE_PROCESS
-    if _player.is_climbing:
-        _player_animations.play("climb_move")
+    emit_signal("transition_start")
     get_tree().paused = true
     _direction = dir
     var old_cam_pos: Vector2 = get_camera_screen_center()
@@ -63,6 +68,10 @@ func transition(dir: Vector2, transition: CameraTransition) -> void:
             transition_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
     $PlayerTween.start()
 
+func on_restarted() -> void:
+    global_position = _player.global_position
+    init_limits()
+
 func init_limits() -> void:
     limit_right = _get_transition_position(Vector2.RIGHT).x
     limit_left = _get_transition_position(Vector2.LEFT).x
@@ -72,9 +81,9 @@ func init_limits() -> void:
 func _on_tween_completed(object: Object, key: NodePath) -> void:
     init_limits()
     set_as_toplevel(false)
-    position = Vector2()
+    global_position = _player.global_position
     get_tree().paused = false
-    _player_animations.pause_mode = PAUSE_MODE_INHERIT
+    emit_signal("transition_end")
 
 func _update_limit() -> void:
     if _direction == Vector2.RIGHT:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://characters/player/scripts/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://characters/player/sprites/Idle.png" type="Texture" id=2]
@@ -28,7 +28,6 @@
 [ext_resource path="res://characters/player/states/climb.gd" type="Script" id=26]
 [ext_resource path="res://characters/player/states/climb_shoot.gd" type="Script" id=27]
 [ext_resource path="res://characters/player/states/death.gd" type="Script" id=28]
-[ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=29]
 [ext_resource path="res://effects/effect_spawner/EffectSpawner.tscn" type="PackedScene" id=30]
 [ext_resource path="res://characters/player/cutscenes/stage_clear.gd" type="Script" id=31]
 
@@ -888,7 +887,6 @@ anims/stagger = SubResource( 17 )
 anims/invincibility = SubResource( 18 )
 
 [node name="SFX" type="Node" parent="."]
-editor/display_folded = true
 
 [node name="Land" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 14 )
@@ -905,7 +903,6 @@ stream = ExtResource( 17 )
 volume_db = -3.0
 
 [node name="StateMachine" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 18 )
 start_state = NodePath("Spawn")
 
@@ -942,12 +939,11 @@ script = ExtResource( 28 )
 [node name="MegaBusterPos" type="Position2D" parent="."]
 position = Vector2( 17, -2 )
 
-[node name="PlayerCamera" parent="." instance=ExtResource( 29 )]
-
 [node name="EffectSpawner" parent="." instance=ExtResource( 30 )]
 
 [node name="Cutscenes" type="Node" parent="."]
 
 [node name="StageClear" type="Node" parent="Cutscenes"]
 script = ExtResource( 31 )
+
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine" method="_on_animation_finished"]

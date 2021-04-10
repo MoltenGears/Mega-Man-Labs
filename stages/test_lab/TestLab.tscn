@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://stages/stage.gd" type="Script" id=1]
 [ext_resource path="res://stages/test_lab/TestLabTileSet.tres" type="TileSet" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://stages/test_lab/MM_TT-ElectricShock.ogg" type="AudioStream" id=23]
 [ext_resource path="res://music/MM_TT-BossFight.ogg" type="AudioStream" id=24]
 [ext_resource path="res://music/MM_TT-StageClear.ogg" type="AudioStream" id=25]
+[ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=26]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 84 )
@@ -242,6 +243,9 @@ shape = SubResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( 48, 180 )
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 26 )]
+player_target_node = NodePath("../Player")
 
 [node name="PickUps" type="Node2D" parent="."]
 
