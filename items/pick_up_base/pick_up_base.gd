@@ -1,11 +1,18 @@
 extends KinematicBody2D
 
+export(bool) var persistent := false
+export(bool) var respawns_on_restart := false
+
 var _velocity: Vector2
 var _start_pos: Vector2
 
 func _ready() -> void:
     _start_pos = global_position
-    add_to_group("SpecialsReset")
+    $PreciseVisibilityNotifier2D.enabled = !persistent
+
+    if respawns_on_restart:
+        add_to_group("SpecialsReset")
+
     $Area2D.connect("body_entered", self, "on_body_entered")
     _velocity = Vector2()
     
@@ -19,19 +26,27 @@ func on_restarted() -> void:
     visible = true
     $Area2D.set_deferred("monitoring", true)
 
+func on_camera_exited() -> void:
+    queue_free()
+
 func _physics_process(delta: float) -> void:
     if move_and_collide(_velocity * delta):
         _velocity.y = 0
     else:
-        _velocity.y = clamp(_velocity.y + Constants.GRAVITY, -Constants.FALL_SPEED_MAX, Constants.FALL_SPEED_MAX)
+        _velocity.y = clamp(
+            _velocity.y + Constants.GRAVITY,
+            -Constants.FALL_SPEED_MAX,
+            Constants.FALL_SPEED_MAX)
 
 func on_body_entered(body: PhysicsBody2D) -> void:
     if body is Player:
-        _on_picked_up_effect(body)
+        _on_picked_up_effect(body as Player)
         visible = false
         $Area2D.set_deferred("monitoring", false)
 
-func _on_picked_up_effect(body) -> void:
-    # TODO: Make function parameter statically typed again when cyclic resource inclusion error gets fixed.
-    # Also in function call within on_body_entered above.
+        if not respawns_on_restart:
+            queue_free()
+
+# Virutal method. Override in actual item for desired effect.
+func _on_picked_up_effect(body: Player) -> void:
     pass

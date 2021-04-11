@@ -1,7 +1,7 @@
 tool
 extends Node2D
 
-const Spawner = preload("res://stages/assets/Spawner.tscn")
+const Spawner: Resource = preload("res://stages/assets/Spawner.tscn")
 
 export(int) var hit_points_max := 20
 export(int) var contact_damage := 5

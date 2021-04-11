@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://characters/enemies/base/enemy_base.gd" type="Script" id=1]
 [ext_resource path="res://characters/enemies/base/sprites/explosions/BaseExplosionDeath.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://characters/enemies/base/sounds/Hit.wav" type="AudioStream" id=4]
 [ext_resource path="res://characters/enemies/base/scripts/enemy_state_machine.gd" type="Script" id=5]
 [ext_resource path="res://characters/enemies/base/states/death.gd" type="Script" id=6]
+[ext_resource path="res://items/ItemGenerator.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -104,5 +105,8 @@ script = ExtResource( 5 )
 
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
+
+[node name="ItemGenerator" parent="." instance=ExtResource( 7 )]
+
 [connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]
 [connection signal="animation_finished" from="BaseAnimations" to="StateMachine" method="_on_animation_finished"]

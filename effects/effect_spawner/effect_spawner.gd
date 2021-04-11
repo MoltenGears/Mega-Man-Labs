@@ -1,6 +1,6 @@
 extends Node2D
 
-const DeathParticle := preload("assets/DeathParticle.tscn")
+const DeathParticle: Resource = preload("assets/DeathParticle.tscn")
 const DEATH_PARTICLE_VELOCITY: int = 30
 const ENERGY_PARTICLE_VELOCITY: int = 120
 

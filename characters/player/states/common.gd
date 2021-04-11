@@ -1,6 +1,6 @@
 extends State
 
-const Projectile = preload("../weapons/MegaBuster.tscn")
+const Projectile: Resource = preload("../weapons/MegaBuster.tscn")
 
 onready var sprite: Sprite = get_node("../../Sprite")
 onready var mega_buster: Position2D = get_node("../../MegaBusterPos")

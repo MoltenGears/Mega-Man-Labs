@@ -5,7 +5,6 @@
 [ext_resource path="res://items/extra_life/ExtraLife.png" type="Texture" id=3]
 [ext_resource path="res://items/sounds/GetItem.wav" type="AudioStream" id=4]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
@@ -26,3 +25,5 @@ physics_process_parent = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource( 4 )
 
+[node name="PreciseVisibilityNotifier2D" parent="." index="5"]
+rect = Rect2( -8, -8, 16, 16 )

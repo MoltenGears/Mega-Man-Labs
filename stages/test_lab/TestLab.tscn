@@ -251,57 +251,83 @@ player_target_node = NodePath("../Player")
 
 [node name="LifeEnergyBig01" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 1040, 152 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall01" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 1024, -372 )
+persistent = true
 
 [node name="LifeEnergySmall02" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 1048, -372 )
+persistent = true
 
 [node name="LifeEnergySmall03" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 1072, -372 )
+persistent = true
 
 [node name="LifeEnergyBig02" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 1104, -376 )
+persistent = true
 
 [node name="ExtraLife01" parent="PickUps" instance=ExtResource( 11 )]
 position = Vector2( 1184, 88 )
+persistent = true
 
 [node name="EnergyTank01" parent="PickUps" instance=ExtResource( 12 )]
 position = Vector2( 1216, 88 )
+persistent = true
 
 [node name="EnergyTank02" parent="PickUps" instance=ExtResource( 12 )]
 position = Vector2( 1072, -152 )
+persistent = true
 
 [node name="ExtraLife02" parent="PickUps" instance=ExtResource( 11 )]
 position = Vector2( 864, -344 )
+persistent = true
 
 [node name="EnergyTank03" parent="PickUps" instance=ExtResource( 12 )]
 position = Vector2( 3808, 488 )
+persistent = true
 
 [node name="ExtraLife03" parent="PickUps" instance=ExtResource( 11 )]
 position = Vector2( 2096, 488 )
+persistent = true
 
 [node name="LifeEnergyBig03" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 2208, 536 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall04" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 2080, 732 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall05" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 2080, 796 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall06" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 2080, 860 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergyBig04" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 3808, 856 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall07" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 3504, 748 )
+persistent = true
+respawns_on_restart = true
 
 [node name="LifeEnergySmall08" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 3520, 748 )
+persistent = true
+respawns_on_restart = true
 
 [node name="Enemies" type="Node2D" parent="."]
 

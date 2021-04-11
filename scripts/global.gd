@@ -10,8 +10,11 @@ var player: Player setget , get_player
 var can_toggle_pause := true
 var base_size: Vector2 setget , get_base_size
 var wide_screen := true
+var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
+    rng.randomize()
+
     # Last child of root is always main scene
     var root := get_tree().get_root()
     main_scene = root.get_child(root.get_child_count() - 1)

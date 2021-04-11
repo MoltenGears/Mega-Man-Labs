@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://items/pick_up_base/pick_up_base.gd" type="Script" id=1]
+[ext_resource path="res://stages/assets/precise_visibility_notifier_2D.gd" type="Script" id=2]
 
 [node name="PickUpBase" type="KinematicBody2D"]
 collision_layer = 32
@@ -11,3 +12,9 @@ script = ExtResource( 1 )
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 2
+
+[node name="PreciseVisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+rect = Rect2( -4, -4, 8, 8 )
+script = ExtResource( 2 )
+
+[connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]

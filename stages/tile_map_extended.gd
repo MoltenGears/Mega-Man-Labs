@@ -3,8 +3,8 @@ extends TileMap
 # Tile map with helpers for setting up special tiles like death spikes and ladders.
 class_name TileMapExtended
 
-const InstantDeathArea = preload("res://stages/assets/InstantDeathArea.tscn")
-const LadderArea = preload("res://stages/assets/Ladder.tscn")
+const InstantDeathArea: Resource = preload("res://stages/assets/InstantDeathArea.tscn")
+const LadderArea: Resource = preload("res://stages/assets/Ladder.tscn")
 
 # Identifiers for different areas must not be combined for a single tile type.
 export(Array, String) var instant_death_identifiers := ["acid", "lava", "spike"]

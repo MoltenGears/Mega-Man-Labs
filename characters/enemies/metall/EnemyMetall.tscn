@@ -68,7 +68,7 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=4]
 radius = 80.0
 
-[node name="EnemyMetall" index="0" instance=ExtResource( 1 )]
+[node name="EnemyMetall" instance=ExtResource( 1 )]
 hit_points_max = 1
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
@@ -85,9 +85,6 @@ rect = Rect2( -9, -10, 18, 16 )
 [node name="EnemyAnimations" type="AnimationPlayer" parent="." index="4"]
 anims/idle = SubResource( 2 )
 anims/shoot = SubResource( 3 )
-
-[node name="SFX" parent="." index="6"]
-editor/display_folded = true
 
 [node name="Timer" type="Timer" parent="." index="7"]
 process_mode = 0
@@ -111,6 +108,7 @@ script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" index="0"]
 shape = SubResource( 4 )
+
 [connection signal="animation_finished" from="EnemyAnimations" to="StateMachine" method="_on_animation_finished"]
 [connection signal="timeout" from="Timer" to="StateMachine/Idle" method="on_Timer_timeout"]
 [connection signal="body_entered" from="TriggerArea" to="TriggerArea" method="on_body_entered"]
