@@ -36,10 +36,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Buttons" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 40.0
-margin_top = 100.0
-margin_right = 216.0
-margin_bottom = 123.0
+margin_left = 104.0
+margin_top = 108.0
+margin_right = 280.0
+margin_bottom = 131.0
 custom_constants/separation = 7
 
 [node name="ContinueButton" type="Button" parent="CenterContainer/Buttons"]

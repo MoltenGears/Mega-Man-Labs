@@ -78,8 +78,8 @@ gdscript/warnings/integer_division=false
 
 [display]
 
-window/size/width=512
-window/size/height=288
+window/size/width=384
+window/size/height=240
 window/size/always_on_top=true
 window/size/test_width=1536
 window/size/test_height=864

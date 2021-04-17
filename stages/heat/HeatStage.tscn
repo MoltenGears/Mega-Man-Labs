@@ -414,29 +414,29 @@ player_target_node = NodePath("../Player")
 [node name="CameraTransitions" type="Node2D" parent="."]
 
 [node name="CameraTransition01" parent="CameraTransitions" instance=ExtResource( 7 )]
-position = Vector2( 0, 144 )
-base_size = Vector2( 512, 288 )
+position = Vector2( 0, 136 )
+base_size = Vector2( 384, 240 )
 
 [node name="CameraTransition03" parent="CameraTransitions" instance=ExtResource( 7 )]
-position = Vector2( 768, 0 )
+position = Vector2( 768, 16 )
 is_rotated = true
-size = 3
-base_size = Vector2( 512, 288 )
+size = 4
+base_size = Vector2( 384, 240 )
 
 [node name="CameraTransition04" parent="CameraTransitions" instance=ExtResource( 7 )]
-position = Vector2( 768, 288 )
+position = Vector2( 768, 256 )
 is_rotated = true
 is_death_pit = true
-size = 3
-base_size = Vector2( 512, 288 )
+size = 4
+base_size = Vector2( 384, 240 )
 
 [node name="CameraTransition05" parent="CameraTransitions" instance=ExtResource( 7 )]
-position = Vector2( 640, 144 )
-base_size = Vector2( 512, 288 )
+position = Vector2( 1088, 136 )
+base_size = Vector2( 384, 240 )
 
 [node name="CameraTransition06" parent="CameraTransitions" instance=ExtResource( 7 )]
-position = Vector2( 1280, 144 )
-base_size = Vector2( 512, 288 )
+position = Vector2( 1536, 136 )
+base_size = Vector2( 384, 240 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 

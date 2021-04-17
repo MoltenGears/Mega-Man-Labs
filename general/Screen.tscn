@@ -9,13 +9,13 @@ script = ExtResource( 1 )
 
 [node name="GameViewportContainer" type="ViewportContainer" parent="."]
 material = ExtResource( 2 )
-margin_right = 256.0
-margin_bottom = 224.0
+margin_right = 384.0
+margin_bottom = 240.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GameViewport" type="Viewport" parent="GameViewportContainer"]
-size = Vector2( 256, 224 )
+size = Vector2( 384, 240 )
 handle_input_locally = false
 render_target_update_mode = 3
