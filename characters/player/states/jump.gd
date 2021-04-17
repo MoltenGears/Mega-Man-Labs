@@ -27,6 +27,9 @@ func _handle_command(command: String) -> void:
 
     if command == "shoot":
         emit_signal("finished", "jump_shoot")
+    
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
 
 func _update(delta: float) -> void:
     var direction: Vector2 = get_input_direction()

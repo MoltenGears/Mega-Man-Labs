@@ -14,6 +14,9 @@ func _handle_command(command: String) -> void:
     if command == "shoot":
         animation_player.play("jump_shoot")
         shoot()
+    
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
 
 func _on_animation_finished(anim_name: String) -> void:
     emit_signal("finished", "jump")

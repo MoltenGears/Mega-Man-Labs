@@ -17,6 +17,9 @@ func _handle_command(command: String) -> void:
         animation_player.play("idle_shoot")
         shoot()
 
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
+
 func _update(delta: float) -> void:
     _frame_count += 1
     if _frame_count > STILL_FRAME_COUNT:

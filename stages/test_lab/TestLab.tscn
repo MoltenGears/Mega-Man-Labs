@@ -441,8 +441,13 @@ position = Vector2( 3024, 852 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="Bar" parent="GUI" instance=ExtResource( 17 )]
+[node name="LifeEnergyBar" parent="GUI" instance=ExtResource( 17 )]
 visible = false
+
+[node name="WeaponEnergyBar" parent="GUI/LifeEnergyBar" instance=ExtResource( 17 )]
+visible = false
+margin_left = 12.0
+color = Color( 0.827451, 0.580392, 0.905882, 1 )
 
 [node name="BossBar" parent="GUI" instance=ExtResource( 17 )]
 visible = false

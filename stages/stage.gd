@@ -22,7 +22,8 @@ var player: Player
 
 onready var _gui_ready := $"GUI/Ready"
 onready var _gui_fade_effects := $"GUI/FadeEffects"
-onready var _gui_bar := $"GUI/Bar"
+onready var _gui_bar := $"GUI/LifeEnergyBar"
+onready var _gui_weapon_bar := $"GUI/LifeEnergyBar/WeaponEnergyBar"
 onready var _gui_pause := $"GUI/Pause"
 onready var _gui_game_over := $"GUI/GameOver"
 
@@ -158,6 +159,8 @@ func _connect_signals() -> void:
 
     # Connect children signals to other children methods.
     _try_connect(player, "hit_points_changed", _gui_bar, "on_hit_points_changed")
+    _try_connect(player, "weapon_energy_changed", _gui_weapon_bar, "on_hit_points_changed")
+    _try_connect(player, "weapon_changed", _gui_weapon_bar, "on_weapon_changed")
     _try_connect(player, "died", _gui_pause, "set_can_pause", [false])
 
     _try_connect(GameState, "extra_life_count_changed", _gui_pause, "on_extra_life_count_changed")

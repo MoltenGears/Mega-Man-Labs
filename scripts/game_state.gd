@@ -2,6 +2,7 @@ extends Node
 
 var extra_life_count: int setget _set_extra_life_count
 var energy_tank_count: int setget _set_energy_tank_count
+var unlocked_weapons: Array = ["thunder_strike"]
 
 signal extra_life_count_changed(extra_life_count)
 signal energy_tank_count_changed(tank_count)

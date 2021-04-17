@@ -25,6 +25,14 @@ func on_hit_points_changed(hit_points: int) -> void:
     elif hit_points > _get_current_hp_bar():
         update_gradual(hit_points)
 
+func on_weapon_changed(weapon_energy: int, new_color: Color) -> void:
+    if new_color == Color.transparent:
+        visible = false
+    else:
+        set_bar_color(new_color)
+        update_instant(weapon_energy)
+        visible = true
+
 func update_instant(hit_points: int) -> void:
     _set_current_hp_bar(hit_points)
 

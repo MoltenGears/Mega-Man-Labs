@@ -23,6 +23,8 @@ func _handle_command(command: String) -> void:
         emit_signal("finished", "climb_shoot")
     if command == "drop_down":
         emit_signal("finished", "jump")
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
 
 func _update(delta: float) -> void:
     direction = get_input_direction()

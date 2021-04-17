@@ -1,0 +1,34 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 original_0: hint_color;
+uniform vec4 original_1: hint_color;
+uniform vec4 replace_0: hint_color;
+uniform vec4 replace_1: hint_color;
+
+const float precision = 0.1;
+
+vec4 swap_color(vec4 color){
+	vec4 original_colors[2] = vec4[2] (original_0, original_1);
+	vec4 replace_colors[2] = vec4[2] (replace_0, replace_1);
+	for (int i = 0; i < 2; i ++) {
+		if (distance(color, original_colors[i]) <= precision){
+			return replace_colors[i];
+		}
+	}
+	return color;
+}
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/original_0 = Color( 0, 0.439216, 0.92549, 1 )
+shader_param/original_1 = Color( 0.219608, 0.721569, 0.972549, 1 )
+shader_param/replace_0 = Color( 0.701961, 0.0509804, 0.0509804, 1 )
+shader_param/replace_1 = Color( 0.92549, 0.478431, 0.478431, 1 )

@@ -35,6 +35,9 @@ func _handle_command(command: String) -> void:
             _frame_count >= LOCKED_FRAME_COUNT:
         emit_signal("finished", "jump")
 
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
+
 func _exit() -> void:
     owner.is_sliding = false
     _ray_cast.enabled = false

@@ -21,6 +21,8 @@ onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
 signal change_state(state_name)
 signal hit_points_changed(hit_points)
+signal weapon_energy_changed(weapon_energy)
+signal weapon_changed(weapon_energy, new_color)
 signal died()
 signal exited()
 
@@ -120,6 +122,14 @@ func set_controllable(value: bool) -> void:
     is_controllable = value
     if value == false:
         $StateMachine.input_direction = Vector2()
+
+func swap_color(main: Color, secondary: Color) -> void:
+    $Sprite.material.set_shader_param("replace_0", main)
+    $Sprite.material.set_shader_param("replace_1", secondary)
+    $Sprite.use_parent_material = false
+
+func reset_color() -> void:
+    $Sprite.use_parent_material = true
 
 func _take_damage(damage: int) -> void:
     hit_points -= damage

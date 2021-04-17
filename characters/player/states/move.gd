@@ -30,6 +30,9 @@ func _handle_command(command: String) -> void:
             animation_player.play("move_shoot")
             animation_player.seek(_current_animation_pos, true)
         shoot()
+
+    if command.begins_with("weapon_"):
+        weapons.change_weapon(command)
     
 func _update(delta: float) -> void:
     _frame_count += 1

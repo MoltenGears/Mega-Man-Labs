@@ -65,6 +65,12 @@ func _unhandled_input(event: InputEvent) -> void:
             not Global.is_action_pressed("action_down"):
         current_state._handle_command("drop_down")
 
+    if event.is_action_pressed("action_weapon_next"):
+        current_state._handle_command("weapon_next")
+
+    if event.is_action_pressed("action_weapon_previous"):
+        current_state._handle_command("weapon_previous")
+
 func send_command(command: String) -> void:
     if current_state:
         current_state._handle_command(command)
