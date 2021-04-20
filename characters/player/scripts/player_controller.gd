@@ -70,6 +70,10 @@ func heal(life_energy: int) -> void:
     hit_points = clamp(hit_points + life_energy, 0, Constants.HIT_POINTS_MAX)
     emit_signal("hit_points_changed", hit_points)
 
+func charge_weapon(weapon_energy: int) -> void:
+    if $Weapons.current_state.has_method("charge_energy"):
+        $Weapons.current_state.charge_energy(weapon_energy)
+
 func die(explode: bool = true) -> void:
     if not is_dead:
         explode_on_death = explode

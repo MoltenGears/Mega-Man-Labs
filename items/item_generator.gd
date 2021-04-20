@@ -1,13 +1,19 @@
 extends Node2D
 
 # Items
-export(int, 0, 9999) var weight_no_drop := 107
+export(int, 0, 9999) var weight_no_drop := 77
 
 const LifeEnergySmall: Resource = preload("res://items/life_energy/LifeEnergySmall.tscn")
 export(int, 0, 9999) var weight_life_energy_small := 15
 
 const LifeEnergyBig: Resource = preload("res://items/life_energy/LifeEnergyBig.tscn")
 export(int, 0, 9999) var weight_life_energy_big := 4
+
+const WeaponEnergySmall: Resource = preload("res://items/weapon_energy/WeaponEnergySmall.tscn")
+export(int, 0, 9999) var weight_weapon_energy_small := 25
+
+const WeaponEnergyBig: Resource = preload("res://items/weapon_energy/WeaponEnergyBig.tscn")
+export(int, 0, 9999) var weight_weapon_energy_big := 5
 
 const ExtraLife: Resource = preload("res://items/extra_life/ExtraLife.tscn")
 export(int, 0, 9999) var weight_extra_life := 1
@@ -29,6 +35,8 @@ func _roll_item() -> Node:
         weight_no_drop
         + weight_life_energy_small
         + weight_life_energy_big
+        + weight_weapon_energy_small
+        + weight_weapon_energy_big
         + weight_extra_life
         + weight_energy_tank
     )
@@ -48,6 +56,14 @@ func _roll_item() -> Node:
     _accumulated_weight += weight_life_energy_big
     if roll <= _accumulated_weight:
         return LifeEnergyBig.instance()
+
+    _accumulated_weight += weight_weapon_energy_small
+    if roll <= _accumulated_weight:
+        return WeaponEnergySmall.instance()
+
+    _accumulated_weight += weight_weapon_energy_big
+    if roll <= _accumulated_weight:
+        return WeaponEnergyBig.instance()
 
     _accumulated_weight += weight_extra_life
     if roll <= _accumulated_weight:
