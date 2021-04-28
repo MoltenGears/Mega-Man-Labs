@@ -441,10 +441,21 @@ position = Vector2( 3024, 852 )
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="LifeEnergyBar" parent="GUI" instance=ExtResource( 17 )]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="GUI"]
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="WeaponEnergyBar" parent="GUI/LifeEnergyBar" instance=ExtResource( 17 )]
+[node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 17 )]
+visible = false
+margin_right = 345.0
+margin_bottom = 216.0
+
+[node name="WeaponEnergyBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 17 )]
 visible = false
 margin_left = 12.0
 color = Color( 0.827451, 0.580392, 0.905882, 1 )

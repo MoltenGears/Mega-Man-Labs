@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://stages/stage.gd" type="Script" id=1]
 [ext_resource path="res://stages/heat/textures/HeatBG.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=13]
 [ext_resource path="res://items/weapon_energy/WeaponEnergyBig.tscn" type="PackedScene" id=14]
 [ext_resource path="res://items/weapon_energy/WeaponEnergySmall.tscn" type="PackedScene" id=15]
+[ext_resource path="res://items/tanks/EnergyTank.tscn" type="PackedScene" id=16]
 
 [sub_resource type="TileSet" id=1]
 0/name = "HeatFullBG01"
@@ -472,12 +473,28 @@ position = Vector2( 248, 172 )
 persistent = true
 respawns_on_restart = true
 
+[node name="EnergyTank" parent="PickUps" instance=ExtResource( 16 )]
+position = Vector2( 168, 168 )
+persistent = true
+respawns_on_restart = true
+
 [node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="LifeEnergyBar" parent="GUI" instance=ExtResource( 10 )]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="GUI"]
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="WeaponEnergyBar" parent="GUI/LifeEnergyBar" instance=ExtResource( 10 )]
+[node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 10 )]
+visible = false
+margin_right = 345.0
+margin_bottom = 216.0
+
+[node name="WeaponEnergyBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 10 )]
 visible = false
 margin_left = 12.0
 color = Color( 0.827451, 0.580392, 0.905882, 1 )

@@ -74,6 +74,15 @@ func charge_weapon(weapon_energy: int) -> void:
     if $Weapons.current_state.has_method("charge_energy"):
         $Weapons.current_state.charge_energy(weapon_energy)
 
+func change_weapon(weapon_name: String) -> void:
+    $Weapons.change_weapon(weapon_name)
+
+func get_weapons_info() -> Dictionary:
+    return $Weapons.get_weapons_info()
+
+func get_current_weapon_name() -> String:
+    return $Weapons.current_state.weapon_name
+
 func die(explode: bool = true) -> void:
     if not is_dead:
         explode_on_death = explode

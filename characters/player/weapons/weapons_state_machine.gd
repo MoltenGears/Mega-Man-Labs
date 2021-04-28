@@ -17,6 +17,14 @@ func change_weapon(name: String) -> void:
     else:
         printerr("Failed to change weapon. %s is not a valid weapon name." % name)
 
+func get_weapons_info() -> Dictionary:
+    var weapons_info := {}
+    for key in states_map.keys():
+        if "weapon_energy" in states_map[key] and "color_primary" in states_map[key]:
+            weapons_info[key] = [states_map[key].weapon_energy, states_map[key].color_primary]
+
+    return weapons_info
+
 func _get_adjacent_key(previous: bool = false) -> String:
     var keys: Array = states_map.keys()
     var current_key: String

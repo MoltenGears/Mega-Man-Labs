@@ -951,9 +951,15 @@ start_state = NodePath("MegaBuster")
 
 [node name="MegaBuster" type="Node" parent="Weapons"]
 script = ExtResource( 33 )
+weapon_name = "mega_buster"
+color_primary = Color( 0.905882, 0.905882, 0.580392, 1 )
 
 [node name="ThunderStrike" type="Node" parent="Weapons"]
 script = ExtResource( 34 )
+weapon_name = "thunder_strike"
+energy_cost = 3
+color_primary = Color( 0.592157, 0.196078, 0.952941, 1 )
+color_secondary = Color( 0.686275, 0.513726, 0.686275, 1 )
 
 [node name="EffectSpawner" parent="." instance=ExtResource( 30 )]
 
