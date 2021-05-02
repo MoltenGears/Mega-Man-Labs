@@ -81,6 +81,8 @@ func get_current_camera() -> Camera2D:
 func _restart() -> void:
     Global.can_toggle_pause = true
     get_tree().paused = true
+    get_tree().call_group("enemies", "queue_free")
+    GameState.reset_enemy_count()
     _set_stage_start_pos()
 
     emit_signal("restarted")

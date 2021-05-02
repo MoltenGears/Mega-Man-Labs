@@ -3,10 +3,13 @@ extends Node2D
 
 const Spawner: Resource = preload("res://stages/assets/Spawner.tscn")
 
+export(String) var enemy_name: String
 export(int) var hit_points_max := 20
 export(int) var contact_damage := 5
 export(int) var buster_damage := 5
 export(bool) var can_respawn := true
+export(int) var spawn_count_max := -1
+export(float) var spawn_timer := 0.0
 export(bool) var flip_direction := false setget set_flip_direction
 
 var _hit_points: int
@@ -42,6 +45,8 @@ func _replace_with_spawner() -> void:
     spawner.packed_scene_ref = load(filename)
     spawner.global_position = _start_pos
     spawner.spawn_info = spawn_info
+    spawner.spawn_count_max = spawn_count_max
+    spawner.spawn_timer = spawn_timer
     get_parent().add_child(spawner)
     queue_free()
 

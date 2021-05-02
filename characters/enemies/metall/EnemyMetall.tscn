@@ -69,6 +69,7 @@ tracks/0/keys = {
 radius = 80.0
 
 [node name="EnemyMetall" instance=ExtResource( 1 )]
+enemy_name = "Metall"
 hit_points_max = 1
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]

@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://characters/enemies/base/EnemyBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://characters/enemies/telly/Telly.png" type="Texture" id=2]
+[ext_resource path="res://characters/enemies/telly/telly_state_machine.gd" type="Script" id=3]
+[ext_resource path="res://characters/enemies/telly/move.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 8, 8 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "rotate"
+length = 0.72
+loop = true
+step = 0.12
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[node name="EnemyTelly" instance=ExtResource( 1 )]
+enemy_name = "Telly"
+hit_points_max = 1
+contact_damage = 2
+buster_damage = 1
+spawn_count_max = 3
+spawn_timer = 4.0
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 2 )
+hframes = 6
+frame = 1
+
+[node name="PreciseVisibilityNotifier2D" parent="." index="3"]
+rect = Rect2( -8, -8, 16, 16 )
+
+[node name="EnemyAnimations" type="AnimationPlayer" parent="." index="4"]
+anims/rotate = SubResource( 2 )
+
+[node name="StateMachine" parent="." index="7"]
+script = ExtResource( 3 )
+start_state = NodePath("Move")
+
+[node name="Move" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( 4 )
