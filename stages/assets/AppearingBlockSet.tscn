@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://stages/assets/sounds/AppearingBlock.wav" type="AudioStream" id=2]
+[ext_resource path="res://stages/assets/appearing_block_set.gd" type="Script" id=3]
+
+[node name="AppearingBlockSet" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+autostart = true
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )

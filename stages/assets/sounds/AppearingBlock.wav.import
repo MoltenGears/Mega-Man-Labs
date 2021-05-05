@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/AppearingBlock.wav-f4781dc902dd10093efc836914a68149.sample"
+
+[deps]
+
+source_file="res://stages/assets/sounds/AppearingBlock.wav"
+dest_files=[ "res://.import/AppearingBlock.wav-f4781dc902dd10093efc836914a68149.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
