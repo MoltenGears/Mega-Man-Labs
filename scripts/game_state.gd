@@ -23,12 +23,12 @@ func increase_enemy_count(enemy_name: String) -> void:
     if not enemies_count.has(enemy_name):
         enemies_count[enemy_name] = 0
     enemies_count[enemy_name] += 1
-    print_debug("Enemy Count++ (%s): %s" % [enemy_name, enemies_count[enemy_name]])
+    # print_debug("Enemy Count++ (%s): %s" % [enemy_name, enemies_count[enemy_name]])
 
 func decrease_enemy_count(enemy_name: String) -> void:
     if enemies_count.has(enemy_name):
         enemies_count[enemy_name] -= 1
-        print_debug("Enemy Count-- (%s): %s" % [enemy_name, enemies_count[enemy_name]])
+        # print_debug("Enemy Count-- (%s): %s" % [enemy_name, enemies_count[enemy_name]])
     
         if enemies_count[enemy_name] < 0:
             printerr("Enemy Count (%s) is smaller than 0: %s" % [enemy_name, enemies_count[enemy_name]])
@@ -41,7 +41,7 @@ func get_enemy_count(enemy_name: String) -> int:
 
 func reset_enemy_count() -> void:
     GameState.enemies_count.clear()
-    print_debug("Reset Enemy Count for all types to 0.")
+    # print_debug("Reset Enemy Count for all types to 0.")
 
 func _set_extra_life_count(value: int) -> void:
     extra_life_count = clamp(value, 0, 9)

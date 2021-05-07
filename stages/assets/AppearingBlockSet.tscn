@@ -11,4 +11,5 @@ process_mode = 0
 autostart = true
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 2 )

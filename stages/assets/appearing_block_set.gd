@@ -2,17 +2,19 @@ tool
 extends Node2D
 
 export(int, 3, 10) var cycle_duration := 5
+export(bool) var show_indices := false setget _show_indices
 
 var _blocks: Array = []
 var _current_index: int = 0
 var _active := true
 
 func _ready() -> void:
-    for child in get_children():
-        if child is AppearingBlock:
-            _blocks.append(child)
+    _update_blocks_array()
 
     $Timer.connect("timeout", self, "_change_blocks")
+
+    if not Engine.editor_hint:
+        _show_indices(false)
 
 func _get_configuration_warning() -> String:
     if _blocks.empty():
@@ -23,15 +25,13 @@ func _get_configuration_warning() -> String:
 func set_active() -> void:
     if not _active:
         _active = true
-        _current_index = 1
+        _current_index = 0
         $Timer.start()
-        print("Set ACTIVE")
 
 func set_inactive() -> void:
     if _active:
         _active = false
         $Timer.stop()
-        print("Set INACTIVE")
 
 func _change_blocks() -> void:
     var play_sound := false
@@ -56,3 +56,14 @@ func _change_blocks() -> void:
         _current_index += 1
     else:
         _current_index = 1
+
+func _show_indices(value: bool) -> void:
+    _update_blocks_array()
+    show_indices = value
+    for block in _blocks:
+        block.show_index = value
+
+func _update_blocks_array() -> void:
+    for child in get_children():
+        if child is AppearingBlock:
+            _blocks.append(child)

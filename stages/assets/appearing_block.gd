@@ -1,13 +1,16 @@
+tool
 extends Node2D
 
 class_name AppearingBlock
 
-export(int, 1, 10) var index := 1
+export(int, 1, 10) var index := 1 setget _set_index
+export(bool) var show_index := false setget _show_index
 
 func _ready() -> void:
-    $Sprite.visible = false
-    $AnimationPlayer.connect("animation_finished", self, "_on_anim_finished")
-    $PreciseVisibilityNotifier2D.connect("camera_entered", self, "_on_camera_entered")
+    if not Engine.editor_hint:
+        $Sprite.visible = false
+        $AnimationPlayer.connect("animation_finished", self, "_on_anim_finished")
+        $PreciseVisibilityNotifier2D.connect("camera_entered", self, "_on_camera_entered")
 
 func appear() -> void:
     $AnimationPlayer.play("appear_disappear")
@@ -21,3 +24,12 @@ func _on_anim_finished(_anim_name: String) -> void:
 
 func _on_camera_entered() -> void:
     get_parent().set_active()
+
+func _set_index(value: int) -> void:
+    $Label.text = str(value)
+    index = value
+
+func _show_index(value: bool) -> void:
+    $Label.text = str(index)
+    $Label.visible = value
+    show_index = value

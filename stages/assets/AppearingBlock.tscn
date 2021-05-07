@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://stages/heat/textures/HeatAppearingBlock.png" type="Texture" id=1]
 [ext_resource path="res://stages/assets/appearing_block.gd" type="Script" id=2]
+[ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://stages/assets/precise_visibility_notifier_2D.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
@@ -36,11 +37,17 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
+[sub_resource type="DynamicFont" id=3]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
 [node name="AppearingBlock" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 3 )
+position = Vector2( 8, 11 )
 texture = ExtResource( 1 )
 hframes = 5
 frame = 1
@@ -50,6 +57,7 @@ anims/appear_disappear = SubResource( 1 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 visible = false
+position = Vector2( 8, 8 )
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -57,5 +65,17 @@ shape = SubResource( 2 )
 disabled = true
 
 [node name="PreciseVisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+position = Vector2( 8, 8 )
 rect = Rect2( -8, -8, 16, 16 )
 script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+custom_fonts/font = SubResource( 3 )
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}

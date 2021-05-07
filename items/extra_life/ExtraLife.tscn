@@ -12,12 +12,17 @@ extents = Vector2( 8, 8 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
 
+[node name="Area2D" parent="." index="2"]
+visible = false
+
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="." index="3"]
+visible = false
 rect = Rect2( -8, -8, 16, 16 )
 process_parent = true
 physics_process_parent = true
@@ -26,4 +31,5 @@ physics_process_parent = true
 stream = ExtResource( 4 )
 
 [node name="PreciseVisibilityNotifier2D" parent="." index="5"]
+visible = false
 rect = Rect2( -8, -8, 16, 16 )

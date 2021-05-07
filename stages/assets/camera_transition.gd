@@ -42,6 +42,7 @@ func on_body_entered(body: PhysicsBody2D) -> void:
     var dir: Vector2 = _get_direction(body)
     if dir == Vector2.UP and not body.is_climbing:
         _is_open_ceiling = true
+        # print_debug("Set %s to open ceiling." % name)
         return
 
     # Prevent breaking the camera transition with slides in opposite direction.
