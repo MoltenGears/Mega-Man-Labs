@@ -36,7 +36,13 @@ func _update(delta: float) -> void:
             _is_move_anim = true
             # collision_shape.shape.extents.y = 12
             animation_player.play("climb_move")
-        owner.move_and_slide(Vector2(0, direction.y * CLIMB_SPEED))
+        
+        # Exit when touching the floor while climbing.
+        if (direction.y > 0
+                and owner.test_move(owner.transform, Vector2(0, direction.y) * delta)):
+            emit_signal("finished", "idle")
+        else:
+            owner.move_and_slide(Vector2(0, direction.y * CLIMB_SPEED))
     else:
         _is_move_anim = false
         if owner.ladder.is_exiting_ladder():
