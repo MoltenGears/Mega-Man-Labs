@@ -1,0 +1,186 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://stages/assets/sprites/ConveyorBelt.png" type="Texture" id=1]
+[ext_resource path="res://stages/assets/conveyor_belt.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 64, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 16, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[node name="ConveyorBelt" type="StaticBody2D"]
+constant_linear_velocity = Vector2( -64, 0 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 64, 8 )
+shape = SubResource( 1 )
+
+[node name="SpriteStart" type="AnimatedSprite" parent="."]
+position = Vector2( 8, 8 )
+frames = SubResource( 4 )
+playing = true
+
+[node name="SpriteInbetweens" type="Node2D" parent="."]
+
+[node name="SpriteInbetween1" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 24, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween2" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 40, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween3" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 56, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween4" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 72, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween5" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 88, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween6" type="AnimatedSprite" parent="SpriteInbetweens"]
+position = Vector2( 104, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween7" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 120, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween8" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 136, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween9" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 152, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween10" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 168, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween11" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 184, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween12" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 200, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween13" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 216, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween14" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 232, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween15" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 248, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween16" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 264, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween17" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 280, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween18" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 296, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween19" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 312, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween20" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 328, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween21" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 344, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteInbetween22" type="AnimatedSprite" parent="SpriteInbetweens"]
+visible = false
+position = Vector2( 360, 8 )
+frames = SubResource( 7 )
+playing = true
+
+[node name="SpriteEnd" type="AnimatedSprite" parent="."]
+position = Vector2( 120, 8 )
+frames = SubResource( 4 )
+playing = true

@@ -30,13 +30,11 @@ func on_camera_exited() -> void:
     queue_free()
 
 func _physics_process(delta: float) -> void:
-    if move_and_collide(_velocity * delta):
-        _velocity.y = 0
-    else:
-        _velocity.y = clamp(
-            _velocity.y + Constants.GRAVITY,
-            -Constants.FALL_SPEED_MAX,
-            Constants.FALL_SPEED_MAX)
+    _velocity = move_and_slide(_velocity, Constants.FLOOR_NORMAL)
+    _velocity.y = clamp(
+        _velocity.y + Constants.GRAVITY,
+        -Constants.FALL_SPEED_MAX,
+        Constants.FALL_SPEED_MAX)
 
 func on_body_entered(body: PhysicsBody2D) -> void:
     if body is Player:

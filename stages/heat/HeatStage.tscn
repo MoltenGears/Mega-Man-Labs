@@ -564,6 +564,7 @@ base_size = Vector2( 384, 240 )
 
 [node name="CameraTransition11" parent="CameraTransitions" instance=ExtResource( 7 )]
 position = Vector2( 4224, 960 )
+is_death_pit = true
 size = 2
 base_size = Vector2( 384, 240 )
 
