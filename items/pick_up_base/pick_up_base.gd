@@ -3,6 +3,8 @@ extends KinematicBody2D
 export(bool) var persistent := false
 export(bool) var respawns_on_restart := false
 
+var disappears := false
+
 var _velocity: Vector2
 var _start_pos: Vector2
 
@@ -19,6 +21,10 @@ func _ready() -> void:
     for child in get_children():
         if "Collision" in child.name:
             $Area2D.add_child(child.duplicate())
+
+    if disappears:
+        $AnimationBase.connect("animation_finished", self, "_on_anim_finished")
+        $AnimationBase.play("disappear")
     
 func on_restarted() -> void:
     _velocity = Vector2()
@@ -48,3 +54,7 @@ func on_body_entered(body: PhysicsBody2D) -> void:
 # Virutal method. Override in actual item for desired effect.
 func _on_picked_up_effect(body: Player) -> void:
     pass
+
+func _on_anim_finished(anim_name: String) -> void:
+    if anim_name == "disappear":
+        queue_free()

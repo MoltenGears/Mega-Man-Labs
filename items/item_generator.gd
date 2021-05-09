@@ -27,6 +27,7 @@ func drop_item() -> void:
     var item_drop = _roll_item()
 
     if item_drop:
+        item_drop.disappears = true
         item_drop.global_position = global_position
         Global.get_current_stage().add_child(item_drop)
 

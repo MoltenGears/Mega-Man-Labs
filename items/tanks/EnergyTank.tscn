@@ -9,6 +9,7 @@
 extents = Vector2( 8, 8 )
 
 [sub_resource type="Animation" id=2]
+resource_name = "blink"
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -35,7 +36,7 @@ texture = ExtResource( 3 )
 hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite" index="0"]
-anims/Blink = SubResource( 2 )
+anims/blink = SubResource( 2 )
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="." index="3"]
 rect = Rect2( -8, -8, 16, 16 )

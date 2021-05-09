@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://items/pick_up_base/pick_up_base.gd" type="Script" id=1]
 [ext_resource path="res://stages/assets/precise_visibility_notifier_2D.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "disappear"
+length = 7.0
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5, 5.08, 5.16, 5.24, 5.32, 5.4, 5.48, 5.56, 5.64, 5.72, 5.8, 5.88, 5.96, 6.04, 6.12, 6.2, 6.28, 6.36, 6.44, 6.52, 6.6, 6.68, 6.76, 6.84, 6.92, 7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true ]
+}
 
 [node name="PickUpBase" type="KinematicBody2D"]
 collision_layer = 32
@@ -16,5 +33,8 @@ collision_mask = 2
 [node name="PreciseVisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 rect = Rect2( -4, -4, 8, 8 )
 script = ExtResource( 2 )
+
+[node name="AnimationBase" type="AnimationPlayer" parent="."]
+anims/disappear = SubResource( 1 )
 
 [connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]
