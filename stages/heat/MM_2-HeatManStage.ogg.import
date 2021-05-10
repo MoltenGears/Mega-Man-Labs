@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MM_2-HeatManStage.ogg-af5fefcf0ac6eed70818079b52a8da79.oggstr"
+
+[deps]
+
+source_file="res://stages/heat/MM_2-HeatManStage.ogg"
+dest_files=[ "res://.import/MM_2-HeatManStage.ogg-af5fefcf0ac6eed70818079b52a8da79.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

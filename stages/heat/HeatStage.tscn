@@ -1,6 +1,6 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=46 format=2]
 
-[ext_resource path="res://stages/stage.gd" type="Script" id=1]
+[ext_resource path="res://stages/heat/heat_man_stage.gd" type="Script" id=1]
 [ext_resource path="res://stages/heat/textures/HeatBG.png" type="Texture" id=2]
 [ext_resource path="res://stages/heat/HeatLavaAnimated.tres" type="Texture" id=3]
 [ext_resource path="res://stages/tile_map_extended.gd" type="Script" id=4]
@@ -17,6 +17,8 @@
 [ext_resource path="res://stages/assets/AppearingBlockSet.tscn" type="PackedScene" id=15]
 [ext_resource path="res://items/extra_life/ExtraLife.tscn" type="PackedScene" id=16]
 [ext_resource path="res://characters/enemies/telly/EnemyTelly.tscn" type="PackedScene" id=17]
+[ext_resource path="res://stages/heat/MM_2-HeatManStage.ogg" type="AudioStream" id=18]
+[ext_resource path="res://stages/test_lab/music.gd" type="Script" id=19]
 
 [sub_resource type="TileSet" id=1]
 0/name = "HeatFullBG01"
@@ -869,3 +871,10 @@ visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 26 )
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource( 19 )
+
+[node name="BGM" type="AudioStreamPlayer" parent="Music"]
+pause_mode = 2
+stream = ExtResource( 18 )
