@@ -1,0 +1,536 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://menus/stage_select/StageSelectBG.png" type="Texture" id=1]
+[ext_resource path="res://menus/stage_select/MM_11-StageSelect.ogg" type="AudioStream" id=2]
+[ext_resource path="res://menus/stage_select/MugshotsMegaMan.png" type="Texture" id=3]
+[ext_resource path="res://menus/stage_select/stage_select_cursor_animated.tres" type="Texture" id=4]
+[ext_resource path="res://menus/stage_select/stage_select.gd" type="Script" id=5]
+[ext_resource path="res://menus/stage_select/StageSelectCursorEmpty.png" type="Texture" id=6]
+[ext_resource path="res://menus/stage_select/MoveCursor.wav" type="AudioStream" id=7]
+[ext_resource path="res://menus/stage_select/ShopIconAnimated.png" type="Texture" id=8]
+[ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://menus/stage_select/MugshotHeatMan.png" type="Texture" id=10]
+[ext_resource path="res://menus/stage_select/StageSelected.wav" type="AudioStream" id=11]
+[ext_resource path="res://effects/FadeEffects.tscn" type="PackedScene" id=12]
+[ext_resource path="res://menus/stage_select/FlashShaderMaterial.tres" type="Material" id=13]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 32, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 8, 32, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 16, 32, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 24, 32, 8 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="DynamicFont" id=6]
+size = 8
+font_data = ExtResource( 9 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "flash"
+length = 1.25
+step = 0.125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Labels/LabelTopLeft:custom_colors/font_color_shadow")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Labels/LabelTopCenter:custom_colors/font_color_shadow")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Labels/LabelTopRight:custom_colors/font_color_shadow")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Labels/LabelMidLeft:custom_colors/font_color_shadow")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Labels/LabelMidCenter:custom_colors/font_color_shadow")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Labels/LabelMidRight:custom_colors/font_color_shadow")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Labels/LabelBottomLeft:custom_colors/font_color_shadow")
+tracks/6/interp = 1
+tracks/6/loop_wrap = false
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Labels/LabelBottomCenter:custom_colors/font_color_shadow")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Labels/LabelBottomRight:custom_colors/font_color_shadow")
+tracks/8/interp = 1
+tracks/8/loop_wrap = false
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Background:material:shader_param/enabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false ]
+}
+
+[node name="StageSelect" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+stage_mid_left = "res://stages/heat/HeatStage.tscn"
+
+[node name="Background" type="TextureRect" parent="."]
+material = ExtResource( 13 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -120.0
+margin_right = 192.0
+margin_bottom = 120.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShopButton" type="AnimatedSprite" parent="Background"]
+position = Vector2( 192, 216 )
+frames = SubResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="MoveCursorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="StageSelectedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Buttons" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonTopLeft" type="TextureButton" parent="Buttons"]
+margin_left = -104.0
+margin_top = -103.0
+margin_right = -56.0
+margin_bottom = -57.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonTopCenter" type="TextureButton" parent="Buttons"]
+margin_left = -24.0
+margin_top = -103.0
+margin_right = 24.0
+margin_bottom = -57.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonTopRight" type="TextureButton" parent="Buttons"]
+margin_left = 56.0
+margin_top = -103.0
+margin_right = 104.0
+margin_bottom = -57.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonMidLeft" type="TextureButton" parent="Buttons"]
+margin_left = -104.0
+margin_top = -39.0
+margin_right = -56.0
+margin_bottom = 7.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonMidCenter" type="TextureButton" parent="Buttons"]
+margin_left = -24.0
+margin_top = -39.0
+margin_right = 24.0
+margin_bottom = 7.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonMidRight" type="TextureButton" parent="Buttons"]
+margin_left = 56.0
+margin_top = -39.0
+margin_right = 104.0
+margin_bottom = 7.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonBottomLeft" type="TextureButton" parent="Buttons"]
+margin_left = -104.0
+margin_top = 25.0
+margin_right = -56.0
+margin_bottom = 71.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonBottomCenter" type="TextureButton" parent="Buttons"]
+margin_left = -24.0
+margin_top = 25.0
+margin_right = 24.0
+margin_bottom = 71.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonBottomRight" type="TextureButton" parent="Buttons"]
+margin_left = 56.0
+margin_top = 25.0
+margin_right = 104.0
+margin_bottom = 71.0
+mouse_filter = 2
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 0
+texture_normal = ExtResource( 6 )
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="LabelTopLeft" type="Label" parent="Labels"]
+margin_left = -104.0
+margin_top = -56.0
+margin_right = -56.0
+margin_bottom = -40.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelTopCenter" type="Label" parent="Labels"]
+margin_left = -24.0
+margin_top = -56.0
+margin_right = 24.0
+margin_bottom = -40.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelTopRight" type="Label" parent="Labels"]
+margin_left = 56.0
+margin_top = -56.0
+margin_right = 104.0
+margin_bottom = -40.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelMidLeft" type="Label" parent="Labels"]
+margin_left = -104.0
+margin_top = 8.0
+margin_right = -56.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "HEAT
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelMidCenter" type="Label" parent="Labels"]
+margin_left = -24.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelMidRight" type="Label" parent="Labels"]
+margin_left = 56.0
+margin_top = 8.0
+margin_right = 104.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelBottomLeft" type="Label" parent="Labels"]
+margin_left = -104.0
+margin_top = 72.0
+margin_right = -56.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelBottomCenter" type="Label" parent="Labels"]
+margin_left = -24.0
+margin_top = 72.0
+margin_right = 24.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelBottomRight" type="Label" parent="Labels"]
+margin_left = 56.0
+margin_top = 72.0
+margin_right = 104.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/line_spacing = 0
+text = "EMPTY
+   MAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mugshots" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MugshotTopLeft" type="Sprite" parent="Mugshots"]
+position = Vector2( -80, -80 )
+
+[node name="MugshotTopCenter" type="Sprite" parent="Mugshots"]
+position = Vector2( 0, -80 )
+
+[node name="MugshotTopRight" type="Sprite" parent="Mugshots"]
+position = Vector2( 80, -80 )
+
+[node name="MugshotMidLeft" type="Sprite" parent="Mugshots"]
+position = Vector2( -80, -16 )
+texture = ExtResource( 10 )
+
+[node name="MugshotMidCenter" type="Sprite" parent="Mugshots"]
+position = Vector2( 0, -16 )
+texture = ExtResource( 3 )
+hframes = 3
+vframes = 3
+frame = 4
+
+[node name="MugshotMidRight" type="Sprite" parent="Mugshots"]
+position = Vector2( 80, -16 )
+
+[node name="MugshotBottomLeft" type="Sprite" parent="Mugshots"]
+position = Vector2( -80, 48 )
+
+[node name="MugshotBottomCenter" type="Sprite" parent="Mugshots"]
+position = Vector2( 0, 48 )
+
+[node name="MugshotBottomRight" type="Sprite" parent="Mugshots"]
+position = Vector2( 80, 48 )
+
+[node name="FadeEffects" parent="." instance=ExtResource( 12 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -120.0
+margin_right = 192.0
+margin_bottom = 120.0
+
+[node name="FlashEffect" type="AnimationPlayer" parent="."]
+anims/flash = SubResource( 7 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://gui/pause.gd" type="Script" id=1]
 [ext_resource path="res://effects/ShaderEffects.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://gui/textures/FocusFrameAnimated2.png" type="Texture" id=8]
 [ext_resource path="res://gui/Bar.tscn" type="PackedScene" id=9]
 [ext_resource path="res://gui/textures/WeaponIconEmpty.png" type="Texture" id=10]
+[ext_resource path="res://menus/stage_select/MoveCursor.wav" type="AudioStream" id=11]
+[ext_resource path="res://gui/sounds/WeaponMenu.wav" type="AudioStream" id=12]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 2
@@ -360,3 +362,9 @@ margin_bottom = 12.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = " 03 /09"
 align = 1
+
+[node name="MoveCursorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="WeaponMenuSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )

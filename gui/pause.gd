@@ -8,6 +8,7 @@ var _is_game_paused := false
 var _can_pause := true setget set_can_pause
 var _bars_node_path: String = "Weapons"
 var _weapon_buttons: Array
+var _first_focus: bool = true
 
 onready var _pause_shader := $ShaderEffects
 onready var _blur_effect := $"ShaderEffects/Blur"
@@ -56,8 +57,11 @@ func pause_game() -> void:
             Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
     _tween.start()
     _set_button_focus()
+    _first_focus = false
+    $WeaponMenuSound.play()
 
 func resume_game() -> void:
+    _first_focus = true
     emit_signal("game_resumed")
     get_tree().paused = false
     visible = false
@@ -122,6 +126,8 @@ func _on_focus_entered(rect_global_pos: Vector2) -> void:
 
 func _on_focus_exited() -> void:
     _focus_frame.visible = false
+    if not _first_focus:
+        $MoveCursorSound.play()
 
 func _on_weapon_button_pressed(bar_name: String) -> void:
     Global.player.change_weapon(str("weapon_", bar_name))
