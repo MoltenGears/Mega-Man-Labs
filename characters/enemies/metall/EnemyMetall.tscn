@@ -9,7 +9,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 9, 5 )
+extents = Vector2( 9, 6 )
 
 [sub_resource type="Animation" id=2]
 tracks/0/type = "value"
@@ -73,6 +73,7 @@ enemy_name = "Metall"
 hit_points_max = 1
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
