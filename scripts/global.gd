@@ -8,6 +8,7 @@ var main_scene: Node
 var current_stage: Stage setget , get_current_stage
 var player: Player setget , get_player
 var can_toggle_pause := true
+var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
 var wide_screen := true
 var rng := RandomNumberGenerator.new()

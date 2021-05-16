@@ -7,16 +7,15 @@
 [ext_resource path="res://characters/player/weapons/Reflect.wav" type="AudioStream" id=5]
 [ext_resource path="res://characters/player/weapons/light.png" type="Texture" id=6]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
 extents = Vector2( 3, 4 )
 
 [node name="Projectile" type="KinematicBody2D" groups=[
 "MegaBusterProjectiles",
 "PlayerWeapons",
 ]]
-collision_layer = 8
+collision_layer = 0
 collision_mask = 4
 script = ExtResource( 1 )
 
@@ -44,4 +43,5 @@ texture = ExtResource( 6 )
 texture_scale = 0.5
 color = Color( 0.792969, 0.956329, 1, 1 )
 energy = 0.5
+
 [connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]

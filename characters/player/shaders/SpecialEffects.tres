@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 outline_color: hint_color;
+uniform vec4 primary_color: hint_color;
+uniform vec4 secondary_color: hint_color;
+uniform bool enabled;
+
+void fragment(){
+    if (!enabled)
+        return;
+
+    vec4 color = texture(TEXTURE, UV);
+
+    if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
+        color = outline_color;
+    else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
+        color = primary_color;
+    else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
+        color = secondary_color;
+
+    COLOR = color;
+   }
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/outline_color = Color( 0.360784, 0.580392, 0.988235, 1 )
+shader_param/primary_color = Color( 0.180392, 0.545098, 0.737255, 0 )
+shader_param/secondary_color = Color( 0.568627, 0.152941, 0.560784, 0 )
+shader_param/enabled = false

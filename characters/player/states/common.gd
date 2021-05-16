@@ -22,4 +22,5 @@ func update_sprite_direction(direction: Vector2) -> bool:
     return last_facing_direction != owner.get_facing_direction()
 
 func shoot() -> void:
+    owner.buffering_charge = false
     weapons.current_state.use()

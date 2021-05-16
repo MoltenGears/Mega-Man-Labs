@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MegaBusterCharging.ogg-8099b84f13ec802b0cbb748c5c82be4c.oggstr"
+
+[deps]
+
+source_file="res://characters/player/sounds/MegaBusterCharging.ogg"
+dest_files=[ "res://.import/MegaBusterCharging.ogg-8099b84f13ec802b0cbb748c5c82be4c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

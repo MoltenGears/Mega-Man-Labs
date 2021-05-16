@@ -9,6 +9,9 @@ func _enter() -> void:
     mega_buster.position = Vector2(21, 0)
     _frame_count = -1
 
+    if owner.charge_level > 0 and not Global.is_action_pressed("action_shoot"):
+        _handle_command("shoot")
+
 func _handle_command(command: String) -> void:
     ._handle_command(command)
     

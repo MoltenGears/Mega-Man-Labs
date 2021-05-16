@@ -4,6 +4,7 @@ extends KinematicBody2D
 class_name Player
 
 export(bool) var can_slide := true
+export(bool) var can_charge_weapon := true
 
 var hit_points: int
 var is_controllable := true setget set_controllable
@@ -15,6 +16,9 @@ var is_still := false
 var explode_on_death := true
 var ladder: StaticBody2D
 var gravity: float = Constants.GRAVITY
+var charge_duration: float = 0
+var charge_level: int setget , _get_charge_level
+var buffering_charge: bool = false
 
 onready var _ray_cast: RayCast2D = $"CollisionShape2D/RayCast2D";
 onready var _animation_player: AnimationPlayer = $AnimationPlayer
@@ -144,8 +148,25 @@ func swap_color(main: Color, secondary: Color) -> void:
 func reset_color() -> void:
     $Sprite.use_parent_material = true
 
+func play_special_animation(anim_name: String) -> void:
+    $"SpriteMask/AnimationSpecialEffects".play(anim_name)
+    $SpriteMask.material.set_shader_param("enabled", true)
+
+func stop_special_animation() -> void:
+    $"SpriteMask/AnimationSpecialEffects".stop()
+    $SpriteMask.material.set_shader_param("enabled", false)
+
 func _take_damage(damage: int) -> void:
     hit_points -= damage
     emit_signal("hit_points_changed", hit_points)
     if hit_points < 1:
         die()
+
+func _get_charge_level() -> int:
+    var level: int = 0
+    if charge_duration > Constants.CHARGE_DURATION_LVL1:
+        level += 1
+    if charge_duration > Constants.CHARGE_DURATION_LVL2:
+        level += 1
+
+    return level

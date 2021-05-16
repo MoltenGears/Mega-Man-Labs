@@ -4,7 +4,6 @@ const BLUR_AMOUNT_START: float = 0.1
 const BLUR_AMOUNT_STOP: float = 2.0
 const BLUR_TWEEN_DURATION: float = 0.08
 
-var _is_game_paused := false
 var _can_pause := true setget set_can_pause
 var _bars_node_path: String = "Weapons"
 var _weapon_buttons: Array
@@ -36,9 +35,9 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("action_pause") and Global.can_toggle_pause:
-        if not get_tree().paused and not _is_game_paused:
+        if not get_tree().paused and not Global.in_pause_menu:
             pause_game()
-        elif _is_game_paused:
+        elif Global.in_pause_menu:
             resume_game()
 
 func pause_game() -> void:
@@ -50,7 +49,7 @@ func pause_game() -> void:
     emit_signal("game_paused")
     get_tree().paused = true
     visible = true
-    _is_game_paused = true
+    Global.in_pause_menu = true
     _pause_shader.visible = true
     _tween.interpolate_property(_blur_effect.material, "shader_param/amount",
             BLUR_AMOUNT_START, BLUR_AMOUNT_STOP, BLUR_TWEEN_DURATION,
@@ -65,7 +64,7 @@ func resume_game() -> void:
     emit_signal("game_resumed")
     get_tree().paused = false
     visible = false
-    _is_game_paused = false
+    Global.in_pause_menu = false
     _tween.interpolate_property(_blur_effect.material, "shader_param/amount",
             BLUR_AMOUNT_STOP, BLUR_AMOUNT_START, BLUR_TWEEN_DURATION,
             Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -117,7 +116,7 @@ func on_energy_tank_count_changed(value: int) -> void:
     $"Menu/EnergyTankContainer/EnergyTankLabel".text = str(" 0", value, " /09")
 
 func _on_tween_completed(object: Object, key: String) -> void:
-    if not _is_game_paused:
+    if not Global.in_pause_menu:
         _pause_shader.visible = false
 
 func _on_focus_entered(rect_global_pos: Vector2) -> void:

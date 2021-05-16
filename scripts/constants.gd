@@ -15,6 +15,8 @@ const FLOOR_NORMAL := Vector2.UP
 const PROJECTILE_COUNT_MAX: int = 3
 const PROJECTILE_SPEED: float = 300.0  # Experimental value.
 const HIT_POINTS_MAX: int = 28
+const CHARGE_DURATION_LVL1: float = 0.4
+const CHARGE_DURATION_LVL2: float = 1.4
 
 # Widescreen
 const WALK_SPEED_WIDE: float = 110.0  # Mega Man 11 style.

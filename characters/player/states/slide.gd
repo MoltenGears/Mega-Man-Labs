@@ -15,6 +15,7 @@ var velocity: Vector2
 
 func _enter() -> void:
     owner.is_sliding = true
+    owner.buffering_charge = true
     _can_exit = false
     _ray_cast.enabled = true
     animation_player.play("slide")
@@ -52,10 +53,13 @@ func _update(delta: float) -> void:
 
     _can_exit = !_ray_cast.is_colliding()
     
-    if _frame_count > SLIDE_FRAME_COUNT and _can_exit:
-        emit_signal("finished", "idle")
-
     var input_direction: Vector2 = get_input_direction()
+    if _frame_count > SLIDE_FRAME_COUNT and _can_exit:
+        if input_direction.x != 0:
+            emit_signal("finished", "move")
+        else:
+            emit_signal("finished", "idle")
+
     if _frame_count > LOCKED_FRAME_COUNT and _can_exit and \
             input_direction.x == -owner.get_facing_direction().x:
         emit_signal("finished", "move")

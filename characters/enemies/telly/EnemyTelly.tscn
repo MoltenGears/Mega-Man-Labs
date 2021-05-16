@@ -31,7 +31,6 @@ tracks/0/keys = {
 enemy_name = "Telly"
 hit_points_max = 1
 contact_damage = 2
-buster_damage = 1
 spawn_count_max = 3
 spawn_timer = 4.0
 

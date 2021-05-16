@@ -1,8 +1,13 @@
 extends "res://characters/player/weapons/weapon_state.gd"
 
 const Projectile: Resource = preload("MegaBuster.tscn")
+const ProjectileCharged1: Resource = preload("MegaBusterCharged1.tscn")
+const ProjectileCharged2: Resource = preload("MegaBusterCharged2.tscn")
 
 onready var mega_buster: Position2D = get_node("../../MegaBusterPos")
+
+func _ready() -> void:
+    can_power_charge = true
 
 func _get_weapon_energy() -> int:
     return owner.hit_points
@@ -18,9 +23,27 @@ func charge_energy(amount: int) -> void:
     pass  # Cannot charge mega buster.
 
 func use() -> void:
-    if get_tree().get_nodes_in_group("MegaBusterProjectiles").size() < Constants.PROJECTILE_COUNT_MAX:
-        var bullet = Projectile.instance()
+    var on_screen_bullets: Array = get_tree().get_nodes_in_group("MegaBusterProjectiles")
+
+    for bullet in on_screen_bullets:
+        if bullet.name == "MegaBusterCharged2":
+            return
+
+    if on_screen_bullets.size() < Constants.PROJECTILE_COUNT_MAX:
         mega_buster.position.x = abs(mega_buster.position.x) * owner.get_facing_direction().x
-        bullet.position = mega_buster.global_position
-        bullet.direction = owner.get_facing_direction()
-        owner.get_parent().add_child(bullet)
+        owner.get_parent().add_child(_get_bullet())
+
+func _get_bullet() -> Node:
+    var bullet: Node
+    match owner.charge_level:
+        0:
+            bullet = Projectile.instance()
+        1:
+            bullet = ProjectileCharged1.instance()
+        2:
+            bullet = ProjectileCharged2.instance()
+
+    bullet.position = mega_buster.global_position
+    bullet.direction = owner.get_facing_direction()
+
+    return bullet

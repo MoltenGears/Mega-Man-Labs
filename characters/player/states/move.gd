@@ -65,3 +65,6 @@ func _update(delta: float) -> void:
 
     if not owner.is_on_floor():
         emit_signal("finished", "jump")
+
+    if owner.charge_level > 0 and not Global.is_action_pressed("action_shoot"):
+        _handle_command("shoot")

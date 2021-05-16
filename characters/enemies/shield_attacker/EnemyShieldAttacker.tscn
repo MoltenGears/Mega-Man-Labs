@@ -73,7 +73,6 @@ script = ExtResource( 2 )
 enemy_name = "Shield Attacker"
 hit_points_max = 4
 contact_damage = 4
-buster_damage = 1
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource( 1 )

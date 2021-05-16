@@ -6,7 +6,6 @@ const Spawner: Resource = preload("res://stages/assets/Spawner.tscn")
 export(String) var enemy_name: String
 export(int) var hit_points_max := 20
 export(int) var contact_damage := 5
-export(int) var buster_damage := 5
 export(bool) var can_respawn := true
 export(int) var spawn_count_max := -1
 export(float) var spawn_timer := 0.0
@@ -58,11 +57,15 @@ func _physics_process(delta: float) -> void:
 
 func _on_hit(body: PhysicsBody2D) -> void:
     if body and body.is_in_group("PlayerWeapons"):
-        if is_blocking:
+        if "consumed" in body and body.consumed:
+            return
+        elif is_blocking:
             body.reflect()
         else:
             _hit_sound.play()
-            body.queue_free()
+            var buster_damage: int = 1 if not "damage" in body else body.damage
+            if buster_damage <= _hit_points:
+                body.queue_free()
             _animations.play("blink")
             _take_damage(buster_damage)
 
@@ -73,9 +76,10 @@ func _take_damage(damage: int) -> void:
 
 func _die() -> void:
     is_dead = true
-    _is_collidable = false    # Player can no longer collide with enemy
+    _is_collidable = false  # Player can no longer collide with enemy.
     if _player_collision_area:
-        _player_collision_area.set_collision_layer_bit(2, false)    # Is no longer hittable by player projectiles
+        # Is no longer hittable by player projectiles.
+        _player_collision_area.set_collision_layer_bit(2, false)
     emit_signal("change_state", "death")
 
 func toggle_flip_h() -> void:
