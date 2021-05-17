@@ -21,9 +21,6 @@ func _enter() -> void:
         # Not sure why a second gravity frame delay is necessary to reach 3 tiles high.
         velocity.y = JUMP_SPEED - owner.gravity * 2
 
-    if owner.charge_level > 0 and not Global.is_action_pressed("action_shoot"):
-        _handle_command("shoot")
-    
 func _handle_command(command: String) -> void:
     if command == "jump_stop" and velocity.y < 0:
         velocity.y = 0
@@ -35,6 +32,9 @@ func _handle_command(command: String) -> void:
         weapons.change_weapon(command)
 
 func _update(delta: float) -> void:
+    if owner.charge_level > 0 and not Global.is_action_pressed("action_shoot"):
+        _handle_command("shoot")
+
     var direction: Vector2 = get_input_direction()
     update_sprite_direction(direction)
     

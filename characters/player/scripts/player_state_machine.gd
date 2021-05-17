@@ -60,10 +60,6 @@ func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("action_shoot"):
         current_state._handle_command("shoot")
 
-    if event.is_action_released("action_shoot"):
-        if owner.charge_level > 0:
-            current_state._handle_command("shoot")
-        
     if event.is_action_pressed("action_jump") and \
             not Global.is_action_pressed("action_up") and \
             not Global.is_action_pressed("action_down"):

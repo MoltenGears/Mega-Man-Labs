@@ -51,3 +51,6 @@ func _update(delta: float) -> void:
         else:
             # collision_shape.shape.extents.y = 12
             animation_player.play("climb_idle")
+
+    if owner.charge_level > 0 and not Global.is_action_pressed("action_shoot"):
+        _handle_command("shoot")

@@ -1,6 +1,6 @@
 extends "on_ground.gd"
 
-const STALL_FRAME_COUNT: int = 4
+const STALL_FRAME_COUNT: int = 5
 const SHOOT_FRAME_COUNT_MAX: int = 19
 
 var _direction: Vector2
@@ -43,21 +43,21 @@ func _update(delta: float) -> void:
     if _direction.x == 0:
         emit_signal("finished", "idle")
         return
-    elif _frame_count == 0:
+    elif _frame_count == 0 and _shoot_frame_count > SHOOT_FRAME_COUNT_MAX:
         animation_player.play("ramp")
     
     _velocity.y += owner.gravity
 
-    if _frame_count < 1:
+    if _frame_count < 1 and _stall_frame_count > 0:
         _velocity.x = Constants.STEP_SPEED * _direction.x
-    elif _frame_count > _stall_frame_count:
+    elif _frame_count >= _stall_frame_count:
         _velocity.x = Global.get_walk_speed() * _direction.x
     else:
         _velocity.x = 0
 
     _velocity = owner.move_and_slide(_velocity, Constants.FLOOR_NORMAL)
 
-    if _frame_count > _stall_frame_count and _shoot_frame_count > SHOOT_FRAME_COUNT_MAX and \
+    if _frame_count >= _stall_frame_count and _shoot_frame_count > SHOOT_FRAME_COUNT_MAX and \
             animation_player.current_animation != "move":
         _current_animation_pos = animation_player.current_animation_position
         animation_player.play("move")
