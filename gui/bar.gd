@@ -2,6 +2,7 @@ tool
 extends Control
 
 const FILL_DELAY: float = 0.05
+const FILL_DELAY_NON_PAUSING: float = 0.02
 
 export(String) var bar_name := ""
 export(Color) var color := Color("e7e794") setget set_bar_color
@@ -14,6 +15,7 @@ onready var _overlay = $"TextureRect/ColorRect"
 onready var _overlay_h = $"TextureRectHorizontal/ColorRect"
 
 signal gradual_update_complete()
+signal _bar_update_complete()
 
 func _ready() -> void:
     pass
@@ -42,6 +44,12 @@ func update_instant(hit_points: int) -> void:
     _set_current_hp_bar(hit_points)
 
 func update_gradual(hit_points) -> void:
+    if not Global.bar_fill_pause:
+        _update_bar(hit_points)
+        yield(self, "_bar_update_complete")
+        emit_signal("gradual_update_complete")
+        return
+
     if _is_updating:
         return
     
@@ -49,12 +57,8 @@ func update_gradual(hit_points) -> void:
     _is_updating = true
     var was_paused: bool = get_tree().paused
     get_tree().paused = true
-    if fill_with_sound:
-        $FillSound.play()
-    while round(clamp(hit_points, 0, Constants.HIT_POINTS_MAX)) != round(_get_current_hp_bar()):
-        yield(get_tree().create_timer(FILL_DELAY), "timeout")
-        _set_current_hp_bar(_get_current_hp_bar() + sign(hit_points - _get_current_hp_bar()))
-    $FillSound.stop()
+    _update_bar(hit_points)
+    yield(self, "_bar_update_complete")
     get_tree().paused = was_paused
     _is_updating = false
     emit_signal("gradual_update_complete")
@@ -85,3 +89,13 @@ func _get_current_hp_bar() -> int:
         return int(round(Constants.HIT_POINTS_MAX - (_overlay_h["rect_size"].x + 1) / 2))
     else:
         return int(round(Constants.HIT_POINTS_MAX - (_overlay["rect_size"].y + 1) / 2))
+
+func _update_bar(hit_points) -> void:
+    var fill_delay: float = FILL_DELAY if Global.bar_fill_pause else FILL_DELAY_NON_PAUSING
+    if fill_with_sound:
+        $FillSound.play()
+    while round(clamp(hit_points, 0, Constants.HIT_POINTS_MAX)) != round(_get_current_hp_bar()):
+        yield(get_tree().create_timer(fill_delay), "timeout")
+        _set_current_hp_bar(_get_current_hp_bar() + sign(hit_points - _get_current_hp_bar()))
+    $FillSound.stop()
+    emit_signal("_bar_update_complete")

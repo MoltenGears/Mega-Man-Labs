@@ -10,8 +10,11 @@ var player: Player setget , get_player
 var can_toggle_pause := true
 var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
-var wide_screen := true
 var rng := RandomNumberGenerator.new()
+
+# Options
+var wide_screen := true
+var bar_fill_pause := true
 
 func _ready() -> void:
     rng.randomize()
