@@ -6,6 +6,7 @@ func _enter() -> void:
     # Stop state machine
     get_parent().set_active(false)
     owner.is_dead = true
+    owner.buffering_charge = false
 
     # Short screen freeze before death explosion.
     # Is not working as expected as is. Incorrect animation state is frozen.

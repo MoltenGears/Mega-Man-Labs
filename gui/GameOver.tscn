@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://gui/themes/menu_theme.tres" type="Theme" id=1]
 [ext_resource path="res://gui/game_over.gd" type="Script" id=2]
 [ext_resource path="res://music/MM_TT-GameOver.ogg" type="AudioStream" id=3]
+[ext_resource path="res://menus/stage_select/MoveCursor.wav" type="AudioStream" id=4]
+[ext_resource path="res://gui/sounds/Select.wav" type="AudioStream" id=5]
 
 [node name="GameOver" type="Control"]
 anchor_right = 1.0
@@ -57,3 +59,9 @@ text = "Return to Title Screen"
 
 [node name="GameOverMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="MoveCursorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )

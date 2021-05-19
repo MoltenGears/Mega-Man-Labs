@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://menus/title_screen.gd" type="Script" id=1]
 [ext_resource path="res://gui/themes/menu_theme.tres" type="Theme" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://menus/MM_TT-TitleScreen.ogg" type="AudioStream" id=5]
 [ext_resource path="res://effects/FadeEffects.tscn" type="PackedScene" id=6]
+[ext_resource path="res://menus/stage_select/MoveCursor.wav" type="AudioStream" id=7]
+[ext_resource path="res://gui/sounds/Select.wav" type="AudioStream" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -31,8 +33,8 @@ __meta__ = {
 }
 
 [node name="Logo" type="TextureRect" parent="VBoxContainer"]
-margin_left = 11.0
-margin_right = 193.0
+margin_left = 62.0
+margin_right = 244.0
 margin_bottom = 56.0
 size_flags_horizontal = 4
 size_flags_vertical = 2
@@ -40,10 +42,10 @@ size_flags_stretch_ratio = 1.8
 texture = ExtResource( 3 )
 
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
-margin_left = 82.0
-margin_top = 108.0
-margin_right = 122.0
-margin_bottom = 116.0
+margin_left = 133.0
+margin_top = 117.0
+margin_right = 173.0
+margin_bottom = 125.0
 size_flags_horizontal = 4
 custom_constants/separation = 7
 alignment = 1
@@ -55,10 +57,10 @@ text = "START"
 align = 1
 
 [node name="Info" type="Label" parent="VBoxContainer"]
-margin_left = 14.0
-margin_top = 160.0
-margin_right = 190.0
-margin_bottom = 179.0
+margin_left = 65.0
+margin_top = 173.0
+margin_right = 241.0
+margin_bottom = 192.0
 size_flags_horizontal = 4
 size_flags_vertical = 10
 custom_fonts/font = SubResource( 1 )
@@ -71,3 +73,9 @@ stream = ExtResource( 5 )
 
 [node name="FadeEffects" parent="." instance=ExtResource( 6 )]
 visible = false
+
+[node name="MoveCursorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

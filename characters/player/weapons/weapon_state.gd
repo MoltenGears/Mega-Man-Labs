@@ -18,6 +18,12 @@ func _enter() -> void:
     owner.swap_color(color_primary, color_secondary)
     owner.emit_signal("weapon_changed", weapon_energy, color_primary)
 
+    if not can_power_charge:
+        owner.buffering_charge = false
+        owner.charge_duration = 0
+        charge_sound.stop()
+        owner.stop_special_animation()
+
 func _update(delta: float) -> void:
     if not owner.can_charge_weapon:
         return

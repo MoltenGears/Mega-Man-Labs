@@ -25,15 +25,24 @@ func _new_game() -> void:
     for button in $"VBoxContainer/Buttons".get_children():
         button.disabled = true
     $TitleMusic.stop()
+    $SelectSound.play()
+    yield($SelectSound, "finished")
     $FadeEffects.fade_out(0.15)
     yield($FadeEffects, "screen_faded_out")
     Global.main_scene.switch_scene("res://menus/stage_select/StageSelect.tscn")
 
 func _options() -> void:
-    pass
+    $SelectSound.play()
 
 func _exit() -> void:
+    exit_button.disconnect("focus_exited", self, "_on_focus_exited")
+    exit_button.release_focus()
+    $SelectSound.play()
+    yield($SelectSound, "finished")
     get_tree().quit()
+
+func _on_focus_exited() -> void:
+    $MoveCursorSound.play()
 
 func _create_main_buttons() -> void:
     new_game_button = _create_button("New Game", "_new_game")
@@ -49,4 +58,5 @@ func _create_button(text: String, callback: String) -> Button:
     button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
     button.mouse_filter = Control.MOUSE_FILTER_IGNORE
     button.connect("button_down", self, callback)
+    button.connect("focus_exited", self, "_on_focus_exited")
     return button

@@ -8,6 +8,7 @@ onready var _ray_cast: RayCast2D = get_node("../../CollisionShape2D/RayCast2D")
 onready var _animation_invincibility: AnimationPlayer = get_node("../../AnimationInvincibility")
 
 func _enter() -> void:
+    owner.buffering_charge = true
     animation_player.play("stagger")
     _animation_invincibility.play("invincibility")
     velocity = Vector2()

@@ -44,6 +44,7 @@ func pause_game() -> void:
     if not _can_pause:
         return
 
+    $WeaponMenuSound.play()
     GameState.update_all()
     _update_weapon_bars()
     emit_signal("game_paused")
@@ -57,9 +58,9 @@ func pause_game() -> void:
     _tween.start()
     _set_button_focus()
     _first_focus = false
-    $WeaponMenuSound.play()
 
 func resume_game() -> void:
+    $WeaponMenuSound.play()
     _first_focus = true
     emit_signal("game_resumed")
     get_tree().paused = false
@@ -107,7 +108,7 @@ func use_energy_tank() -> void:
             Global.player.hit_points < Constants.HIT_POINTS_MAX:
         GameState.energy_tank_count -= 1
         Global.player.heal(Constants.HIT_POINTS_MAX)
-    get_node(_bars_node_path).get_children()[0].update_gradual(Constants.HIT_POINTS_MAX)
+        get_node(_bars_node_path).get_children()[0].update_gradual(Constants.HIT_POINTS_MAX)
 
 func on_extra_life_count_changed(value: int) -> void:
     $"Menu/LifeContainer/LifeLabel".text = str(" 0", value, " /09")
@@ -129,4 +130,6 @@ func _on_focus_exited() -> void:
         $MoveCursorSound.play()
 
 func _on_weapon_button_pressed(bar_name: String) -> void:
+    if Global.player.get_current_weapon_name() != bar_name:
+        $SelectSound.play()
     Global.player.change_weapon(str("weapon_", bar_name))

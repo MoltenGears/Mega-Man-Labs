@@ -35,6 +35,7 @@ func _ready() -> void:
     visible = true
 
 func _physics_process(_delta: float) -> void:
+    position = _sprite.position
     offset = _sprite.offset
     flip_h = _sprite.flip_h
     flip_v = _sprite.flip_v
