@@ -36,8 +36,8 @@ func _on_body_exited(body: PhysicsBody2D) -> void:
 func _physics_process(delta: float) -> void:
     if not _player.is_climbing and not _player.is_sliding and \
             _player.get_node("StateMachine").current_state != _player.get_node("StateMachine/Stagger") and \
-            (Global.is_action_pressed("action_up") and not _is_above_ladder() or \
-            Global.is_action_pressed("action_down") and _is_above_ladder()):
+            (Global.is_action_pressed(_player.get_node("StateMachine").action_up) and not _is_above_ladder() or \
+            Global.is_action_pressed(_player.get_node("StateMachine").action_down) and _is_above_ladder()):
         var distance_to_center = $"Ladder/LadderCollision".global_position - _player.global_position
         distance_to_center.y = 0
         _player.climb(distance_to_center)

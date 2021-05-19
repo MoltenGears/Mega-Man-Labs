@@ -3,6 +3,7 @@ extends KinematicBody2D
 # Player controller class that makes an in-game character playable.
 class_name Player
 
+export(int, 1, 2) var player_number := 1
 export(bool) var can_slide := true
 export(bool) var can_charge_weapon := true
 

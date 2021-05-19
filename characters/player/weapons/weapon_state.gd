@@ -10,6 +10,7 @@ var can_power_charge: bool = false
 var _charge_playback_position: float = 0.0
 
 onready var charge_sound: AudioStreamPlayer = get_node("../../SFX/ChargeWeapon")
+onready var state_machine: Node = get_node("../../StateMachine")
 
 func _get_weapon_energy() -> int:
     return weapon_energy
@@ -34,7 +35,7 @@ func _update(delta: float) -> void:
             charge_sound.stop()
         return
 
-    if can_power_charge and Global.is_action_pressed("action_shoot") and not owner.is_dead:
+    if can_power_charge and Global.is_action_pressed(state_machine.action_shoot) and not owner.is_dead:
         if _charge_playback_position != 0:
             charge_sound.play(_charge_playback_position)
 

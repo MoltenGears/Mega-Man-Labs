@@ -40,6 +40,7 @@
 [ext_resource path="res://characters/player/sprite_mask.gd" type="Script" id=38]
 
 [sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
 extents = Vector2( 6, 12 )
 
 [sub_resource type="Animation" id=2]
