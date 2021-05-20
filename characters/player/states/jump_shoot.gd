@@ -1,8 +1,10 @@
 extends "jump.gd"
 
+export(Vector2) var buster_position := Vector2(17, -4)
+
 func _enter() -> void:
     animation_player.play("jump_shoot")
-    mega_buster.position = Vector2(17, -4)
+    mega_buster.position = buster_position
     velocity = _velocity_init
     _velocity_init = Vector2()
     shoot()

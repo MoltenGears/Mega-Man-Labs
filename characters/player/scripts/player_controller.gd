@@ -6,6 +6,9 @@ class_name Player
 export(int, 1, 2) var player_number := 1
 export(bool) var can_slide := true
 export(bool) var can_charge_weapon := true
+export(int, 1, 4) var damage_multiplier := 1
+export(int, 1, 4) var knock_back_multiplier := 1
+export(int, 1, 10) var max_on_screen_projectiles := 3
 
 var hit_points: int
 var is_controllable := true setget set_controllable
@@ -158,7 +161,7 @@ func stop_special_animation() -> void:
     $SpriteMask.material.set_shader_param("enabled", false)
 
 func _take_damage(damage: int) -> void:
-    hit_points -= damage
+    hit_points -= damage * damage_multiplier
     emit_signal("hit_points_changed", hit_points)
     if hit_points < 1:
         die()

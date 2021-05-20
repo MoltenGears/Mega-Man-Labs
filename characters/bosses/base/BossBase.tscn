@@ -3,7 +3,7 @@
 [ext_resource path="res://characters/bosses/base/boss_base.gd" type="Script" id=1]
 [ext_resource path="res://characters/bosses/thunder_man/sprites/ThunderManIdle.png" type="Texture" id=2]
 [ext_resource path="res://characters/bosses/thunder_man/sprites/ThunderManDash.png" type="Texture" id=3]
-[ext_resource path="res://characters/player/sprites/Hit.png" type="Texture" id=4]
+[ext_resource path="res://characters/player/sprites/mega_man/Hit.png" type="Texture" id=4]
 [ext_resource path="res://characters/enemies/base/sounds/Hit.wav" type="AudioStream" id=5]
 [ext_resource path="res://characters/player/sounds/Died.wav" type="AudioStream" id=6]
 [ext_resource path="res://characters/bosses/base/scripts/boss_state_machine.gd" type="Script" id=7]
@@ -11,6 +11,7 @@
 [ext_resource path="res://characters/bosses/base/states/ready.gd" type="Script" id=9]
 [ext_resource path="res://characters/bosses/base/states/await.gd" type="Script" id=10]
 [ext_resource path="res://effects/effect_spawner/EffectSpawner.tscn" type="PackedScene" id=11]
+
 
 
 

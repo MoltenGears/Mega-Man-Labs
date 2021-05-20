@@ -1,49 +1,142 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=38 format=2]
 
-[ext_resource path="res://characters/player/scripts/player_controller.gd" type="Script" id=1]
-[ext_resource path="res://characters/player/sprites/mega_man/Idle.png" type="Texture" id=2]
-[ext_resource path="res://characters/player/sprites/mega_man/SlideDust.png" type="Texture" id=3]
-[ext_resource path="res://characters/player/sprites/mega_man/Climb.png" type="Texture" id=4]
-[ext_resource path="res://characters/player/sprites/mega_man/Spawn.png" type="Texture" id=5]
-[ext_resource path="res://characters/player/sprites/mega_man/IdleShoot.png" type="Texture" id=6]
-[ext_resource path="res://characters/player/sprites/mega_man/Jump.png" type="Texture" id=7]
-[ext_resource path="res://characters/player/sprites/mega_man/JumpShoot.png" type="Texture" id=8]
-[ext_resource path="res://characters/player/sprites/mega_man/Run.png" type="Texture" id=9]
-[ext_resource path="res://characters/player/sprites/mega_man/RunShoot.png" type="Texture" id=10]
-[ext_resource path="res://characters/player/sprites/mega_man/Slide.png" type="Texture" id=11]
-[ext_resource path="res://characters/player/sprites/mega_man/Stagger.png" type="Texture" id=12]
-[ext_resource path="res://characters/player/sprites/mega_man/Hit.png" type="Texture" id=13]
-[ext_resource path="res://characters/player/sounds/Land.wav" type="AudioStream" id=14]
-[ext_resource path="res://characters/player/sounds/GetHit.wav" type="AudioStream" id=15]
-[ext_resource path="res://characters/player/sounds/Died.wav" type="AudioStream" id=16]
-[ext_resource path="res://characters/player/sounds/Appear.wav" type="AudioStream" id=17]
-[ext_resource path="res://characters/player/scripts/player_state_machine.gd" type="Script" id=18]
-[ext_resource path="res://characters/player/states/spawn.gd" type="Script" id=19]
-[ext_resource path="res://characters/player/states/idle.gd" type="Script" id=20]
-[ext_resource path="res://characters/player/states/move.gd" type="Script" id=21]
-[ext_resource path="res://characters/player/states/jump.gd" type="Script" id=22]
-[ext_resource path="res://characters/player/states/slide.gd" type="Script" id=23]
-[ext_resource path="res://characters/player/states/jump_shoot.gd" type="Script" id=24]
-[ext_resource path="res://characters/player/states/stagger.gd" type="Script" id=25]
-[ext_resource path="res://characters/player/states/climb.gd" type="Script" id=26]
-[ext_resource path="res://characters/player/states/climb_shoot.gd" type="Script" id=27]
-[ext_resource path="res://characters/player/states/death.gd" type="Script" id=28]
-[ext_resource path="res://characters/player/shaders/ColorSwap.tres" type="Material" id=29]
-[ext_resource path="res://effects/effect_spawner/EffectSpawner.tscn" type="PackedScene" id=30]
-[ext_resource path="res://characters/player/cutscenes/stage_clear.gd" type="Script" id=31]
-[ext_resource path="res://characters/player/weapons/weapons_state_machine.gd" type="Script" id=32]
-[ext_resource path="res://characters/player/weapons/mega_buster_state.gd" type="Script" id=33]
-[ext_resource path="res://characters/player/weapons/thunder_strike/thunder_strike_state.gd" type="Script" id=34]
-[ext_resource path="res://characters/player/sounds/MegaBusterCharging.ogg" type="AudioStream" id=35]
-[ext_resource path="res://characters/player/sprites/mega_man/IdleMask.png" type="Texture" id=36]
-[ext_resource path="res://characters/player/shaders/SpecialEffects.tres" type="Material" id=37]
-[ext_resource path="res://characters/player/scripts/sprite_mask.gd" type="Script" id=38]
+[ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://characters/player/sprites/proto_man/Slide.png" type="Texture" id=2]
+[ext_resource path="res://characters/player/sprites/proto_man/Idle.png" type="Texture" id=3]
+[ext_resource path="res://characters/player/sprites/proto_man/Stagger.png" type="Texture" id=4]
+[ext_resource path="res://characters/player/sprites/proto_man/Spawn.png" type="Texture" id=5]
+[ext_resource path="res://characters/player/sprites/proto_man/IdleShoot.png" type="Texture" id=6]
+[ext_resource path="res://characters/player/sprites/proto_man/Run.png" type="Texture" id=7]
+[ext_resource path="res://characters/player/sprites/proto_man/RunShoot.png" type="Texture" id=8]
+[ext_resource path="res://characters/player/sprites/proto_man/IdleMask.png" type="Texture" id=9]
+[ext_resource path="res://characters/player/sprites/proto_man/Jump.png" type="Texture" id=11]
+[ext_resource path="res://characters/player/sprites/proto_man/JumpShoot.png" type="Texture" id=12]
+[ext_resource path="res://characters/player/sprites/proto_man/Climb.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
 extents = Vector2( 6, 12 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4, 11 )
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform vec4 original_0: hint_color;
+uniform vec4 original_1: hint_color;
+uniform vec4 replace_0: hint_color;
+uniform vec4 replace_1: hint_color;
+
+const float precision = 0.1;
+
+vec4 swap_color(vec4 color){
+	vec4 original_colors[2] = vec4[2] (original_0, original_1);
+	vec4 replace_colors[2] = vec4[2] (replace_0, replace_1);
+	for (int i = 0; i < 2; i ++) {
+		if (distance(color, original_colors[i]) <= precision){
+			return replace_colors[i];
+		}
+	}
+	return color;
+}
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/original_0 = Color( 0.862745, 0.156863, 0, 1 )
+shader_param/original_1 = Color( 0.737255, 0.737255, 0.737255, 1 )
+shader_param/replace_0 = Color( 0.701961, 0.0509804, 0.0509804, 1 )
+shader_param/replace_1 = Color( 0.92549, 0.478431, 0.478431, 1 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform vec4 outline_color: hint_color;
+uniform vec4 primary_color: hint_color;
+uniform vec4 secondary_color: hint_color;
+uniform bool enabled;
+
+void fragment(){
+    if (!enabled)
+        return;
+
+    vec4 color = texture(TEXTURE, UV);
+
+    if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
+        color = outline_color;
+    else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
+        color = primary_color;
+    else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
+        color = secondary_color;
+
+    COLOR = color;
+   }
+"
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = SubResource( 5 )
+shader_param/outline_color = Color( 0.580392, 0, 0.517647, 1 )
+shader_param/primary_color = Color( 0.180392, 0.545098, 0.737255, 0 )
+shader_param/secondary_color = Color( 0.568627, 0.152941, 0.560784, 0 )
+shader_param/enabled = false
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Sprite
+
+# Implemented as separate script to be able to process this SpriteMask node
+# while player itself is not processed when in pause mode.
+# This is required during camera transitions in order to correctly update
+# the mask sprites.
+
+const ClimbMask: Resource = preload(\"res://characters/player/sprites/proto_man/ClimbMask.png\")
+const IdleMask: Resource = preload(\"res://characters/player/sprites/proto_man/IdleMask.png\")
+const IdleShootMask: Resource = preload(\"res://characters/player/sprites/proto_man/IdleShootMask.png\")
+const JumpMask: Resource = preload(\"res://characters/player/sprites/proto_man/JumpMask.png\")
+const JumpShootMask: Resource = preload(\"res://characters/player/sprites/proto_man/JumpShootMask.png\")
+const RunMask: Resource = preload(\"res://characters/player/sprites/proto_man/RunMask.png\")
+const RunShootMask: Resource = preload(\"res://characters/player/sprites/proto_man/RunShootMask.png\")
+const SlideMask: Resource = preload(\"res://characters/player/sprites/proto_man/SlideMask.png\")
+const SpawnMask: Resource = preload(\"res://characters/player/sprites/proto_man/SpawnMask.png\")
+const StaggerMask: Resource = preload(\"res://characters/player/sprites/proto_man/StaggerMask.png\")
+
+var _mask_textures: Dictionary = {
+    \"res://characters/player/sprites/proto_man/Climb.png\": ClimbMask,
+    \"res://characters/player/sprites/proto_man/Idle.png\": IdleMask,
+    \"res://characters/player/sprites/proto_man/IdleShoot.png\": IdleShootMask,
+    \"res://characters/player/sprites/proto_man/Jump.png\": JumpMask,
+    \"res://characters/player/sprites/proto_man/JumpShoot.png\": JumpShootMask,
+    \"res://characters/player/sprites/proto_man/Run.png\": RunMask,
+    \"res://characters/player/sprites/proto_man/RunShoot.png\": RunShootMask,
+    \"res://characters/player/sprites/proto_man/Slide.png\": SlideMask,
+    \"res://characters/player/sprites/proto_man/Spawn.png\": SpawnMask,
+    \"res://characters/player/sprites/proto_man/Stagger.png\": StaggerMask
+}
+
+onready var _sprite: Sprite = $\"../Sprite\"
+
+func _ready() -> void:
+    visible = true
+
+func _physics_process(_delta: float) -> void:
+    position = _sprite.position
+    offset = _sprite.offset
+    flip_h = _sprite.flip_h
+    flip_v = _sprite.flip_v
+    hframes = _sprite.hframes
+    vframes = _sprite.vframes
+    frame = _sprite.frame
+    texture = _mask_textures[_sprite.texture.resource_path]
+"
+
+[sub_resource type="Animation" id=8]
+resource_local_to_scene = true
 resource_name = "power_charge_lvl1"
 length = 0.16
 loop = true
@@ -58,7 +151,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.08 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.360784, 0.580392, 0.988235, 1 ), Color( 0.360784, 0.580392, 0.988235, 0 ) ]
+"values": [ Color( 0.580392, 0, 0.517647, 1 ), Color( 0.360784, 0.580392, 0.988235, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:material:shader_param/primary_color")
@@ -85,7 +178,8 @@ tracks/2/keys = {
 "values": [ Color( 0.568627, 0.152941, 0.560784, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=9]
+resource_local_to_scene = true
 resource_name = "power_charge_lvl2"
 length = 0.16
 loop = true
@@ -100,7 +194,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.08 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.501961, 0.815686, 0.0627451, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
+"values": [ Color( 0.678431, 0.482353, 0, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:material:shader_param/primary_color")
@@ -112,7 +206,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.08 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.298039, 0.862745, 0.282353, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
+"values": [ Color( 0.968627, 0.709804, 0, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:material:shader_param/secondary_color")
@@ -124,38 +218,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.08 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.658824, 0.941176, 0.737255, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
+"values": [ Color( 0.839216, 0.968627, 0.45098, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-length = 0.3
-step = 0.08
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.08, 0.16, 1.93486 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.24 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=10]
 resource_local_to_scene = true
 loop = true
 tracks/0/type = "value"
@@ -168,7 +234,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -195,7 +261,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=11]
 resource_local_to_scene = true
 loop = true
 tracks/0/type = "value"
@@ -208,7 +274,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -235,7 +301,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=12]
 resource_local_to_scene = true
 length = 0.32
 loop = true
@@ -267,7 +333,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:hframes")
@@ -294,7 +360,7 @@ tracks/3/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=13]
 resource_local_to_scene = true
 length = 0.32
 step = 0.16
@@ -308,7 +374,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -335,7 +401,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=14]
 resource_local_to_scene = true
 length = 0.9
 tracks/0/type = "value"
@@ -399,11 +465,11 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=15]
 resource_local_to_scene = true
-length = 3.0
+length = 0.32
 loop = true
-step = 0.5
+step = 0.08
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -414,7 +480,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -435,13 +501,13 @@ tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2.84 ),
+"times": PoolRealArray( 0, 0.16 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=16]
 resource_local_to_scene = true
 length = 0.32
 step = 0.16
@@ -482,7 +548,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=17]
 resource_local_to_scene = true
 length = 0.16
 loop = true
@@ -491,6 +557,90 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_local_to_scene = true
+length = 0.16
+loop = true
+step = 0.16
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_local_to_scene = true
+length = 0.48
+loop = true
+step = 0.12
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
@@ -509,26 +659,26 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 3 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:frame")
 tracks/2/interp = 1
-tracks/2/loop_wrap = true
+tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0 ]
+"values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=20]
 resource_local_to_scene = true
-length = 0.16
+length = 0.48
 loop = true
-step = 0.16
+step = 0.12
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -551,90 +701,6 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = false
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="Animation" id=14]
-resource_local_to_scene = true
-length = 0.48
-loop = true
-step = 0.12
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 9 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 3 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = false
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.12, 0.24, 0.36 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 1 ]
-}
-
-[sub_resource type="Animation" id=15]
-resource_local_to_scene = true
-length = 0.48
-loop = true
-step = 0.12
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 10 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ 3 ]
 }
 tracks/2/type = "value"
@@ -650,7 +716,7 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=21]
 resource_local_to_scene = true
 length = 0.08
 step = 0.08
@@ -664,7 +730,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -691,11 +757,11 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=22]
 resource_local_to_scene = true
 length = 0.16
 loop = true
-step = 0.16
+step = 0.08
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -706,7 +772,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 2 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -718,7 +784,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 2 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:frame")
@@ -727,13 +793,13 @@ tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.08 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0 ]
+"values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=23]
 resource_local_to_scene = true
 length = 0.9
 tracks/0/type = "value"
@@ -809,7 +875,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=24]
 resource_local_to_scene = true
 length = 0.6
 step = 1.0
@@ -823,7 +889,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 12 ) ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -850,242 +916,90 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=20]
-length = 1.3
-step = 0.08
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:collision_mask")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 1, 13 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32, 0.4, 0.48, 0.56, 0.64, 0.72, 0.8, 0.88, 0.96, 1.04, 1.12, 1.2, 1.28 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.160784 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.160235 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.160235 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.160235 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:is_invincible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("SpriteEffect:texture")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1.28458 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 13 ), null ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("SpriteEffect:hframes")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1.28458 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 1, 1 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("SpriteEffect:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1.28458 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("SpriteEffect:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32, 0.4, 0.48, 0.56, 0.64 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, false, true, false, true, false, true, false ]
-}
+[sub_resource type="GDScript" id=25]
+script/source = "extends \"res://characters/player/states/jump.gd\"
 
-[node name="Player" type="KinematicBody2D"]
-z_index = 1
-collision_layer = 2
-collision_mask = 13
-collision/safe_margin = 0.01
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
+onready var _shield: Area2D = $\"../../ShieldArea\"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+func _enter() -> void:
+    ._enter()
+    _shield.set_deferred(\"monitoring\", true)
+
+func _exit() -> void:
+    _shield.set_deferred(\"monitoring\", false)
+    
+func _update(delta: float) -> void:
+    ._update(delta)
+    _shield.position = Vector2(
+        abs(_shield.position.x) * sign(owner.get_facing_direction().x),
+        _shield.position.y)
+
+func on_shield_area_area_entered(area: Area2D) -> void:
+    if area.owner and area.owner.has_method(\"reflect\"):
+        area.owner.reflect(owner.get_facing_direction())
+"
+
+[node name="ProtoMan" instance=ExtResource( 1 )]
+damage_multiplier = 2
+knock_back_multiplier = 2
+max_on_screen_projectiles = 2
+
+[node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource( 1 )
 
-[node name="RayCast2D" type="RayCast2D" parent="CollisionShape2D"]
-cast_to = Vector2( 0, -14 )
+[node name="ShieldArea" type="Area2D" parent="." index="1"]
+position = Vector2( 10, -1 )
+monitoring = false
+monitorable = false
+collision_layer = 0
+collision_mask = 8
 
-[node name="Sprite" type="Sprite" parent="."]
-material = ExtResource( 29 )
-use_parent_material = true
-texture = ExtResource( 2 )
-offset = Vector2( 0, 1 )
-hframes = 3
-region_rect = Rect2( 157, 0, 16, 30 )
+[node name="CollisionShapeShield" type="CollisionShape2D" parent="ShieldArea" index="0"]
+shape = SubResource( 2 )
 
-[node name="SpriteMask" type="Sprite" parent="."]
-pause_mode = 2
-visible = false
-material = ExtResource( 37 )
-texture = ExtResource( 36 )
-offset = Vector2( 0, 1 )
-hframes = 3
-script = ExtResource( 38 )
-
-[node name="AnimationSpecialEffects" type="AnimationPlayer" parent="SpriteMask"]
-anims/power_charge_lvl1 = SubResource( 2 )
-anims/power_charge_lvl2 = SubResource( 3 )
-
-[node name="SpriteEffect" type="Sprite" parent="."]
-visible = false
-
-[node name="SpriteDust" type="Sprite" parent="."]
-visible = false
+[node name="Sprite" parent="." index="2"]
+material = SubResource( 4 )
 texture = ExtResource( 3 )
-hframes = 3
-frame = 2
 
-[node name="AnimationDust" type="AnimationPlayer" parent="SpriteDust"]
-anims/dust = SubResource( 4 )
+[node name="SpriteMask" parent="." index="3"]
+material = SubResource( 6 )
+texture = ExtResource( 9 )
+script = SubResource( 7 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/climb_exit = SubResource( 5 )
-anims/climb_idle = SubResource( 6 )
-anims/climb_move = SubResource( 7 )
-anims/climb_shoot = SubResource( 8 )
-anims/exit = SubResource( 9 )
-anims/idle = SubResource( 10 )
-anims/idle_shoot = SubResource( 11 )
-anims/jump = SubResource( 12 )
-anims/jump_shoot = SubResource( 13 )
-anims/move = SubResource( 14 )
-anims/move_shoot = SubResource( 15 )
-anims/ramp = SubResource( 16 )
-anims/slide = SubResource( 17 )
-anims/spawn = SubResource( 18 )
-anims/stagger = SubResource( 19 )
+[node name="AnimationSpecialEffects" parent="SpriteMask" index="0"]
+anims/power_charge_lvl1 = SubResource( 8 )
+anims/power_charge_lvl2 = SubResource( 9 )
 
-[node name="AnimationInvincibility" type="AnimationPlayer" parent="."]
-anims/invincibility = SubResource( 20 )
+[node name="AnimationPlayer" parent="." index="6"]
+anims/climb_exit = SubResource( 10 )
+anims/climb_idle = SubResource( 11 )
+anims/climb_move = SubResource( 12 )
+anims/climb_shoot = SubResource( 13 )
+anims/exit = SubResource( 14 )
+anims/idle = SubResource( 15 )
+anims/idle_shoot = SubResource( 16 )
+anims/jump = SubResource( 17 )
+anims/jump_shoot = SubResource( 18 )
+anims/move = SubResource( 19 )
+anims/move_shoot = SubResource( 20 )
+anims/ramp = SubResource( 21 )
+anims/slide = SubResource( 22 )
+anims/spawn = SubResource( 23 )
+anims/stagger = SubResource( 24 )
 
-[node name="SFX" type="Node" parent="."]
+[node name="Idle" parent="StateMachine" index="1"]
+buster_position = Vector2( 14, 3 )
 
-[node name="Land" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 14 )
-volume_db = -6.0
+[node name="Move" parent="StateMachine" index="2"]
+buster_position = Vector2( 11, 3 )
 
-[node name="Hit" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 15 )
+[node name="Jump" parent="StateMachine" index="3"]
+script = SubResource( 25 )
 
-[node name="Death" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 16 )
+[node name="JumpShoot" parent="StateMachine" index="5"]
+buster_position = Vector2( 13, 0 )
 
-[node name="Spawn" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 17 )
-volume_db = -3.0
+[node name="ClimbShoot" parent="StateMachine" index="8"]
+buster_position = Vector2( 16, 0 )
 
-[node name="ChargeWeapon" type="AudioStreamPlayer" parent="SFX"]
-pause_mode = 2
-stream = ExtResource( 35 )
-
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource( 18 )
-start_state = NodePath("Spawn")
-
-[node name="Spawn" type="Node" parent="StateMachine"]
-script = ExtResource( 19 )
-
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource( 20 )
-
-[node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource( 21 )
-
-[node name="Jump" type="Node" parent="StateMachine"]
-script = ExtResource( 22 )
-
-[node name="Slide" type="Node" parent="StateMachine"]
-script = ExtResource( 23 )
-
-[node name="JumpShoot" type="Node" parent="StateMachine"]
-script = ExtResource( 24 )
-
-[node name="Stagger" type="Node" parent="StateMachine"]
-script = ExtResource( 25 )
-
-[node name="Climb" type="Node" parent="StateMachine"]
-script = ExtResource( 26 )
-
-[node name="ClimbShoot" type="Node" parent="StateMachine"]
-script = ExtResource( 27 )
-
-[node name="Death" type="Node" parent="StateMachine"]
-script = ExtResource( 28 )
-
-[node name="MegaBusterPos" type="Position2D" parent="."]
-position = Vector2( 17, -2 )
-
-[node name="Weapons" type="Node" parent="."]
-pause_mode = 2
-script = ExtResource( 32 )
-start_state = NodePath("MegaBuster")
-
-[node name="MegaBuster" type="Node" parent="Weapons"]
-script = ExtResource( 33 )
-weapon_name = "mega_buster"
-color_primary = Color( 0.905882, 0.905882, 0.580392, 1 )
-
-[node name="ThunderStrike" type="Node" parent="Weapons"]
-script = ExtResource( 34 )
-weapon_name = "thunder_strike"
-energy_cost = 3
-color_primary = Color( 0.592157, 0.196078, 0.952941, 1 )
-color_secondary = Color( 0.686275, 0.513726, 0.686275, 1 )
-
-[node name="EffectSpawner" parent="." instance=ExtResource( 30 )]
-
-[node name="Cutscenes" type="Node" parent="."]
-
-[node name="StageClear" type="Node" parent="Cutscenes"]
-script = ExtResource( 31 )
-
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine" method="_on_animation_finished"]
+[connection signal="area_entered" from="ShieldArea" to="StateMachine/Jump" method="on_shield_area_area_entered"]

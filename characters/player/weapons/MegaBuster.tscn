@@ -12,7 +12,6 @@ resource_local_to_scene = true
 extents = Vector2( 3, 4 )
 
 [node name="Projectile" type="KinematicBody2D" groups=[
-"MegaBusterProjectiles",
 "PlayerWeapons",
 ]]
 collision_layer = 0

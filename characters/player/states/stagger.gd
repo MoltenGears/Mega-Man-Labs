@@ -14,7 +14,7 @@ func _enter() -> void:
     velocity = Vector2()
 
 func _update(delta: float) -> void:
-    velocity.x = -owner.get_facing_direction().x * KNOCKBACK_VELOCITY
+    velocity.x = -owner.get_facing_direction().x * KNOCKBACK_VELOCITY * owner.knock_back_multiplier
     velocity.y = clamp(velocity.y + owner.gravity, -Constants.FALL_SPEED_MAX, Constants.FALL_SPEED_MAX)
     velocity = owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
 

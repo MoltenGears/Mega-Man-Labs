@@ -3,6 +3,8 @@ extends "on_ground.gd"
 const STALL_FRAME_COUNT: int = 5
 const SHOOT_FRAME_COUNT_MAX: int = 19
 
+export(Vector2) var buster_position := Vector2(17, 0)
+
 var _direction: Vector2
 var _velocity: Vector2
 var _frame_count: int
@@ -15,7 +17,7 @@ func _enter() -> void:
     _frame_count = -1
     _shoot_frame_count = SHOOT_FRAME_COUNT_MAX
     _stall_frame_count = STALL_FRAME_COUNT if owner.is_still else 0
-    mega_buster.position = Vector2(17, 0)
+    mega_buster.position = buster_position
 
 func _exit() -> void:
     owner.is_still = false

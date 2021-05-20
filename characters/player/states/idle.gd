@@ -2,11 +2,13 @@ extends "on_ground.gd"
 
 const STILL_FRAME_COUNT: int = 4
 
+export(Vector2) var buster_position := Vector2(21, 0)
+
 var _frame_count: int
 
 func _enter() -> void:
     animation_player.play("idle")
-    mega_buster.position = Vector2(21, 0)
+    mega_buster.position = buster_position
     _frame_count = -1
 
 func _handle_command(command: String) -> void:
