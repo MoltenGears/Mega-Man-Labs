@@ -12,9 +12,12 @@ export(bool) var is_death_pit := false
 export(int) var size := 1 setget set_extents
 export(Vector2) var base_size := Vector2(Constants.WIDTH, Constants.HEIGHT) setget set_base_size
 
+var is_boss_door_transition := false
 var _has_enough_space_to_transition := true
 var _reset_one_way := true
+var _one_way_locked := false
 var _is_open_ceiling := false
+var _players_ready_count := 0
 
 signal transition_entered(dir, transition)
 
@@ -24,55 +27,77 @@ func _ready() -> void:
     set_extents(size)
 
 func on_restarted() -> void:
+    _reset_players_ready_count()
     if is_one_way and _reset_one_way:
+        _one_way_locked = false
         turn_off_wall()
 
 func on_checkpoint_reached() -> void:
     if is_one_way and is_wall_on():
         _reset_one_way = false
 
-func on_body_entered(body: PhysicsBody2D) -> void:
-    if not body is Player or is_wall_on():
-        return
+func on_body_entered(body: PhysicsBody2D, test_only: bool = false) -> bool:
+    if not body is Player:
+        return false
     if is_death_pit and is_rotated:
-        return
+        return false
     if _is_open_ceiling and not body.is_climbing:
-        return
+        return false
 
     var dir: Vector2 = _get_direction(body)
     if dir == Vector2.UP and not body.is_climbing:
         _is_open_ceiling = true
         # print_debug("Set %s to open ceiling." % name)
-        return
+        return false
 
     # Prevent breaking the camera transition with slides in opposite direction.
     if body.is_sliding and body.get_facing_direction() == -dir:
-        return
+        return false
+
+    # Important to do before checking for enough empty space.
+    _increment_players_ready_count()
+    if not is_boss_door_transition and not _all_players_ready():
+        turn_on_wall()
+        return false
+
+    if _one_way_locked:
+        return false
+    else:
+        turn_off_wall()
 
     # Check for enough empty space after transition.
     if not body.check_for_space(dir, $CollisionShape2D.shape.extents):
         turn_on_wall()
         _has_enough_space_to_transition = false
-        return
+        return false
 
     _is_open_ceiling = false
+
+    if test_only:
+        return true
+
     emit_signal("transition_entered", dir, self)
     if is_one_way:
+        _one_way_locked = true
         turn_on_wall()
 
+    return true
+
 func on_body_exited(body: PhysicsBody2D) -> void:
+    _decrement_players_ready_count()
     if not _has_enough_space_to_transition:
         _has_enough_space_to_transition = true
-        turn_off_wall()
+        if not _one_way_locked:
+            turn_off_wall()
 
 func turn_on_wall() -> void:
-    $StaticBody2D.set_collision_layer_bit(0, true)
+    $StaticBody2D.set_collision_mask_bit(1, true)
 
 func turn_off_wall() -> void:
-    $StaticBody2D.set_collision_layer_bit(0, false)
+    $StaticBody2D.set_collision_mask_bit(1, false)
 
 func is_wall_on() -> bool:
-    return $StaticBody2D.get_collision_layer_bit(0)
+    return $StaticBody2D.get_collision_mask_bit(1)
 
 func set_extents(value: int) -> void:
     # Checks are necessary, otherwise this method causes errors
@@ -82,13 +107,25 @@ func set_extents(value: int) -> void:
     size = value
     if is_rotated:
         $CollisionShape2D.shape.extents = Vector2(base_size.x / 2 * size, WIDTH)
+        $"StaticBody2D/CollisionShape2D".shape.extents = Vector2(
+            $CollisionShape2D.shape.extents.x, 1)
     else:
         $CollisionShape2D.shape.extents = Vector2(WIDTH, base_size.y / 2 * size)
-    $"StaticBody2D/CollisionShape2D".shape.extents = $CollisionShape2D.shape.extents
+        $"StaticBody2D/CollisionShape2D".shape.extents = Vector2(
+            1, $CollisionShape2D.shape.extents.y)
 
 func set_base_size(value: Vector2) -> void:
     base_size = value
     set_extents(size)
+
+func _reset_players_ready_count() -> void:
+    _players_ready_count = 0
+
+func _increment_players_ready_count() -> void:
+    _players_ready_count = clamp(_players_ready_count + 1, 0, Global.players_alive_count)
+
+func _decrement_players_ready_count() -> void:
+    _players_ready_count = clamp(_players_ready_count - 1, 0, Global.players_alive_count)
 
 func _set_rotation(value: bool) -> void:
     is_rotated = value
@@ -99,3 +136,8 @@ func _get_direction(body: PhysicsBody2D) -> Vector2:
         return Vector2(0, sign((global_position - body.global_position).y))
     else:
         return Vector2(sign((global_position - body.global_position).x), 0)
+
+func _all_players_ready() -> bool:
+    if _players_ready_count > Global.players_alive_count:
+        _players_ready_count = Global.players_alive_count
+    return _players_ready_count == Global.players_alive_count

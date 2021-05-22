@@ -45,13 +45,17 @@ func on_ready() -> void:
     $StateMachine.initialize($StateMachine.start_state)
 
 func on_camera_transition_start() -> void:
-    if _animation_player.current_animation == "move" or is_climbing:
-        _animation_player.pause_mode = PAUSE_MODE_PROCESS
+    _animation_player.pause_mode = PAUSE_MODE_PROCESS
     if is_climbing:
         _animation_player.play("climb_move")
+    elif _animation_player.current_animation == "idle":
+        emit_signal("change_state", "move")
+        _animation_player.play("move")
 
 func on_camera_transition_end() -> void:
     _animation_player.pause_mode = PAUSE_MODE_INHERIT
+    if not is_climbing and not is_sliding and is_on_floor():
+        emit_signal("change_state", "idle")
 
 func on_boss_entered() -> void:
     if is_on_floor():

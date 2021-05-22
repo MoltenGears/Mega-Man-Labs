@@ -269,6 +269,7 @@ action_weapon_previous_p2={
 2d_physics/layer_4="Projectiles"
 2d_physics/layer_5="Transitions"
 2d_physics/layer_6="PickUps"
+2d_physics/layer_7="Ladders"
 
 [logging]
 

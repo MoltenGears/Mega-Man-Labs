@@ -7,6 +7,8 @@ const DATETIME_FORMAT := "%02d"
 var main_scene: Node
 var current_stage: Stage setget , get_current_stage
 var player: Player setget , get_player
+var players: Dictionary setget , get_players
+var players_alive_count: int setget , get_players_alive_count
 var can_toggle_pause := true
 var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
@@ -37,6 +39,17 @@ func get_current_stage() -> Stage:
 
 func get_player() -> Player:
     return get_current_stage().player
+
+func get_players() -> Dictionary:
+    return get_current_stage().players
+
+func get_players_alive_count() -> int:
+    var count: int = 0
+    for p in get_current_stage().players.values():
+        if not p.is_dead:
+            count += 1
+
+    return count
 
 func take_screenshot() -> void:
     var dir: Directory = Directory.new()

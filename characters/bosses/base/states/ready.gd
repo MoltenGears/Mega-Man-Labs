@@ -6,7 +6,7 @@ onready var _animations_special: AnimationPlayer = $"../../AnimationPlayer"
 func _enter() -> void:
     $"../../CharacterSprites/AnimatedSprite".visible = true
     get_tree().paused = true
-    get_tree().call_group("BossDoors", "lock_door")
+    get_tree().set_group("BossDoors", "locked", true)
     _animations.play("drop_in")
     yield(_animations, "animation_finished")
     _animations_special.play("taunt")

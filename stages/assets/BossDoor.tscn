@@ -4,7 +4,6 @@
 [ext_resource path="res://stages/assets/sprites/BossDoor.png" type="Texture" id=2]
 [ext_resource path="res://stages/assets/sounds/Shutter.wav" type="AudioStream" id=3]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "open_close"
 length = 0.37
@@ -23,7 +22,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 16, 32 )
+extents = Vector2( 17, 32 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 32 )
@@ -43,7 +42,8 @@ anims/open_close = SubResource( 1 )
 stream = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_mask = 16
+collision_layer = 0
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
@@ -52,8 +52,8 @@ shape = SubResource( 2 )
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-visible = false
 shape = SubResource( 3 )
+
 [connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="on_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="on_transition_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="on_entered"]

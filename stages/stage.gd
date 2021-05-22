@@ -19,6 +19,7 @@ var start_pos: Vector2
 var start_dir: Vector2
 var stage_exited: bool
 var player: Player
+var players: Dictionary
 
 onready var _gui_ready := $"GUI/Ready"
 onready var _gui_fade_effects := $"GUI/FadeEffects"
@@ -40,8 +41,12 @@ func _init() -> void:
 func _ready() -> void:
     for child in get_children():
         if child is Player:
-            player = child as Player
-            break
+            players[child.player_number] = child as Player
+
+    # Set player with smallest player number as main player.
+    if not players.empty():
+        player = players[players.keys().min()]
+
     if Engine.is_editor_hint():
         return
 
@@ -94,6 +99,10 @@ func _restart() -> void:
     get_tree().call_group("SpecialsReset", "on_restarted")
 
 func _on_died() -> void:
+    for p in players.values():
+        if not p.is_dead:
+            return
+
     yield(get_tree().create_timer(DEATH_DELAY), "timeout")
     emit_signal("player_died")
 
@@ -125,7 +134,8 @@ func _set_stage_start_pos() -> void:
         return
     
     if start_pos:
-        player.global_position = start_pos
+        for p in players.values():
+            p.global_position = start_pos
     else:
         start_pos = player.global_position
         stage_start_pos = start_pos
@@ -134,7 +144,8 @@ func _set_stage_start_pos() -> void:
 
 func _connect_signals() -> void:
     # Connect various stage signals to children methods.
-    _try_connect(self, "restarted", player, "on_restarted")
+    for p in players.values():
+        _try_connect(self, "restarted", p, "on_restarted")
     _try_connect(self, "restarted", get_current_camera(), "on_restarted")
     _try_connect(self, "restarted", _gui_ready, "on_restarted")
     _try_connect(self, "restarted", _gui_fade_effects, "fade_in", [FADE_IN_DURATION])
@@ -148,14 +159,16 @@ func _connect_signals() -> void:
                 for checkpoint in $Checkpoints.get_children():
                     _try_connect(checkpoint, "checkpoint_reached", transition, "on_checkpoint_reached")
 
-    _try_connect(self, "player_ready", player, "on_ready")
+    for p in players.values():
+        _try_connect(self, "player_ready", p, "on_ready")
     _try_connect(self, "player_ready", _gui_ready, "on_ready")
     _try_connect(self, "player_ready", _gui_pause, "set_can_pause", [true])
     _try_connect(self, "player_died", _gui_fade_effects, "fade_out", [FADE_OUT_DURATION])
     _try_connect(self, "stage_cleared", player, "on_stage_cleared")
     
     # Connect children signals to stage methods.
-    _try_connect(player, "died", self, "_on_died")
+    for p in players.values():
+        _try_connect(p, "died", self, "_on_died")
     _try_connect(_gui_fade_effects, "screen_faded_out", self, "_on_screen_faded_out")
     _try_connect(player, "exited", self, "_on_stage_exited")
 

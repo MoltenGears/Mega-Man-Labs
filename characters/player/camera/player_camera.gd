@@ -1,16 +1,15 @@
 extends Camera2D
 
 const RAYCAST_LENGTH: int = 100000
-const RAYCAST_OFFSET: int = 32
+const RAYCAST_OFFSET: int = 36
 
 export(NodePath) var player_target_node
 export(float) var transition_time := 1.0
 
+var camera_target: Node2D
 var _transition_pos: int
 var _direction: Vector2
 
-onready var _player: Node2D = get_node(player_target_node) as Node2D
-onready var _player_collision_extents: Vector2 = _player.get_node("CollisionShape2D").shape.extents
 onready var _ray: RayCast2D = $TransitionFinder
 onready var _base_width: int = Global.base_size.x
 onready var _base_height: int = Global.base_size.y
@@ -21,16 +20,17 @@ signal transition_end()
 
 func _ready() -> void:
     $CameraTween.connect("tween_completed", self, "_on_tween_completed")
-    connect("transition_start", _player, "on_camera_transition_start")
-    connect("transition_end", _player, "on_camera_transition_end")
-    global_position = _player.global_position
+    
+    camera_target = get_node(player_target_node) as Node2D
+    global_position = camera_target.global_position
     init_limits()
 
 func _physics_process(delta: float) -> void:
-    if _player.global_position.distance_to(get_camera_screen_center()) > _death_distance:
-        _player.die(false)
+    for p in Global.players.values():
+        if p.global_position.distance_to(get_camera_screen_center()) > _death_distance:
+            p.die(false)
 
-    position = _player.position
+    position = camera_target.position
 
 func transition(dir: Vector2, transition: CameraTransition) -> void:
     if _get_transition_position(dir, true) == _ray.cast_to:
@@ -46,15 +46,10 @@ func transition(dir: Vector2, transition: CameraTransition) -> void:
     position = old_cam_pos
 
     var target_position: Vector2
-    var player_movement: Vector2
     if _direction.x != 0:
         target_position = Vector2(_transition_pos + _base_width / 2 * _direction.x, position.y)
-        player_movement = _player_collision_extents.x * 2.5 * _direction + \
-                Vector2(_transition_pos - _player.global_position.x, 0) * 1.6
     else:
         target_position = Vector2(position.x, _transition_pos + _base_height / 2 * _direction.y)
-        player_movement = _player_collision_extents.y * 2 * _direction + \
-                Vector2(0, _transition_pos - _player.global_position.y) * 1.6
                 
     $CameraTween.interpolate_property(self, 'position',
             position,
@@ -62,14 +57,31 @@ func transition(dir: Vector2, transition: CameraTransition) -> void:
             transition_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
     $CameraTween.start()
 
-    $PlayerTween.interpolate_property(_player, 'global_position',
-            _player.global_position,
-            _player.global_position + player_movement,
-            transition_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-    $PlayerTween.start()
+    for p in Global.players.values():
+        if not p.is_dead:
+            var player_movement: Vector2
+            var player_collision_extents: Vector2 = p.get_node("CollisionShape2D").shape.extents
+            if _direction.x != 0:
+                player_movement = player_collision_extents.x * 2.5 * _direction + \
+                Vector2(_transition_pos - p.global_position.x, 0) * 1.6
+            else:
+                player_movement = player_collision_extents.y * 2 * _direction + \
+                Vector2(0, _transition_pos - p.global_position.y) * 1.6
+        
+            $PlayerTween.interpolate_property(p, 'global_position',
+                    p.global_position,
+                    p.global_position + player_movement,
+                    transition_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+            $PlayerTween.start()
 
 func on_restarted() -> void:
-    global_position = _player.global_position
+    for p in Global.players.values():
+        if not is_connected("transition_start", p, "on_camera_transition_start"):
+            connect("transition_start", p, "on_camera_transition_start")
+        if not is_connected("transition_end", p, "on_camera_transition_end"):
+            connect("transition_end", p, "on_camera_transition_end")
+    
+    global_position = camera_target.global_position
     init_limits()
 
 func init_limits() -> void:
@@ -81,7 +93,7 @@ func init_limits() -> void:
 func _on_tween_completed(object: Object, key: NodePath) -> void:
     init_limits()
     set_as_toplevel(false)
-    global_position = _player.global_position
+    global_position = camera_target.global_position
     get_tree().paused = false
     emit_signal("transition_end")
 

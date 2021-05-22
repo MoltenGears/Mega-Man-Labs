@@ -29,7 +29,7 @@ func _handle_command(command: String) -> void:
 func _update(delta: float) -> void:
     direction = get_input_direction()
     if direction.y != 0:
-        if owner.ladder.is_exiting_ladder():
+        if owner.ladder.is_exiting_ladder(owner):
             # collision_shape.shape.extents.y = 6
             animation_player.play("climb_exit")
         elif not _is_move_anim:
@@ -45,7 +45,7 @@ func _update(delta: float) -> void:
             owner.move_and_slide(Vector2(0, direction.y * CLIMB_SPEED))
     else:
         _is_move_anim = false
-        if owner.ladder.is_exiting_ladder():
+        if owner.ladder.is_exiting_ladder(owner):
             # collision_shape.shape.extents.y = 6
             animation_player.play("climb_exit")
         else:

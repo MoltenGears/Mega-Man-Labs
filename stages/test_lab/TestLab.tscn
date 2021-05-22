@@ -134,11 +134,6 @@ position = Vector2( 3072, 112 )
 is_one_way = true
 size = 5
 
-[node name="CameraTransition24" parent="CameraTransitions" instance=ExtResource( 5 )]
-position = Vector2( 3072, 112 )
-is_one_way = true
-size = 5
-
 [node name="CameraTransition18" parent="CameraTransitions" instance=ExtResource( 5 )]
 position = Vector2( 2816, 224 )
 is_one_way = true
@@ -452,8 +447,8 @@ __meta__ = {
 
 [node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 17 )]
 visible = false
-margin_right = 345.0
-margin_bottom = 216.0
+margin_right = 230.0
+margin_bottom = 201.0
 
 [node name="WeaponEnergyBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 17 )]
 visible = false
