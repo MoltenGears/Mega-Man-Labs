@@ -11,6 +11,7 @@ script = ExtResource( 1 )
 material = ExtResource( 2 )
 margin_right = 384.0
 margin_bottom = 240.0
+stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

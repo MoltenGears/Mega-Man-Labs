@@ -176,6 +176,7 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+stage_top_right = "res://stages/test_lab/TestLab.tscn"
 stage_mid_left = "res://stages/heat/HeatStage.tscn"
 
 [node name="Background" type="TextureRect" parent="."]
@@ -385,15 +386,15 @@ __meta__ = {
 }
 
 [node name="LabelTopRight" type="Label" parent="Labels"]
-margin_left = 56.0
+margin_left = 48.0
 margin_top = -56.0
 margin_right = 104.0
 margin_bottom = -40.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/line_spacing = 0
-text = "EMPTY
-   MAN"
+text = "THUNDER
+    MAN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -497,6 +498,7 @@ position = Vector2( 0, -80 )
 
 [node name="MugshotTopRight" type="Sprite" parent="Mugshots"]
 position = Vector2( 80, -80 )
+texture = ExtResource( 10 )
 
 [node name="MugshotMidLeft" type="Sprite" parent="Mugshots"]
 position = Vector2( -80, -16 )

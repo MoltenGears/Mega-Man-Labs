@@ -44,8 +44,10 @@ func _on_pressed(index: int) -> void:
             path = stage_top_center
         2:
             path = stage_top_right
+            Global.wide_screen = false
         3:
             path = stage_mid_left
+            Global.wide_screen = true
         5:
             path = stage_mid_right
         6:
