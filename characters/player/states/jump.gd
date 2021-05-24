@@ -25,6 +25,10 @@ func _handle_command(command: String) -> void:
     if command == "jump_stop" and velocity.y < 0:
         velocity.y = 0
 
+    if command == "jump" and owner.has_in_air_jump:
+        owner.has_in_air_jump = false
+        velocity.y = JUMP_SPEED * 0.9
+
     if command == "shoot":
         emit_signal("finished", "jump_shoot")
     

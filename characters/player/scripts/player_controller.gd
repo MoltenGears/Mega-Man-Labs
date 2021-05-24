@@ -5,6 +5,7 @@ class_name Player
 
 export(int, 1, 2) var player_number := 1
 export(bool) var can_slide := true
+export(bool) var can_double_jump := false
 export(bool) var can_charge_weapon := true
 export(int, 1, 4) var damage_multiplier := 1
 export(int, 1, 4) var knock_back_multiplier := 1
@@ -23,6 +24,7 @@ var gravity: float = Constants.GRAVITY
 var charge_duration: float = 0
 var charge_level: int setget , _get_charge_level
 var buffering_charge: bool = false
+var has_in_air_jump: bool = false
 
 onready var stopper_ray_cast: RayCast2D = $"CollisionShape2D/StopperRayCast";
 onready var _ray_cast: RayCast2D = $"CollisionShape2D/RayCast2D";
@@ -42,6 +44,10 @@ func _physics_process(delta: float) -> void:
     # Update direction of slide stopper ray cast.
     stopper_ray_cast.cast_to.x = (
         abs(stopper_ray_cast.cast_to.x) * sign(get_facing_direction().x))
+
+    # Reset double jump if enabled.
+    if can_double_jump and is_on_floor():
+        has_in_air_jump = true
 
 func on_restarted() -> void:
     visible = false
