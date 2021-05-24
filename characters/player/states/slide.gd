@@ -9,11 +9,18 @@ onready var _ray_cast: RayCast2D = get_node("../../CollisionShape2D/RayCast2D")
 onready var _slide_dust: Sprite = get_node("../../SpriteDust")
 onready var _slide_dust_anim: AnimationPlayer = get_node("../../SpriteDust/AnimationDust")
 
+var velocity: Vector2
 var _frame_count: int
 var _can_exit: bool
-var velocity: Vector2
+var _was_in_front_of_wall: bool
 
 func _enter() -> void:
+    if owner.stopper_ray_cast.is_colliding():
+        _was_in_front_of_wall = true
+        return
+    else:
+        _was_in_front_of_wall = false
+
     owner.is_sliding = true
     owner.buffering_charge = true
     _can_exit = false
@@ -40,6 +47,9 @@ func _handle_command(command: String) -> void:
         weapons.change_weapon(command)
 
 func _exit() -> void:
+    if _was_in_front_of_wall:
+        return
+
     owner.is_sliding = false
     _ray_cast.enabled = false
     _collision_shape.shape.extents.x /= 2
@@ -47,12 +57,18 @@ func _exit() -> void:
     _collision_shape.position.y -= 6
 
 func _update(delta: float) -> void:
-    velocity.y += owner.gravity
-    velocity.x = SLIDE_SPEED * owner.get_facing_direction().x
-    velocity = owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
-
+    # Enough empty space above.
     _can_exit = !_ray_cast.is_colliding()
-    
+
+    # Cancel slide if hitting a wall.
+    if owner.stopper_ray_cast.is_colliding() and _can_exit:
+        emit_signal("finished", "idle")
+    else:
+        velocity.y += owner.gravity
+        velocity.x = SLIDE_SPEED * owner.get_facing_direction().x
+        velocity = owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
+
+    # Full slide duration passed.
     var input_direction: Vector2 = get_input_direction()
     if _frame_count > SLIDE_FRAME_COUNT and _can_exit:
         if input_direction.x != 0:
@@ -60,6 +76,7 @@ func _update(delta: float) -> void:
         else:
             emit_signal("finished", "idle")
 
+    # Cancel slide by pressing the opposite direction.
     if _frame_count > LOCKED_FRAME_COUNT and _can_exit and \
             input_direction.x == -owner.get_facing_direction().x:
         emit_signal("finished", "move")

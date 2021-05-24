@@ -24,6 +24,7 @@ var charge_duration: float = 0
 var charge_level: int setget , _get_charge_level
 var buffering_charge: bool = false
 
+onready var stopper_ray_cast: RayCast2D = $"CollisionShape2D/StopperRayCast";
 onready var _ray_cast: RayCast2D = $"CollisionShape2D/RayCast2D";
 onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -36,6 +37,11 @@ signal exited()
 
 func _ready() -> void:
     connect("change_state", $StateMachine, "_change_state")
+
+func _physics_process(delta: float) -> void:
+    # Update direction of slide stopper ray cast.
+    stopper_ray_cast.cast_to.x = (
+        abs(stopper_ray_cast.cast_to.x) * sign(get_facing_direction().x))
 
 func on_restarted() -> void:
     visible = false
