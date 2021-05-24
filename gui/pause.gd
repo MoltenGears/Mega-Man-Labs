@@ -100,6 +100,7 @@ func _set_button_focus() -> void:
     for button in _weapon_buttons:
         if button.get_parent().bar_name == current_weapon_name:
             button.grab_focus()
+            $ButtonHighlight.rect_position = _focus_frame.rect_position
             return
     _energy_tank_button.grab_focus()
 
@@ -132,4 +133,5 @@ func _on_focus_exited() -> void:
 func _on_weapon_button_pressed(bar_name: String) -> void:
     if Global.player.get_current_weapon_name() != bar_name:
         $SelectSound.play()
+        $ButtonHighlight.rect_position = _focus_frame.rect_position
     Global.player.change_weapon(str("weapon_", bar_name))
