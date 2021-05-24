@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://characters/player/weapons/MegaBuster.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/player/weapons/MegaBusterCharged2.wav" type="AudioStream" id=2]
@@ -8,6 +8,40 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 14 )
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+
+uniform vec4 original_0: hint_color;
+uniform vec4 original_1: hint_color;
+uniform vec4 replace_0: hint_color;
+uniform vec4 replace_1: hint_color;
+
+const float precision = 0.1;
+
+vec4 swap_color(vec4 color){
+	vec4 original_colors[2] = vec4[2] (original_0, original_1);
+	vec4 replace_colors[2] = vec4[2] (replace_0, replace_1);
+	for (int i = 0; i < 2; i ++) {
+		if (distance(color, original_colors[i]) <= precision){
+			return replace_colors[i];
+		}
+	}
+	return color;
+}
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}
+"
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/original_0 = Color( 0, 0.439216, 0.92549, 1 )
+shader_param/original_1 = Color( 0, 0.909804, 0.847059, 1 )
+shader_param/replace_0 = Color( 0.862745, 0.156863, 0, 1 )
+shader_param/replace_1 = Color( 0.92549, 0.721569, 0.266667, 1 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
@@ -71,4 +105,6 @@ stream = ExtResource( 2 )
 volume_db = 6.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="6"]
+material = SubResource( 10 )
+use_parent_material = true
 frames = SubResource( 8 )

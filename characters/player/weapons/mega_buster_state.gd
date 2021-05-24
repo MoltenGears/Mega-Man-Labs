@@ -43,6 +43,8 @@ func _get_bullet() -> Node:
             bullet = ProjectileCharged1.instance()
         2:
             bullet = ProjectileCharged2.instance()
+            if owner.name == "ProtoMan":  # Use color swap shader.
+                bullet.get_node("AnimatedSprite").use_parent_material = false
 
     bullet.position = mega_buster.global_position
     bullet.direction = owner.get_facing_direction()
