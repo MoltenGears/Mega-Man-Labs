@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://stages/test_lab/test_lab.gd" type="Script" id=1]
 [ext_resource path="res://stages/test_lab/TestLabTileSet.tres" type="TileSet" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://music/MM_TT-BossFight.ogg" type="AudioStream" id=24]
 [ext_resource path="res://music/MM_TT-StageClear.ogg" type="AudioStream" id=25]
 [ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=26]
+[ext_resource path="res://gui/WeaponIconOverhead.tscn" type="PackedScene" id=27]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 84 )
@@ -447,8 +448,8 @@ __meta__ = {
 
 [node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 17 )]
 visible = false
-margin_right = 230.0
-margin_bottom = 201.0
+margin_right = 345.0
+margin_bottom = 216.0
 
 [node name="WeaponEnergyBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 17 )]
 visible = false
@@ -461,6 +462,9 @@ margin_left = 16.0
 color = Color( 0.588235, 0.352941, 0.929412, 1 )
 
 [node name="Ready" parent="GUI" instance=ExtResource( 18 )]
+visible = false
+
+[node name="WeaponIconOverhead" parent="GUI" instance=ExtResource( 27 )]
 visible = false
 
 [node name="Pause" parent="GUI" instance=ExtResource( 19 )]

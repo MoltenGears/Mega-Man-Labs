@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://stages/heat/heat_man_stage.gd" type="Script" id=1]
 [ext_resource path="res://stages/heat/textures/HeatBG.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://characters/enemies/telly/EnemyTelly.tscn" type="PackedScene" id=17]
 [ext_resource path="res://stages/heat/MM_2-HeatManStage.ogg" type="AudioStream" id=18]
 [ext_resource path="res://stages/test_lab/music.gd" type="Script" id=19]
+[ext_resource path="res://gui/WeaponIconOverhead.tscn" type="PackedScene" id=20]
 
 [sub_resource type="TileSet" id=1]
 0/name = "HeatFullBG01"
@@ -858,6 +859,9 @@ margin_left = 12.0
 color = Color( 0.827451, 0.580392, 0.905882, 1 )
 
 [node name="Ready" parent="GUI" instance=ExtResource( 11 )]
+visible = false
+
+[node name="WeaponIconOverhead" parent="GUI" instance=ExtResource( 20 )]
 visible = false
 
 [node name="Pause" parent="GUI" instance=ExtResource( 8 )]

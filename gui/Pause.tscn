@@ -16,7 +16,7 @@
 [ext_resource path="res://gui/textures/WeaponIconMegaBuster.png" type="Texture" id=14]
 [ext_resource path="res://gui/textures/WeaponIconHighlight.png" type="Texture" id=15]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=10]
 size = 8
 font_data = ExtResource( 4 )
 
@@ -65,7 +65,7 @@ anchor_bottom = 0.05
 margin_left = -32.0
 margin_right = 32.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "- MENU -"
 align = 1
@@ -118,6 +118,7 @@ margin_left = -64.0
 margin_top = 28.0
 margin_right = -8.0
 margin_bottom = 36.0
+bar_name = "thunder_strike"
 color = Color( 0.0666667, 0.352941, 0.0627451, 1 )
 horizontal = true
 fill_with_sound = false

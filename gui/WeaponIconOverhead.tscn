@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/weapon_icon_overhead.gd" type="Script" id=1]
+[ext_resource path="res://gui/textures/WeaponIconMegaBuster.png" type="Texture" id=2]
+
+[node name="WeaponIconOverhead" type="Control"]
+pause_mode = 2
+margin_right = 16.0
+margin_bottom = 16.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -8.0
+margin_top = -32.0
+margin_right = 8.0
+margin_bottom = -16.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

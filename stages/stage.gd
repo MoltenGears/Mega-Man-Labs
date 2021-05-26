@@ -27,6 +27,7 @@ onready var _gui_bar := $"GUI/MarginContainer/LifeEnergyBar"
 onready var _gui_weapon_bar := $"GUI/MarginContainer/LifeEnergyBar/WeaponEnergyBar"
 onready var _gui_pause := $"GUI/Pause"
 onready var _gui_game_over := $"GUI/GameOver"
+onready var _gui_weapon_icon_overhead := $"GUI/WeaponIconOverhead"
 
 signal restarted()
 signal player_ready()
@@ -176,6 +177,7 @@ func _connect_signals() -> void:
     _try_connect(player, "hit_points_changed", _gui_bar, "on_hit_points_changed")
     _try_connect(player, "weapon_energy_changed", _gui_weapon_bar, "on_hit_points_changed")
     _try_connect(player, "weapon_changed", _gui_weapon_bar, "on_weapon_changed")
+    _try_connect(player, "weapon_changed", _gui_weapon_icon_overhead, "on_weapon_changed")
     _try_connect(player, "died", _gui_pause, "set_can_pause", [false])
 
     _try_connect(GameState, "extra_life_count_changed", _gui_pause, "on_extra_life_count_changed")

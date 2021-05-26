@@ -39,6 +39,7 @@ func transition(dir: Vector2, transition: CameraTransition) -> void:
     
     emit_signal("transition_start")
     get_tree().paused = true
+    set_physics_process(false)
     _direction = dir
     var old_cam_pos: Vector2 = get_camera_screen_center()
     _update_limit()    # Must be called before camera is set to top level
@@ -95,6 +96,7 @@ func _on_tween_completed(object: Object, key: NodePath) -> void:
     set_as_toplevel(false)
     global_position = camera_target.global_position
     get_tree().paused = false
+    set_physics_process(true)
     emit_signal("transition_end")
 
 func _update_limit() -> void:
