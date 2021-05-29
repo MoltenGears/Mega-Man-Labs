@@ -459,11 +459,14 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 [sub_resource type="Environment" id=26]
 background_mode = 4
 glow_enabled = true
-glow_intensity = 2.48
-glow_strength = 0.49
+glow_levels/1 = true
+glow_levels/2 = true
+glow_levels/4 = true
+glow_intensity = 0.1
 glow_blend_mode = 1
-glow_hdr_threshold = 1.2
 glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_saturation = 0.95
 
 [node name="HeatStage" type="Node"]
 pause_mode = 1
@@ -479,7 +482,6 @@ format = 1
 tile_data = PoolIntArray( 0, 0, 0, 24, 0, 0, 48, 0, 0, 72, 0, 0, 96, 0, 0, 120, 0, 0, 983144, 0, 0, 1966184, 0, 0, 1966208, 0, 0, 1966232, 0, 0, 1966256, 0, 0, 1966280, 0, 0, 1966304, 0, 0, 1966328, 0, 0, 1966352, 0, 0, 2949384, 0, 0, 3932424, 0, 0 )
 
 [node name="Lava" type="TileMap" parent="."]
-modulate = Color( 4.05, 1, 1, 1 )
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 collision_mask = 6

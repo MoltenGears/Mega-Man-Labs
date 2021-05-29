@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://effects/effect_spawner/assets/death_particle.gd" type="Script" id=1]
 [ext_resource path="res://characters/enemies/base/sprites/explosions/BaseExplosionDeath.png" type="Texture" id=2]
@@ -21,6 +21,36 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
+[sub_resource type="Animation" id=2]
+resource_name = "radiate_vfx"
+length = 0.4
+loop = true
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1.5, 1.5, 1.5, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="DeathParticle" type="Node2D"]
 z_index = 1
 script = ExtResource( 1 )
@@ -31,6 +61,7 @@ hframes = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/radiate = SubResource( 1 )
+anims/radiate_vfx = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 

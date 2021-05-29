@@ -33,6 +33,8 @@ onready var _sprite: Sprite = $"../Sprite"
 
 func _ready() -> void:
     visible = true
+    if Global.lighting_vfx:
+        modulate = Color(1.1, 1.1, 1.1, 1)
 
 func _physics_process(_delta: float) -> void:
     position = _sprite.position

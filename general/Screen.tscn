@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 
 [node name="GameViewportContainer" type="ViewportContainer" parent="."]
 material = ExtResource( 2 )
+use_parent_material = true
 margin_right = 384.0
 margin_bottom = 240.0
 stretch = true

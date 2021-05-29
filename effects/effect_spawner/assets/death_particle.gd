@@ -11,7 +11,12 @@ func initialize(pos: Vector2, dir: Vector2, velo: int) -> void:
 
 func _ready() -> void:
     $VisibilityNotifier2D.connect("screen_exited", self, "_on_screen_exited")
-    $AnimationPlayer.play("radiate")
+
+    if Global.lighting_vfx:
+        $AnimationPlayer.play("radiate_vfx")
+    else:
+        $AnimationPlayer.play("radiate")
+
     $Timer.connect("timeout", self, "_on_timeout")
     if _lifetime > 0:
         $Timer.start(_lifetime)

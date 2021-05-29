@@ -6,6 +6,9 @@ var direction: Vector2
 var consumed := false
     
 func _ready() -> void:
+    if Global.lighting_vfx:
+        modulate = Color(2, 1, 1, 1)
+
     if not $PreciseVisibilityNotifier2D.is_on_screen():
         queue_free()
     $ShootSFX.play()

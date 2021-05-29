@@ -45,9 +45,9 @@ extents = Vector2( 6, 12 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "power_charge_lvl1"
-length = 0.16
+length = 0.12
 loop = true
-step = 0.08
+step = 0.06
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/outline_color")
 tracks/0/interp = 1
@@ -55,7 +55,7 @@ tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.08 ),
+"times": PoolRealArray( 0, 0.06 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Color( 0.360784, 0.580392, 0.988235, 1 ), Color( 0.360784, 0.580392, 0.988235, 0 ) ]
@@ -87,9 +87,9 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "power_charge_lvl2"
-length = 0.16
+length = 0.12
 loop = true
-step = 0.08
+step = 0.06
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/outline_color")
 tracks/0/interp = 1
@@ -97,10 +97,10 @@ tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.08 ),
+"times": PoolRealArray( 0, 0.06 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Color( 0.501961, 0.815686, 0.0627451, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
+"values": [ Color( 0.721569, 0.972549, 0.0941176, 1 ), Color( 0.407843, 0.533333, 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:material:shader_param/primary_color")
@@ -109,7 +109,7 @@ tracks/1/loop_wrap = false
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.08 ),
+"times": PoolRealArray( 0, 0.06 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Color( 0.298039, 0.862745, 0.282353, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]
@@ -121,7 +121,7 @@ tracks/2/loop_wrap = false
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.08 ),
+"times": PoolRealArray( 0, 0.06 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Color( 0.658824, 0.941176, 0.737255, 1 ), Color( 0.501961, 0.815686, 0.0627451, 0 ) ]

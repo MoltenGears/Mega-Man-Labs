@@ -22,10 +22,12 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="PreciseVisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
 rect = Rect2( -4, -3, 8, 6 )
 script = ExtResource( 3 )
 
@@ -38,9 +40,10 @@ stream = ExtResource( 5 )
 volume_db = -6.0
 
 [node name="Light2D" type="Light2D" parent="."]
+visible = false
 texture = ExtResource( 6 )
 texture_scale = 0.5
-color = Color( 0.792969, 0.956329, 1, 1 )
+color = Color( 0.792157, 0.956863, 1, 1 )
 energy = 0.5
 
 [connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]

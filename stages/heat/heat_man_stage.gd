@@ -10,6 +10,10 @@ func _notification(what):
         NOTIFICATION_INSTANCED:
             _music = $Music
 
+func _ready() -> void:
+    if Global.lighting_vfx:
+        $Lava.modulate = Color(1.7, 1, 1, 1)
+
 func _connect_signals() -> void:
     ._connect_signals()
 
