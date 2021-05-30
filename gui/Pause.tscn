@@ -16,7 +16,7 @@
 [ext_resource path="res://gui/textures/WeaponIconMegaBuster.png" type="Texture" id=14]
 [ext_resource path="res://gui/textures/WeaponIconHighlight.png" type="Texture" id=15]
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=1]
 size = 8
 font_data = ExtResource( 4 )
 
@@ -57,6 +57,18 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="ShaderEffects"]
 
+[node name="TransparentBG" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.02
+anchor_right = 0.5
+anchor_bottom = 0.93
+margin_left = -120.0
+margin_right = 120.0
+color = Color( 0, 0, 0, 0.768627 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MenuLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.05
@@ -65,7 +77,7 @@ anchor_bottom = 0.05
 margin_left = -32.0
 margin_right = 32.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "- MENU -"
 align = 1
