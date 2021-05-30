@@ -15,12 +15,12 @@ onready var _base_height: int = Global.base_size.y
 onready var _base_size := Vector2(_base_width, _base_height)
 
 func _ready() -> void:
-    get_tree().connect("screen_resized", self, "_on_screen_resized")
+    get_tree().connect("screen_resized", self, "on_screen_resized")
     if not OS.is_debug_build():
         VisualServer.set_default_clear_color(Color("000000"))
         set_fullscreen(true)
     
-    _on_screen_resized()
+    on_screen_resized()
 
 func set_fullscreen(value: bool) -> void:
     if not fullscreen and value:
@@ -30,7 +30,7 @@ func set_fullscreen(value: bool) -> void:
         fullscreen = value
         OS.window_fullscreen = false
 
-func _on_screen_resized() -> void:
+func on_screen_resized() -> void:
     var window_size: Vector2 = OS.get_window_size()
 
     # See how big the window is compared to the viewport size.
@@ -40,6 +40,7 @@ func _on_screen_resized() -> void:
 
     # Use the smaller scale with 1x minimum scale.
     var scale: float = max(1, min(scale_x, scale_y))
+    Global.scale_factor = scale
 
     # Find the coordinate we will use to center the viewport inside the window.
     var diff: Vector2 = window_size - (_base_size * scale)

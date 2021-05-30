@@ -10,8 +10,8 @@ onready var _game_vp: Viewport = _find_viewport_leaf(self)
 onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 
 func _ready() -> void:
-    _game_vp.size = Global.base_size
-    _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)
+    get_tree().connect("screen_resized", self, "on_screen_resized")
+    Global.set_wide_screen(Global.wide_screen)  # Trigger pixel perfect scaling.
     _game_vpc.set_process_unhandled_input(true)
 
     if OS.is_debug_build():
@@ -24,6 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
         Global.take_screenshot()
     if event.is_action_pressed("action_debug_crt"):
         _game_vpc.use_parent_material = !_game_vpc.use_parent_material
+        on_screen_resized()
     if event.is_action_pressed("action_debug_fullscreen"):
         PixelPerfectScaling.fullscreen = !PixelPerfectScaling.fullscreen
 
@@ -53,3 +54,25 @@ func _find_viewport_leaf(node: Node) -> Viewport:
     
     print("No child Viewport node found below \'", name, "\'.")
     return null
+
+func on_screen_resized() -> void:
+    # Force same behavior of internal game viewport as root viewport with strech mode '2d'.
+    # This allows upscaling of the internal game viewport and applying post-processing
+    # shaders to the upscaled image. Furthermore, sub-pixel precision sprite movement
+    # and camera scrolling is maintained if upscaled this way.
+    # Disable this behavior if CRT shader is enabled (_game_vpc.use_parent_material == false).
+    _game_vp.set_size_override(_game_vpc.use_parent_material, Global.base_size)
+    _game_vp.set_size_override_stretch(_game_vpc.use_parent_material)
+
+    # Sets root viewport stretch mode to 'viewport' instead of '2d' for this to work properly.
+    get_viewport().set_size_override(false)
+
+    # Resize viewport container (vpc).
+    _game_vpc.rect_size = Global.base_size * Global.scale_factor
+
+    # Upscale internal game viewport (vp) if desired.
+    var scale: int = Global.scale_factor if _game_vpc.use_parent_material else 1
+    _game_vp.size = Global.base_size * scale
+
+    # CRT shaders are intended to be used without upscaling of the input.
+    _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)

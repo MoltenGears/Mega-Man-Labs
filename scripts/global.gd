@@ -12,6 +12,7 @@ var players_alive_count: int setget , get_players_alive_count
 var can_toggle_pause := true
 var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
+var scale_factor: int = 1
 var rng := RandomNumberGenerator.new()
 
 # Options
@@ -130,9 +131,7 @@ func set_wide_screen(value: bool) -> void:
     wide_screen = value
     ProjectSettings.set_setting("display/window/size/width", get_base_size().x)
     ProjectSettings.set_setting("display/window/size/height", get_base_size().y)
-    main_scene._game_vp.size = get_base_size()
-    main_scene._game_vpc.material.set_shader_param("screen_base_size", get_base_size().y)
     PixelPerfectScaling._base_width = get_base_size().x
     PixelPerfectScaling._base_height = get_base_size().y
     PixelPerfectScaling._base_size = Vector2(get_base_size().x, get_base_size().y)
-    PixelPerfectScaling._on_screen_resized()
+    get_tree().emit_signal("screen_resized")
