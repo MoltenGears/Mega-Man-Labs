@@ -57,9 +57,6 @@ func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed(_get_action_jump()) and Global.is_action_pressed(_get_action_down()):
         current_state._handle_command("slide")
 
-    if event.is_action_pressed(_get_action_jump()) and not Global.is_action_pressed(_get_action_down()):
-        current_state._handle_command("slide_jump")
-
     if event.is_action_pressed(_get_action_jump()):
         current_state._handle_command("jump")
     

@@ -39,8 +39,11 @@ func _enter() -> void:
     _slide_dust_anim.play("dust")
 
 func _handle_command(command: String) -> void:
-    if command == "slide_jump" and _can_exit and \
-            _frame_count >= LOCKED_FRAME_COUNT:
+    if (command == "jump"
+        and _can_exit
+        and _frame_count >= LOCKED_FRAME_COUNT
+        and not Global.is_action_pressed(get_parent().action_down)
+        ):
         emit_signal("finished", "jump")
 
     if command.begins_with("weapon_"):
