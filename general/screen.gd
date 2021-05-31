@@ -1,7 +1,9 @@
+tool
 extends Node2D
 
-export(String) var start_scene_release = "res://menus/TitleScreen.tscn"
-export(String) var start_scene_debug = "res://stages/heat/HeatStage.tscn"
+export(String) var start_scene_release := "res://menus/TitleScreen.tscn"
+export(String) var start_scene_debug := "res://stages/heat/HeatStage.tscn"
+export(String, "geom", "lotte") var crt_shader := "lotte" setget _set_crt_shader
 
 var _current_scene_path: String
 var current_scene: Node = null
@@ -10,6 +12,9 @@ onready var _game_vp: Viewport = _find_viewport_leaf(self)
 onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 
 func _ready() -> void:
+    if Engine.is_editor_hint():
+        return
+
     get_tree().connect("screen_resized", self, "on_screen_resized")
     Global.set_wide_screen(Global.wide_screen)  # Trigger pixel perfect scaling.
     _game_vpc.set_process_unhandled_input(true)
@@ -75,4 +80,22 @@ func on_screen_resized() -> void:
     _game_vp.size = Global.base_size * scale
 
     # CRT shaders are intended to be used without upscaling of the input.
-    _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)
+    if crt_shader == "geom":
+        _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)
+    elif crt_shader == "lotte":
+        _game_vpc.material.set_shader_param("InputSize", Global.base_size)
+        _game_vpc.material.set_shader_param("TextureSize", Global.base_size)
+
+func _set_crt_shader(value: String) -> void:
+    crt_shader = value
+    if not _game_vpc:
+        return
+
+    match value:
+        "geom":
+            _game_vpc.material = load("res://effects/crt_material.tres")
+        "lotte":
+            _game_vpc.material = load("res://effects/crt-lottes.tres")
+
+    if not Engine.is_editor_hint():
+        on_screen_resized()

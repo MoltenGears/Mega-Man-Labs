@@ -45,9 +45,11 @@ func _on_pressed(index: int) -> void:
         2:
             path = stage_top_right
             Global.wide_screen = false
+            Global.lighting_vfx = false
         3:
             path = stage_mid_left
             Global.wide_screen = true
+            Global.lighting_vfx = true
         5:
             path = stage_mid_right
         6:
