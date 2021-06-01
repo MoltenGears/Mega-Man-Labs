@@ -7,6 +7,7 @@ export(Color) var color_secondary: Color
 
 var weapon_energy: int = Constants.HIT_POINTS_MAX setget , _get_weapon_energy
 var can_power_charge: bool = false
+var use_alt_anim: bool = false
 var _charge_playback_position: float = 0.0
 
 onready var charge_sound: AudioStreamPlayer = get_node("../../SFX/ChargeWeapon")

@@ -4,7 +4,8 @@ export(Vector2) var buster_position := Vector2(17, -2)
 
 func _enter() -> void:
     owner.is_climbing = true
-    animation_player.play("climb_shoot")
+    animation_player.play(
+        "climb_shoot_alt" if weapons.current_state.use_alt_anim else "climb_shoot")
     mega_buster.position = buster_position
     shoot()
 

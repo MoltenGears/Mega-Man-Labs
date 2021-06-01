@@ -27,9 +27,10 @@ func _handle_command(command: String) -> void:
     
     if command == "shoot":
         _shoot_frame_count = -1
-        if animation_player.current_animation != "move_shoot":
+        if not animation_player.current_animation.begins_with("move_shoot"):
             _current_animation_pos = animation_player.current_animation_position
-            animation_player.play("move_shoot")
+            animation_player.play(
+                "move_shoot_alt" if weapons.current_state.use_alt_anim else "move_shoot")
             animation_player.seek(_current_animation_pos, true)
         shoot()
 

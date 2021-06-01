@@ -16,7 +16,8 @@ func _handle_command(command: String) -> void:
     
     if command == "shoot":
         animation_player.stop()
-        animation_player.play("idle_shoot")
+        animation_player.play(
+            "idle_shoot_alt" if weapons.current_state.use_alt_anim else "idle_shoot")
         shoot()
 
     if command.begins_with("weapon_"):
@@ -39,5 +40,5 @@ func _update(delta: float) -> void:
         _handle_command("shoot")
 
 func _on_animation_finished(anim_name: String) -> void:
-    if anim_name == "idle_shoot":
+    if anim_name.begins_with("idle_shoot"):
         animation_player.play("idle")

@@ -3,7 +3,8 @@ extends "jump.gd"
 export(Vector2) var buster_position := Vector2(17, -4)
 
 func _enter() -> void:
-    animation_player.play("jump_shoot")
+    animation_player.play(
+        "jump_shoot_alt" if weapons.current_state.use_alt_anim else "jump_shoot")
     mega_buster.position = buster_position
     velocity = _velocity_init
     _velocity_init = Vector2()
@@ -14,7 +15,8 @@ func _handle_command(command: String) -> void:
         velocity.y = 0
         
     if command == "shoot":
-        animation_player.play("jump_shoot")
+        animation_player.play(
+            "jump_shoot_alt" if weapons.current_state.use_alt_anim else "jump_shoot")
         shoot()
     
     if command.begins_with("weapon_"):
