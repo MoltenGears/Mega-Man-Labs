@@ -13,6 +13,7 @@ func on_weapon_changed(_weapon_energy: int, _new_color: Color) -> void:
         set_process(true)
         visible = true
         $Timer.start()
+        $TextureRect.use_parent_material = Global.player.name != "ProtoMan"
 
 func _set_texture() -> bool:
     var texture: Resource
