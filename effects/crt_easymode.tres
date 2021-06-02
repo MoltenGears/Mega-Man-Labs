@@ -1,4 +1,7 @@
-shader_type canvas_item;
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
 
 // Taken from https://github.com/AaronWizard/CRTScreenShader
 
@@ -142,4 +145,25 @@ void fragment()
 	col = pow(col, vec3(1.0 / gamma_output));
 
 	COLOR = vec4(col * bright_boost, 1.0);
-}
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/screen_base_size = 224.0
+shader_param/sharpness_h = 0.5
+shader_param/sharpness_v = 0.8
+shader_param/mask_strength = 0.3
+shader_param/mask_dot_width = 1.0
+shader_param/mask_dot_height = 1.0
+shader_param/mask_stagger = 0.0
+shader_param/mask_size = 1.0
+shader_param/scanline_strength = 0.5
+shader_param/scanline_beam_width_min = 1.5
+shader_param/scanline_beam_width_max = 1.5
+shader_param/scanline_bright_min = 0.35
+shader_param/scanline_bright_max = 0.65
+shader_param/scanline_cutoff = 300.0
+shader_param/gamma_input = 2.0
+shader_param/gamma_output = 1.9
+shader_param/bright_boost = 1.2
+shader_param/dilation = 1.0

@@ -3,7 +3,7 @@ extends Node2D
 
 export(String) var start_scene_release := "res://menus/TitleScreen.tscn"
 export(String) var start_scene_debug := "res://stages/heat/HeatStage.tscn"
-export(String, "geom", "lotte") var crt_shader := "lotte" setget _set_crt_shader
+export(String, "easymode", "lottes") var crt_shader := "lottes" setget _set_crt_shader
 
 var _current_scene_path: String
 var current_scene: Node = null
@@ -80,9 +80,9 @@ func on_screen_resized() -> void:
     _game_vp.size = Global.base_size * scale
 
     # CRT shaders are intended to be used without upscaling of the input.
-    if crt_shader == "geom":
+    if crt_shader == "easymode":
         _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)
-    elif crt_shader == "lotte":
+    elif crt_shader == "lottes":
         _game_vpc.material.set_shader_param("InputSize", Global.base_size)
         _game_vpc.material.set_shader_param("TextureSize", Global.base_size)
 
@@ -92,10 +92,10 @@ func _set_crt_shader(value: String) -> void:
         return
 
     match value:
-        "geom":
-            _game_vpc.material = load("res://effects/crt_material.tres")
-        "lotte":
-            _game_vpc.material = load("res://effects/crt-lottes.tres")
+        "easymode":
+            _game_vpc.material = load("res://effects/crt_easymode.tres")
+        "lottes":
+            _game_vpc.material = load("res://effects/crt_lottes.tres")
 
     if not Engine.is_editor_hint():
         on_screen_resized()
