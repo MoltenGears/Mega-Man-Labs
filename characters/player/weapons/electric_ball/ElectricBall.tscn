@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://characters/bosses/thunder_man/sprites/ThunderManElectricBall.png" type="Texture" id=1]
+[ext_resource path="res://stages/assets/precise_visibility_notifier_2D.gd" type="Script" id=2]
+[ext_resource path="res://characters/player/weapons/Reflect.wav" type="AudioStream" id=3]
+[ext_resource path="res://characters/player/weapons/electric_ball/electric_ball.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 8, 8 )
+
+[sub_resource type="Animation" id=2]
+length = 0.16
+loop = true
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.08 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[node name="ElectricBall" type="KinematicBody2D" groups=[
+"PlayerWeapons",
+]]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 4 )
+damage = 2
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="PreciseVisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+rect = Rect2( -8, -8, 16, 16 )
+script = ExtResource( 2 )
+
+[node name="ReflectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -6.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/pulse = SubResource( 2 )
+
+[connection signal="camera_exited" from="PreciseVisibilityNotifier2D" to="." method="on_camera_exited"]

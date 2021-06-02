@@ -49,5 +49,5 @@ func _init_states_map() -> void:
     states_map.clear()
     states_map["mega_buster"] = $MegaBuster
 
-    if GameState.unlocked_weapons.has("thunder_strike"):
-        states_map["thunder_strike"] = $ThunderStrike
+    if GameState.unlocked_weapons.has("electric_ball"):
+        states_map["electric_ball"] = $ElectricBall

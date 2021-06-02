@@ -33,7 +33,6 @@
 [ext_resource path="res://characters/player/cutscenes/stage_clear.gd" type="Script" id=31]
 [ext_resource path="res://characters/player/weapons/weapons_state_machine.gd" type="Script" id=32]
 [ext_resource path="res://characters/player/weapons/mega_buster_state.gd" type="Script" id=33]
-[ext_resource path="res://characters/player/weapons/thunder_strike/thunder_strike_state.gd" type="Script" id=34]
 [ext_resource path="res://characters/player/sounds/MegaBusterCharging.ogg" type="AudioStream" id=35]
 [ext_resource path="res://characters/player/sprites/mega_man/IdleMask.png" type="Texture" id=36]
 [ext_resource path="res://characters/player/shaders/SpecialEffects.tres" type="Material" id=37]
@@ -41,6 +40,7 @@
 [ext_resource path="res://characters/player/sprites/mega_man/IdleShootAlt.png" type="Texture" id=39]
 [ext_resource path="res://characters/player/sprites/mega_man/JumpShootAlt.png" type="Texture" id=40]
 [ext_resource path="res://characters/player/sprites/mega_man/RunShootAlt.png" type="Texture" id=41]
+[ext_resource path="res://characters/player/weapons/electric_ball/electric_ball_state.gd" type="Script" id=42]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -338,7 +338,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=9]
 resource_local_to_scene = true
 resource_name = "climb_shoot_alt"
 length = 0.32
@@ -380,7 +380,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 resource_local_to_scene = true
 length = 0.9
 tracks/0/type = "value"
@@ -444,7 +444,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 resource_local_to_scene = true
 length = 3.0
 loop = true
@@ -486,7 +486,7 @@ tracks/2/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 resource_local_to_scene = true
 length = 0.32
 step = 0.16
@@ -527,7 +527,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=13]
 resource_local_to_scene = true
 resource_name = "idle_shoot_alt"
 length = 0.32
@@ -569,7 +569,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 resource_local_to_scene = true
 length = 0.16
 loop = true
@@ -611,7 +611,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 resource_local_to_scene = true
 length = 0.16
 loop = true
@@ -653,7 +653,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=16]
 resource_local_to_scene = true
 resource_name = "jump_shoot_alt"
 length = 0.16
@@ -696,7 +696,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=17]
 resource_local_to_scene = true
 length = 0.48
 loop = true
@@ -738,7 +738,7 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=18]
 resource_local_to_scene = true
 length = 0.48
 loop = true
@@ -780,7 +780,7 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=19]
 resource_local_to_scene = true
 resource_name = "move_shoot_alt"
 length = 0.48
@@ -823,7 +823,7 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 1 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=20]
 resource_local_to_scene = true
 length = 0.08
 step = 0.08
@@ -864,7 +864,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=21]
 resource_local_to_scene = true
 length = 0.16
 loop = true
@@ -906,7 +906,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=22]
 resource_local_to_scene = true
 length = 0.9
 tracks/0/type = "value"
@@ -982,7 +982,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=23]
 resource_local_to_scene = true
 length = 0.6
 step = 1.0
@@ -1023,7 +1023,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=24]
 length = 1.3
 step = 0.08
 tracks/0/type = "value"
@@ -1169,24 +1169,24 @@ anims/climb_exit = SubResource( 5 )
 anims/climb_idle = SubResource( 6 )
 anims/climb_move = SubResource( 7 )
 anims/climb_shoot = SubResource( 8 )
-anims/climb_shoot_alt = SubResource( 21 )
-anims/exit = SubResource( 9 )
-anims/idle = SubResource( 10 )
-anims/idle_shoot = SubResource( 11 )
-anims/idle_shoot_alt = SubResource( 22 )
-anims/jump = SubResource( 12 )
-anims/jump_shoot = SubResource( 13 )
-anims/jump_shoot_alt = SubResource( 23 )
-anims/move = SubResource( 14 )
-anims/move_shoot = SubResource( 15 )
-anims/move_shoot_alt = SubResource( 24 )
-anims/ramp = SubResource( 16 )
-anims/slide = SubResource( 17 )
-anims/spawn = SubResource( 18 )
-anims/stagger = SubResource( 19 )
+anims/climb_shoot_alt = SubResource( 9 )
+anims/exit = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/idle_shoot = SubResource( 12 )
+anims/idle_shoot_alt = SubResource( 13 )
+anims/jump = SubResource( 14 )
+anims/jump_shoot = SubResource( 15 )
+anims/jump_shoot_alt = SubResource( 16 )
+anims/move = SubResource( 17 )
+anims/move_shoot = SubResource( 18 )
+anims/move_shoot_alt = SubResource( 19 )
+anims/ramp = SubResource( 20 )
+anims/slide = SubResource( 21 )
+anims/spawn = SubResource( 22 )
+anims/stagger = SubResource( 23 )
 
 [node name="AnimationInvincibility" type="AnimationPlayer" parent="."]
-anims/invincibility = SubResource( 20 )
+anims/invincibility = SubResource( 24 )
 
 [node name="SFX" type="Node" parent="."]
 
@@ -1255,12 +1255,11 @@ script = ExtResource( 33 )
 weapon_name = "mega_buster"
 color_primary = Color( 0.905882, 0.905882, 0.580392, 1 )
 
-[node name="ThunderStrike" type="Node" parent="Weapons"]
-script = ExtResource( 34 )
-weapon_name = "thunder_strike"
-energy_cost = 3
-color_primary = Color( 0.592157, 0.196078, 0.952941, 1 )
-color_secondary = Color( 0.686275, 0.513726, 0.686275, 1 )
+[node name="ElectricBall" type="Node" parent="Weapons"]
+script = ExtResource( 42 )
+weapon_name = "electric_ball"
+color_primary = Color( 0.407843, 0.266667, 0.988235, 1 )
+color_secondary = Color( 0.988235, 0.627451, 0.266667, 1 )
 
 [node name="EffectSpawner" parent="." instance=ExtResource( 30 )]
 

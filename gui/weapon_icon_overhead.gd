@@ -19,8 +19,8 @@ func _set_texture() -> bool:
     match Global.player.get_current_weapon_name():
         "mega_buster":
             texture = load("res://gui/textures/WeaponIconMegaBuster.png")
-        "thunder_strike":
-            texture = load("res://gui/textures/WeaponIconEmpty.png")
+        "electric_ball":
+            texture = load("res://gui/textures/WeaponIconElectricBall.png")
 
     if texture:
         $TextureRect.texture = texture
