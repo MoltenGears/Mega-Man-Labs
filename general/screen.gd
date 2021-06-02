@@ -76,7 +76,7 @@ func on_screen_resized() -> void:
     _game_vpc.rect_size = Global.base_size * Global.scale_factor
 
     # Upscale internal game viewport (vp) if desired.
-    var scale: int = Global.scale_factor if _game_vpc.use_parent_material else 1
+    var scale: float = Global.scale_factor if _game_vpc.use_parent_material else 1.0
     _game_vp.size = Global.base_size * scale
 
     # CRT shaders are intended to be used without upscaling of the input.

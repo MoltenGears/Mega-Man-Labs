@@ -8,6 +8,7 @@ extends Node
 # Set project settings stretch mode to '2d' and stretch aspect to 'ignore'.
 
 var fullscreen: bool = false setget set_fullscreen
+var allow_half_int: bool = true
 
 onready var _viewport: Viewport = get_viewport()
 onready var _base_width: int = Global.base_size.x
@@ -38,6 +39,12 @@ func on_screen_resized() -> void:
     var scale_x: float = floor(window_size.x / _base_width)
     var scale_y: float = floor(window_size.y / _base_height)
 
+    if allow_half_int:
+        # Recalculate scaling factors allowing half-integers.
+        # Enables a fullscreen image on 1080p screens (4.5 * 240 vertical resolution).
+        scale_x = round(window_size.x / _base_width * 2) / 2
+        scale_y = round(window_size.y / _base_height * 2) / 2
+    
     # Use the smaller scale with 1x minimum scale.
     var scale: float = max(1, min(scale_x, scale_y))
     Global.scale_factor = scale

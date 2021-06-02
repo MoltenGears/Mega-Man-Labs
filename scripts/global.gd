@@ -12,7 +12,7 @@ var players_alive_count: int setget , get_players_alive_count
 var can_toggle_pause := true
 var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
-var scale_factor: int = 1
+var scale_factor: float = 1
 var rng := RandomNumberGenerator.new()
 
 # Options
