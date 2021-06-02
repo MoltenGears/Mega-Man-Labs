@@ -4,6 +4,57 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
 
 ![In-game screenshot](/.resources/screenshot-01.png)
 
+## Features
+
+- Classic Mega Man physics
+- Mega Man and Proto Man as playable characters including optional
+  - Sliding
+  - Weapon charging
+  - Double jumping
+- Local multiplayer co-op mode (groundwork)
+- Flexible camera screen transition system
+- Support for arbitrary base resolutions
+  - Presets for regular (256 x 224) and wide-screen (384 x 240)
+  - Dynamic in-game base resolution switching
+  - Half-integer pixel-perfect upscaling
+  - Sub-pixel precision movement and camera scrolling
+- Post-processing shaders
+  - CRT-Easymode
+  - CRT-Lottes
+- Special weapons system
+  - Quick switch methods (MM10 and MM11 style)
+- UI, menus, and screens
+  - Title screen
+  - Stage-select screen
+  - Game-over screen
+  - Weapons sub-menu
+  - Life/weapon energy bars
+- Items and item drops
+  - Life/weapon energy pellets
+  - Extra lives
+  - Energy tanks
+- Checkpoints
+- Optional modern lighting effects
+  - Glow
+- Modern gamepad support
+- Stage building features
+  - Automatic conversion of ladder tiles (just draw them)
+  - Automatic conversion of insta-kill hazard tiles (just draw them)
+  - Doors (regular/boss)
+  - Example gimmicks
+    - Appearing blocks
+    - Conveyor belts
+    - Wall of death
+  - Example enemies
+    - Metall
+    - Shield Attacker
+    - Telly
+  - Example robot master bosses
+    - Thunder Man
+  - Example stages
+    - Test lab stage
+    - Wide-screen rebuild of Heat Man's stage (MM2)
+
 ## Purpose and Scope
 
 Always wanting to try out game development, I aimlessly read about and fiddled
