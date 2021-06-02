@@ -20,7 +20,7 @@ animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
-"speed": 15.0
+"speed": 8.0
 } ]
 
 [sub_resource type="AtlasTexture" id=5]
@@ -36,7 +36,7 @@ animations = [ {
 "frames": [ SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
 "name": "default",
-"speed": 15.0
+"speed": 8.0
 } ]
 
 [node name="ConveyorBelt" type="StaticBody2D"]
