@@ -79,7 +79,7 @@ func set_bar_orientation(is_horizontal: bool) -> void:
         horizontal = is_horizontal
 
 func _set_current_hp_bar(hit_points: int) -> void:
-    var offset := clamp(2 * (Constants.HIT_POINTS_MAX - hit_points) - 1, 0, 2 * Constants.HIT_POINTS_MAX - 1)
+    var offset := clamp(2 * (Constants.HIT_POINTS_MAX - hit_points), 0, 2 * Constants.HIT_POINTS_MAX)
     if horizontal:
         _overlay_h["rect_size"].x = offset
         _overlay_h["rect_position"].x = 2 * Constants.HIT_POINTS_MAX - offset
@@ -88,9 +88,9 @@ func _set_current_hp_bar(hit_points: int) -> void:
 
 func _get_current_hp_bar() -> int:
     if horizontal:
-        return int(round(Constants.HIT_POINTS_MAX - (_overlay_h["rect_size"].x + 1) / 2))
+        return int(round(Constants.HIT_POINTS_MAX - _overlay_h["rect_size"].x / 2))
     else:
-        return int(round(Constants.HIT_POINTS_MAX - (_overlay["rect_size"].y + 1) / 2))
+        return int(round(Constants.HIT_POINTS_MAX - _overlay["rect_size"].y / 2))
 
 func _update_bar(hit_points) -> void:
     var fill_delay: float = FILL_DELAY if Global.bar_fill_pause else FILL_DELAY_NON_PAUSING
