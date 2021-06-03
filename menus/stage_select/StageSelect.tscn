@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://menus/stage_select/StageSelectBG.png" type="Texture" id=1]
 [ext_resource path="res://menus/stage_select/MM_11-StageSelect.ogg" type="AudioStream" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://menus/stage_select/StageSelected.wav" type="AudioStream" id=11]
 [ext_resource path="res://effects/FadeEffects.tscn" type="PackedScene" id=12]
 [ext_resource path="res://menus/stage_select/FlashShaderMaterial.tres" type="Material" id=13]
+[ext_resource path="res://menus/stage_select/MugshotUnknown.png" type="Texture" id=14]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 8 )
@@ -492,13 +493,15 @@ __meta__ = {
 
 [node name="MugshotTopLeft" type="Sprite" parent="Mugshots"]
 position = Vector2( -80, -80 )
+texture = ExtResource( 14 )
 
 [node name="MugshotTopCenter" type="Sprite" parent="Mugshots"]
 position = Vector2( 0, -80 )
+texture = ExtResource( 14 )
 
 [node name="MugshotTopRight" type="Sprite" parent="Mugshots"]
 position = Vector2( 80, -80 )
-texture = ExtResource( 10 )
+texture = ExtResource( 14 )
 
 [node name="MugshotMidLeft" type="Sprite" parent="Mugshots"]
 position = Vector2( -80, -16 )
@@ -513,15 +516,19 @@ frame = 4
 
 [node name="MugshotMidRight" type="Sprite" parent="Mugshots"]
 position = Vector2( 80, -16 )
+texture = ExtResource( 14 )
 
 [node name="MugshotBottomLeft" type="Sprite" parent="Mugshots"]
 position = Vector2( -80, 48 )
+texture = ExtResource( 14 )
 
 [node name="MugshotBottomCenter" type="Sprite" parent="Mugshots"]
 position = Vector2( 0, 48 )
+texture = ExtResource( 14 )
 
 [node name="MugshotBottomRight" type="Sprite" parent="Mugshots"]
 position = Vector2( 80, 48 )
+texture = ExtResource( 14 )
 
 [node name="FadeEffects" parent="." instance=ExtResource( 12 )]
 visible = false
