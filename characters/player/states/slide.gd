@@ -13,13 +13,16 @@ var velocity: Vector2
 var _frame_count: int
 var _can_exit: bool
 var _was_in_front_of_wall: bool
+var _cancel_on_next_frame: bool
 
 func _enter() -> void:
     if owner.stopper_ray_cast.is_colliding():
         _was_in_front_of_wall = true
+        _cancel_on_next_frame = true
         return
     else:
         _was_in_front_of_wall = false
+        _cancel_on_next_frame = false
 
     owner.is_sliding = true
     owner.buffering_charge = true
@@ -60,16 +63,16 @@ func _exit() -> void:
     _collision_shape.position.y -= 6
 
 func _update(delta: float) -> void:
+    if _cancel_on_next_frame:
+        emit_signal("finished", "idle")
+        return
+    
     # Enough empty space above.
     _can_exit = !_ray_cast.is_colliding()
 
-    # Cancel slide if hitting a wall.
-    if owner.stopper_ray_cast.is_colliding() and _can_exit:
-        emit_signal("finished", "idle")
-    else:
-        velocity.y += owner.gravity
-        velocity.x = SLIDE_SPEED * owner.get_facing_direction().x
-        velocity = owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
+    velocity.y += owner.gravity
+    velocity.x = SLIDE_SPEED * owner.get_facing_direction().x
+    velocity = owner.move_and_slide(velocity, Constants.FLOOR_NORMAL)
 
     # Full slide duration passed.
     var input_direction: Vector2 = get_input_direction()
@@ -91,3 +94,8 @@ func _update(delta: float) -> void:
 
     if not owner.is_on_floor() and _can_exit:
         emit_signal("finished", "jump")
+
+    # Cancel slide on next frame if hitting a wall.
+    # Deferring to next frame is required to allow sliding into insta-death hazards.
+    if owner.stopper_ray_cast.is_colliding() and _can_exit:
+        _cancel_on_next_frame = true
