@@ -42,8 +42,8 @@ func on_screen_resized() -> void:
     if allow_half_int:
         # Recalculate scaling factors allowing half-integers.
         # Enables a fullscreen image on 1080p screens (4.5 * 240 vertical resolution).
-        scale_x = round(window_size.x / _base_width * 2) / 2
-        scale_y = round(window_size.y / _base_height * 2) / 2
+        scale_x = floor(window_size.x / _base_width * 2) / 2
+        scale_y = floor(window_size.y / _base_height * 2) / 2
     
     # Use the smaller scale with 1x minimum scale.
     var scale: float = max(1, min(scale_x, scale_y))
