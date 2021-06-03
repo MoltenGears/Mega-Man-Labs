@@ -1,8 +1,10 @@
 tool
 extends Control
 
+# Do not set these values below 0.035. Otherwise sound might occasionally not play at all.
+# Related to https://github.com/godotengine/godot/issues/37148
 const FILL_DELAY: float = 0.05
-const FILL_DELAY_NON_PAUSING: float = 0.02
+const FILL_DELAY_NON_PAUSING: float = 0.035
 
 export(String) var bar_name := ""
 export(Color) var color := Color("e7e794") setget set_bar_color
@@ -93,9 +95,18 @@ func _get_current_hp_bar() -> int:
 func _update_bar(hit_points) -> void:
     var fill_delay: float = FILL_DELAY if Global.bar_fill_pause else FILL_DELAY_NON_PAUSING
     if fill_with_sound:
+        # stop() and stream_paused is part of a workaround to avoid infinite gage sound.
+        # See https://github.com/godotengine/godot/issues/37148
+        $FillSound.stop()
+        $FillSound.stream_paused = false
         $FillSound.play()
     while round(clamp(hit_points, 0, Constants.HIT_POINTS_MAX)) != round(_get_current_hp_bar()):
         yield(get_tree().create_timer(fill_delay), "timeout")
         _set_current_hp_bar(_get_current_hp_bar() + sign(hit_points - _get_current_hp_bar()))
-    $FillSound.stop()
+
+    $FillSound.stream_paused = true  # Part of above workaround. Should just be stop() here.
+    $FillSound.call_deferred("stop")  # Ensure that audio is properly stopped as part of workaround.
+    # Otherwise audio will be resumed in infinite loop when exiting the pause menu or after
+    # a camera screen transition due to get_tree().paused = false.
+
     emit_signal("_bar_update_complete")

@@ -31,6 +31,7 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - Life/weapon energy bars
 - Items and item drops
   - Life/weapon energy pellets
+    - Optional non-pausing energy refills (MM11 style)
   - Extra lives
   - Energy tanks
 - Checkpoints

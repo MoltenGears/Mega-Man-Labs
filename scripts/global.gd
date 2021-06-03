@@ -17,7 +17,7 @@ var rng := RandomNumberGenerator.new()
 
 # Options
 var wide_screen := true setget set_wide_screen
-var bar_fill_pause := true
+var bar_fill_pause := false
 var lighting_vfx := true  # Requires World Environment with glow effect.
 
 func _ready() -> void:
