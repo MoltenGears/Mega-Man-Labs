@@ -1,6 +1,6 @@
 extends "common.gd"
 
-const FREEZE_TIME: float = 0.24    # Seconds
+const FREEZE_TIME: float = 0.33  # Seconds
 
 func _enter() -> void:
     # Stop state machine
@@ -9,13 +9,13 @@ func _enter() -> void:
     owner.buffering_charge = false
 
     # Short screen freeze before death explosion.
-    # Is not working as expected as is. Incorrect animation state is frozen.
-    # var pause_mode_temp = animation_player.pause_mode
-    # animation_player.pause_mode = PAUSE_MODE_STOP
-    # get_tree().paused = true
-    # yield(get_tree().create_timer(FREEZE_TIME), "timeout")
-    # get_tree().paused = false
-    # animation_player.pause_mode = pause_mode_temp
+    get_tree().paused = true
+    var pause_mode_temp := animation_player.pause_mode
+    animation_player.pause_mode = PAUSE_MODE_PROCESS
+    animation_player.play("stagger")
+    yield(get_tree().create_timer(FREEZE_TIME), "timeout")
+    animation_player.pause_mode = pause_mode_temp
+    get_tree().paused = false
 
     # Vanish and explode
     owner.visible = false
