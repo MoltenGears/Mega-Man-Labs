@@ -22,7 +22,8 @@ func _ready() -> void:
     $CameraTween.connect("tween_completed", self, "_on_tween_completed")
     
     camera_target = get_node(player_target_node) as Node2D
-    global_position = camera_target.global_position
+    global_position = _get_target_pos()
+    _set_multiplayer_boundaries_dimensions()
     init_limits()
 
 func _physics_process(delta: float) -> void:
@@ -30,7 +31,8 @@ func _physics_process(delta: float) -> void:
         if p.global_position.distance_to(get_camera_screen_center()) > _death_distance:
             p.die(false)
 
-    position = camera_target.position
+    global_position = _get_target_pos()
+    $MultiplayerBoundaries.global_position = get_camera_screen_center()
 
 func transition(dir: Vector2, transition: CameraTransition) -> void:
     if _get_transition_position(dir, true) == _ray.cast_to:
@@ -82,7 +84,7 @@ func on_restarted() -> void:
         if not is_connected("transition_end", p, "on_camera_transition_end"):
             connect("transition_end", p, "on_camera_transition_end")
     
-    global_position = camera_target.global_position
+    global_position = _get_target_pos()
     init_limits()
 
 func init_limits() -> void:
@@ -94,7 +96,7 @@ func init_limits() -> void:
 func _on_tween_completed(object: Object, key: NodePath) -> void:
     init_limits()
     set_as_toplevel(false)
-    global_position = camera_target.global_position
+    global_position = _get_target_pos()
     get_tree().paused = false
     set_physics_process(true)
     emit_signal("transition_end")
@@ -130,3 +132,39 @@ func _get_transition_position(dir: Vector2, on_camera_screen_center := false) ->
         return _ray.get_collider().global_position
     else:
         return _ray.cast_to
+
+func _get_target_pos() -> Vector2:
+    if Global.players_alive_count > 1:
+        # There are no min/max constants. 1e6 is just a substitute for that.
+        var most_left_pos: float = 1e6
+        var most_right_pos: float = -1e6
+        var most_up_pos: float = 1e6
+        var most_down_pos: float = -1e6
+
+        for p in Global.players.values():
+            most_left_pos = min(most_left_pos, p.global_position.x)
+            most_right_pos = max(most_right_pos, p.global_position.x)
+            most_up_pos = min(most_up_pos, p.global_position.y)
+            most_down_pos = max(most_down_pos, p.global_position.y)
+
+        return Vector2((most_left_pos + most_right_pos) / 2, (most_up_pos + most_down_pos) / 2)
+    else:
+        return camera_target.global_position
+
+func _set_multiplayer_boundaries_dimensions() -> void:
+    var offset: int = 8
+    var width: int = 4
+    var x: float = Global.base_size.x
+    var y: float = Global.base_size.y
+
+    $MultiplayerBoundaries/CollisionShapeTop.shape.extents.x = x / 2
+    $MultiplayerBoundaries/CollisionShapeTop.shape.extents.y = width
+    $MultiplayerBoundaries/CollisionShapeTop.position.y = -y / 2 - offset
+
+    $MultiplayerBoundaries/CollisionShapeLeft.shape.extents.x = width
+    $MultiplayerBoundaries/CollisionShapeLeft.shape.extents.y = y / 2
+    $MultiplayerBoundaries/CollisionShapeLeft.position.x = -x / 2 - offset
+
+    $MultiplayerBoundaries/CollisionShapeRight.shape.extents.x = width
+    $MultiplayerBoundaries/CollisionShapeRight.shape.extents.y = y / 2
+    $MultiplayerBoundaries/CollisionShapeRight.position.x = x / 2 + offset

@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://characters/player/camera/player_camera.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 192, 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+resource_local_to_scene = true
+extents = Vector2( 4, 120 )
+
+[sub_resource type="RectangleShape2D" id=4]
+resource_local_to_scene = true
+extents = Vector2( 4, 120 )
 
 [node name="PlayerCamera" type="Camera2D"]
 pause_mode = 2
@@ -26,3 +38,19 @@ cast_to = Vector2( 100, 0 )
 collision_mask = 16
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="MultiplayerBoundaries" type="StaticBody2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShapeTop" type="CollisionShape2D" parent="MultiplayerBoundaries"]
+position = Vector2( 0, -128 )
+shape = SubResource( 1 )
+
+[node name="CollisionShapeLeft" type="CollisionShape2D" parent="MultiplayerBoundaries"]
+position = Vector2( -200, 0 )
+shape = SubResource( 3 )
+
+[node name="CollisionShapeRight" type="CollisionShape2D" parent="MultiplayerBoundaries"]
+position = Vector2( 200, 0 )
+shape = SubResource( 4 )
