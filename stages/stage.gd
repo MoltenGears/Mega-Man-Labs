@@ -179,6 +179,9 @@ func _connect_signals() -> void:
     _try_connect(player, "weapon_changed", _gui_weapon_bar, "on_weapon_changed")
     _try_connect(player, "weapon_changed", _gui_weapon_icon_overhead, "on_weapon_changed")
     _try_connect(player, "died", _gui_pause, "set_can_pause", [false])
+    for p in players.values():
+        _try_connect(p, "died", get_current_camera(), "on_died")
+        _try_connect(p, "death_freeze_finished", get_current_camera(), "on_death_freeze_finished", [p])
 
     _try_connect(GameState, "extra_life_count_changed", _gui_pause, "on_extra_life_count_changed")
     _try_connect(GameState, "energy_tank_count_changed", _gui_pause, "on_energy_tank_count_changed")

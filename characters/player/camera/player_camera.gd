@@ -9,6 +9,8 @@ export(float) var transition_time := 1.0
 var camera_target: Node2D
 var _transition_pos: int
 var _direction: Vector2
+var _boundaries_collision_mask: int
+var _switching_target: bool
 
 onready var _ray: RayCast2D = $TransitionFinder
 onready var _base_width: int = Global.base_size.x
@@ -24,6 +26,7 @@ func _ready() -> void:
     camera_target = get_node(player_target_node) as Node2D
     global_position = _get_target_pos()
     _set_multiplayer_boundaries_dimensions()
+    _boundaries_collision_mask = $MultiplayerBoundaries.collision_mask
     init_limits()
 
 func _physics_process(delta: float) -> void:
@@ -31,8 +34,9 @@ func _physics_process(delta: float) -> void:
         if p.global_position.distance_to(get_camera_screen_center()) > _death_distance:
             p.die(false)
 
-    global_position = _get_target_pos()
-    $MultiplayerBoundaries.global_position = get_camera_screen_center()
+    if not _switching_target:
+        global_position = _get_target_pos()
+        $MultiplayerBoundaries.global_position = get_camera_screen_center()
 
 func transition(dir: Vector2, transition: CameraTransition) -> void:
     if _get_transition_position(dir, true) == _ray.cast_to:
@@ -44,9 +48,10 @@ func transition(dir: Vector2, transition: CameraTransition) -> void:
     set_physics_process(false)
     _direction = dir
     var old_cam_pos: Vector2 = get_camera_screen_center()
-    _update_limit()    # Must be called before camera is set to top level
+    _update_limit()  # Must be called before camera is set to top level.
     set_as_toplevel(true)
     position = old_cam_pos
+    $MultiplayerBoundaries.collision_mask = 0  # Prevent moving players.
 
     var target_position: Vector2
     if _direction.x != 0:
@@ -87,6 +92,32 @@ func on_restarted() -> void:
     global_position = _get_target_pos()
     init_limits()
 
+func on_died() -> void:
+    if Global.players_alive_count > 0:
+        _switching_target = true
+
+func on_death_freeze_finished(dead_player: Node2D) -> void:
+    if Global.players_alive_count < 1:
+        return
+    elif Global.players_alive_count == 1:
+        for p in Global.players.values():
+            if not p.is_dead:
+                camera_target = p
+                break
+
+    get_tree().paused = true
+    $MultiplayerBoundaries.collision_mask = 0  # Prevent moving players.
+
+    $CameraTween.interpolate_property(
+        self,
+        'global_position',
+        get_camera_screen_center(),
+        _get_target_pos(),
+        0.66,
+        Tween.TRANS_QUAD,
+        Tween.EASE_IN_OUT)
+    $CameraTween.start()
+
 func init_limits() -> void:
     limit_right = _get_transition_position(Vector2.RIGHT).x
     limit_left = _get_transition_position(Vector2.LEFT).x
@@ -94,12 +125,17 @@ func init_limits() -> void:
     limit_bottom = _get_transition_position(Vector2.DOWN).y
 
 func _on_tween_completed(object: Object, key: NodePath) -> void:
-    init_limits()
-    set_as_toplevel(false)
-    global_position = _get_target_pos()
-    get_tree().paused = false
-    set_physics_process(true)
-    emit_signal("transition_end")
+    if _switching_target:
+        get_tree().paused = false
+        $MultiplayerBoundaries.collision_mask = _boundaries_collision_mask
+        _switching_target = false
+    else:
+        init_limits()
+        set_as_toplevel(false)
+        global_position = _get_target_pos()
+        get_tree().paused = false
+        set_physics_process(true)
+        emit_signal("transition_end")
 
 func _update_limit() -> void:
     if _direction == Vector2.RIGHT:

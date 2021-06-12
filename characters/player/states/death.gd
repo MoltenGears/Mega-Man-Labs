@@ -16,6 +16,7 @@ func _enter() -> void:
     yield(get_tree().create_timer(FREEZE_TIME), "timeout")
     animation_player.pause_mode = pause_mode_temp
     get_tree().paused = false
+    owner.emit_signal("death_freeze_finished")
 
     # Vanish and explode
     owner.visible = false

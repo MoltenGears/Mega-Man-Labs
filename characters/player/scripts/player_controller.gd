@@ -35,6 +35,7 @@ signal hit_points_changed(hit_points)
 signal weapon_energy_changed(weapon_energy)
 signal weapon_changed(weapon_energy, new_color)
 signal died()
+signal death_freeze_finished()
 signal exited()
 
 func _ready() -> void:
