@@ -9,19 +9,18 @@ uniform vec4 secondary_color: hint_color;
 uniform bool enabled;
 
 void fragment(){
-    if (!enabled)
-        return;
+    if (enabled){
+        vec4 color = texture(TEXTURE, UV);
 
-    vec4 color = texture(TEXTURE, UV);
+        if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
+            color = outline_color;
+        else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
+            color = primary_color;
+        else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
+            color = secondary_color;
 
-    if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
-        color = outline_color;
-    else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
-        color = primary_color;
-    else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
-        color = secondary_color;
-
-    COLOR = color;
+        COLOR = color;
+       }
    }
 "
 

@@ -172,10 +172,12 @@ func reset_color() -> void:
 func play_special_animation(anim_name: String) -> void:
     $"SpriteMask/AnimationSpecialEffects".play(anim_name)
     $SpriteMask.material.set_shader_param("enabled", true)
+    $SpriteMask.visible = true
 
 func stop_special_animation() -> void:
     $"SpriteMask/AnimationSpecialEffects".stop()
     $SpriteMask.material.set_shader_param("enabled", false)
+    $SpriteMask.visible = false
 
 func _take_damage(damage: int) -> void:
     hit_points -= damage * damage_multiplier
