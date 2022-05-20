@@ -20,6 +20,8 @@ var wide_screen := true setget set_wide_screen
 var bar_fill_pause := false
 var lighting_vfx := true  # Requires World Environment with glow effect.
 
+signal internal_res_changed()
+
 func _ready() -> void:
     rng.randomize()
 
@@ -130,9 +132,8 @@ func get_projectile_speed() -> float:
 
 func set_wide_screen(value: bool) -> void:
     wide_screen = value
-    ProjectSettings.set_setting("display/window/size/width", get_base_size().x)
-    ProjectSettings.set_setting("display/window/size/height", get_base_size().y)
     PixelPerfectScaling._base_width = get_base_size().x
     PixelPerfectScaling._base_height = get_base_size().y
     PixelPerfectScaling._base_size = Vector2(get_base_size().x, get_base_size().y)
     get_tree().emit_signal("screen_resized")
+    emit_signal("internal_res_changed")

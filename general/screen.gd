@@ -15,7 +15,10 @@ func _ready() -> void:
     if Engine.is_editor_hint():
         return
 
-    get_tree().connect("screen_resized", self, "on_screen_resized")
+    _game_vp.get_texture().flags = Texture.FLAG_FILTER
+
+    Global.connect("internal_res_changed", self, "on_internal_res_changed")
+    # get_tree().connect("screen_resized", self, "on_screen_resized")
     Global.set_wide_screen(Global.wide_screen)  # Trigger pixel perfect scaling.
     _game_vpc.set_process_unhandled_input(true)
 
@@ -59,6 +62,15 @@ func _find_viewport_leaf(node: Node) -> Viewport:
     
     print("No child Viewport node found below \'", name, "\'.")
     return null
+
+func on_internal_res_changed() -> void:
+    _game_vp.size = Global.base_size
+    _game_vpc.rect_size = Global.base_size
+    get_tree().set_screen_stretch(
+        get_tree().STRETCH_MODE_2D,
+        get_tree().STRETCH_ASPECT_KEEP,
+        Global.base_size,
+        1)
 
 func on_screen_resized() -> void:
     # Force same behavior of internal game viewport as root viewport with strech mode '2d'.

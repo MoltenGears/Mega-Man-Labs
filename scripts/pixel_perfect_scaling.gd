@@ -7,6 +7,9 @@ extends Node
 
 # Set project settings stretch mode to '2d' and stretch aspect to 'ignore'.
 
+# This is no longer required and is superseded by a pixel art scaling shader.
+# on_screen_resized() will be removed in a future commit.
+
 var fullscreen: bool = false setget set_fullscreen
 var allow_half_int: bool = true
 
@@ -16,12 +19,12 @@ onready var _base_height: int = Global.base_size.y
 onready var _base_size := Vector2(_base_width, _base_height)
 
 func _ready() -> void:
-    get_tree().connect("screen_resized", self, "on_screen_resized")
+    # get_tree().connect("screen_resized", self, "on_screen_resized")
     if not OS.is_debug_build():
         VisualServer.set_default_clear_color(Color("000000"))
         set_fullscreen(true)
     
-    on_screen_resized()
+    # on_screen_resized()
 
 func set_fullscreen(value: bool) -> void:
     if not fullscreen and value:
