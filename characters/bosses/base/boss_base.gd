@@ -13,7 +13,8 @@ var is_restarting: bool
 
 onready var _base_width: int = Global.base_size.x
 onready var _animated_sprite: AnimatedSprite = $"CharacterSprites/AnimatedSprite"
-onready var life_bar: Control = Global.get_current_stage().get_node("GUI/BossBar")
+onready var life_bar: Control = Global.get_current_stage().get_node(
+    "GUI/MarginContainer/LifeEnergyBar/BossBar")
 
 signal change_state(state_name)
 signal hit_points_changed(_hit_points)

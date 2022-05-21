@@ -9,9 +9,6 @@
 
 [node name="Bar" type="Control"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 8.0

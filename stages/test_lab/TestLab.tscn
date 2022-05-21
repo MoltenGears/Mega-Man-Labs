@@ -249,6 +249,7 @@ player_target_node = NodePath("../Player")
 position = Vector2( 1040, 152 )
 persistent = true
 respawns_on_restart = true
+hit_points_healed = 10
 
 [node name="LifeEnergySmall01" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 1024, -372 )
@@ -265,6 +266,7 @@ persistent = true
 [node name="LifeEnergyBig02" parent="PickUps" instance=ExtResource( 9 )]
 position = Vector2( 1104, -376 )
 persistent = true
+hit_points_healed = 10
 
 [node name="ExtraLife01" parent="PickUps" instance=ExtResource( 11 )]
 position = Vector2( 1184, 88 )
@@ -294,6 +296,7 @@ persistent = true
 position = Vector2( 2208, 536 )
 persistent = true
 respawns_on_restart = true
+hit_points_healed = 10
 
 [node name="LifeEnergySmall04" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 2080, 732 )
@@ -314,6 +317,7 @@ respawns_on_restart = true
 position = Vector2( 3808, 856 )
 persistent = true
 respawns_on_restart = true
+hit_points_healed = 10
 
 [node name="LifeEnergySmall07" parent="PickUps" instance=ExtResource( 10 )]
 position = Vector2( 3504, 748 )
@@ -373,12 +377,15 @@ max_distance = 128
 
 [node name="EnemyShieldAttacker02" parent="Enemies" instance=ExtResource( 14 )]
 position = Vector2( 1696, -272 )
+max_distance = 192
 
 [node name="EnemyShieldAttacker03" parent="Enemies" instance=ExtResource( 14 )]
 position = Vector2( 2528, -272 )
+max_distance = 192
 
 [node name="EnemyShieldAttacker04" parent="Enemies" instance=ExtResource( 14 )]
 position = Vector2( 2784, -385 )
+max_distance = 192
 
 [node name="EnemyShieldAttacker05" parent="Enemies" instance=ExtResource( 14 )]
 position = Vector2( 3312, 575 )
@@ -442,9 +449,6 @@ anchor_left = 0.05
 anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.95
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 17 )]
 visible = false
@@ -456,9 +460,11 @@ visible = false
 margin_left = 12.0
 color = Color( 0.827451, 0.580392, 0.905882, 1 )
 
-[node name="BossBar" parent="GUI" instance=ExtResource( 17 )]
+[node name="BossBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 17 )]
 visible = false
-margin_left = 16.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -8.0
 color = Color( 0.588235, 0.352941, 0.929412, 1 )
 
 [node name="Ready" parent="GUI" instance=ExtResource( 18 )]
