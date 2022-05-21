@@ -583,68 +583,6 @@ position = Vector2( 4416, 1200 )
 is_rotated = true
 base_size = Vector2( 384, 240 )
 
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="EnemyTelly1" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 680, 88 )
-
-[node name="EnemyTelly2" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 744, 120 )
-
-[node name="EnemyTelly3" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 840, 72 )
-
-[node name="EnemyTelly4" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 904, 104 )
-
-[node name="EnemyTelly5" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 984, 152 )
-
-[node name="EnemyTelly6" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1064, 88 )
-
-[node name="EnemyTelly7" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1160, 88 )
-
-[node name="EnemyTelly8" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1256, 56 )
-
-[node name="EnemyTelly9" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1352, 88 )
-
-[node name="EnemyTelly10" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1480, 88 )
-
-[node name="EnemyTelly11" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 1976, 568 )
-
-[node name="EnemyTelly12" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2024, 600 )
-
-[node name="EnemyTelly13" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2136, 552 )
-
-[node name="EnemyTelly14" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2312, 616 )
-
-[node name="EnemyTelly15" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2360, 600 )
-
-[node name="EnemyTelly16" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2408, 552 )
-
-[node name="EnemyTelly17" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2520, 552 )
-
-[node name="EnemyTelly18" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 2712, 552 )
-
-[node name="PickUps" type="Node2D" parent="."]
-
-[node name="ExtraLife" parent="PickUps" instance=ExtResource( 16 )]
-position = Vector2( 4024, 649 )
-persistent = true
-
 [node name="Gimmicks" type="Node2D" parent="."]
 
 [node name="AppearingBlockSet1" parent="Gimmicks" instance=ExtResource( 15 )]
@@ -838,6 +776,68 @@ show_index = true
 position = Vector2( 192, 16 )
 index = 3
 show_index = true
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyTelly1" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 680, 88 )
+
+[node name="EnemyTelly2" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 744, 120 )
+
+[node name="EnemyTelly3" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 840, 72 )
+
+[node name="EnemyTelly4" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 904, 104 )
+
+[node name="EnemyTelly5" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 984, 152 )
+
+[node name="EnemyTelly6" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1064, 88 )
+
+[node name="EnemyTelly7" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1160, 88 )
+
+[node name="EnemyTelly8" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1256, 56 )
+
+[node name="EnemyTelly9" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1352, 88 )
+
+[node name="EnemyTelly10" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1480, 88 )
+
+[node name="EnemyTelly11" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 1976, 568 )
+
+[node name="EnemyTelly12" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2024, 600 )
+
+[node name="EnemyTelly13" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2136, 552 )
+
+[node name="EnemyTelly14" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2312, 616 )
+
+[node name="EnemyTelly15" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2360, 600 )
+
+[node name="EnemyTelly16" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2408, 552 )
+
+[node name="EnemyTelly17" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2520, 552 )
+
+[node name="EnemyTelly18" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 2712, 552 )
+
+[node name="PickUps" type="Node2D" parent="."]
+
+[node name="ExtraLife" parent="PickUps" instance=ExtResource( 16 )]
+position = Vector2( 4024, 649 )
+persistent = true
 
 [node name="GUI" type="CanvasLayer" parent="."]
 

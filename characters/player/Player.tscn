@@ -1049,7 +1049,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 1, 13 ]
+"values": [ 65, 77 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:modulate")
@@ -1167,6 +1167,7 @@ anims/power_charge_lvl2 = SubResource( 3 )
 
 [node name="SpriteEffect" type="Sprite" parent="."]
 visible = false
+texture = ExtResource( 13 )
 
 [node name="SpriteDust" type="Sprite" parent="."]
 visible = false
