@@ -1,6 +1,6 @@
 extends Node2D
 
-export(float) var speed := 75
+export(float) var speed := 75.0
 export(int) var travel_distance_tiles := 10
 
 var _start_pos: Vector2

@@ -38,7 +38,6 @@ var _mask_textures: Dictionary = {
 onready var _sprite: Sprite = $"../Sprite"
 
 func _ready() -> void:
-    visible = true
     if Global.lighting_vfx:
         modulate = Color(1.1, 1.1, 1.1, 1)
 

@@ -11,9 +11,7 @@
 resource_local_to_scene = true
 extents = Vector2( 3, 4 )
 
-[node name="Projectile" type="KinematicBody2D" groups=[
-"PlayerWeapons",
-]]
+[node name="Projectile" type="KinematicBody2D" groups=["PlayerWeapons"]]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource( 1 )

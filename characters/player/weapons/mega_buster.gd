@@ -19,12 +19,10 @@ func _ready() -> void:
             $AnimatedSprite.flip_h = true
 
     if has_node("AnimatedSprite"):  # Charge level 2
-        var dir_temp: Vector2 = direction
-        direction = Vector2()
-        $AnimatedSprite.play("muzzle_flash")
-        yield($AnimatedSprite, "animation_finished")
+        $MuzzleFlashAnimatedSprite.set_as_toplevel(true)
+        $MuzzleFlashAnimatedSprite.global_position = global_position
+        $MuzzleFlashAnimatedSprite.play("muzzle_flash")
         $AnimatedSprite.play("default")
-        direction = dir_temp
 
 func _physics_process(delta: float) -> void:
     move_and_collide(direction.normalized() * Global.get_projectile_speed() * delta)
@@ -32,7 +30,6 @@ func _physics_process(delta: float) -> void:
 func reflect() -> void:
     $ReflectSFX.play()
     direction = Vector2(-direction.x, -1)
-    set_collision_layer_bit(3, false)
     $Sprite.flip_h = !$Sprite.flip_h
 
     if has_node("AnimatedSprite"):  # Charge level 2
