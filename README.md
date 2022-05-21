@@ -16,8 +16,7 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
 - Support for arbitrary base resolutions
   - Presets for regular (256 x 224) and wide-screen (384 x 240)
   - Dynamic in-game base resolution switching
-  - Half-integer pixel-perfect upscaling
-  - Sub-pixel precision movement and camera scrolling
+  - Anti-aliased fractional pixel-art upscaling
 - Post-processing shaders
   - CRT-Easymode
   - CRT-Lottes
@@ -93,7 +92,7 @@ create something playable.
 ## Installation and Usage
 
 To be able to take a look at, edit, test, and build this project, you need
-**version 3.3** of the Godot Engine Editor, which you can download from the
+**version 3.5** of the Godot Engine Editor, which you can download from the
 [official website](https://godotengine.org/download). Just clone or download
 this repository and import its `project.godot` file from within the Godot
 editor project manager. Other versions might work, but it is recommended to
