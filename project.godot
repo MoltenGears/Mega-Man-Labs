@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://stages/assets/appearing_block.gd"
 }, {
-"base": "Area2D",
-"class": "CameraTransition",
-"language": "GDScript",
-"path": "res://stages/assets/camera_transition.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -28,6 +23,11 @@ _global_script_classes=[ {
 "class": "PreciseVisibilityNotifier2D",
 "language": "GDScript",
 "path": "res://stages/assets/precise_visibility_notifier_2D.gd"
+}, {
+"base": "Node2D",
+"class": "Section",
+"language": "GDScript",
+"path": "res://stages/section.gd"
 }, {
 "base": "Node",
 "class": "Stage",
@@ -51,9 +51,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AppearingBlock": "",
-"CameraTransition": "",
 "Player": "",
 "PreciseVisibilityNotifier2D": "",
+"Section": "",
 "Stage": "",
 "State": "",
 "StateMachine": "",
@@ -86,7 +86,6 @@ gdscript/warnings/integer_division=false
 
 window/size/width=384
 window/size/height=240
-window/size/always_on_top=true
 window/size/test_width=1152
 window/size/test_height=720
 window/dpi/allow_hidpi=true
@@ -279,6 +278,7 @@ action_weapon_previous_p2={
 2d_physics/layer_5="Transitions"
 2d_physics/layer_6="PickUps"
 2d_physics/layer_7="Ladders"
+2d_physics/layer_8="Sections"
 
 [logging]
 

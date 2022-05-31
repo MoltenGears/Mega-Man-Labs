@@ -12,7 +12,7 @@ func _notification(what):
     match what:
         NOTIFICATION_INSTANCED:
             _music = $Music
-            _boss = $"Specials/ThunderMan"
+            _boss = $"Sections/Section23/ThunderMan"
             _boss_door_left = $"BossDoors/BossDoor02"
             _boss_door_right = $"BossDoors/BossDoor03"
 
@@ -40,9 +40,7 @@ func _connect_signals() -> void:
     _try_connect(_boss_door_right, "closed", _boss, "on_boss_entered")
     _try_connect(_boss_door_right, "closed", player, "on_boss_entered")
 
-    if has_node("BossDoors"):
-        for boss_door in $BossDoors.get_children():
-            _try_connect(self, "restarted", boss_door, "on_restarted")
-            if has_node("Checkpoints"):
-                for checkpoint in $Checkpoints.get_children():
-                    _try_connect(checkpoint, "checkpoint_reached", boss_door, "on_checkpoint_reached")
+    for boss_door in get_tree().get_nodes_in_group("BossDoors"):
+        _try_connect(self, "restarted", boss_door, "on_restarted")
+        for checkpoint in get_tree().get_nodes_in_group("Checkpoints"):
+            _try_connect(checkpoint, "checkpoint_reached", boss_door, "on_checkpoint_reached")

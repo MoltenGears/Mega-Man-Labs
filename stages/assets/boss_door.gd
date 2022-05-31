@@ -1,7 +1,8 @@
 extends Node2D
 
 var locked := false
-var _camera_transition: CameraTransition
+var _section_1: Section
+var _section_2: Section
 var _player: Player
 var _reset_lock := true
 var _players_ready_count := 0
@@ -20,11 +21,12 @@ func on_checkpoint_reached() -> void:
     if locked:
         _reset_lock = false
 
-func on_transition_entered(transition: Area2D) -> void:
-    if transition is CameraTransition:
-        _camera_transition = transition as CameraTransition
-        _camera_transition.monitoring = false
-        _camera_transition.is_boss_door_transition = true
+func on_section_entered(section: Node2D) -> void:
+    if section.owner is Section:
+        if not _section_1:
+            _section_1 = section.owner as Section
+        elif not _section_2:
+            _section_2 = section.owner as Section
 
 func on_entered(body: PhysicsBody2D) -> void:
     if not body is Player or locked:
@@ -33,11 +35,6 @@ func on_entered(body: PhysicsBody2D) -> void:
     _increment_players_ready_count()
     if _all_players_ready():
         open_door()
-        for p in Global.players.values():
-            # Check if all players would be able to transition properly.
-            if not _camera_transition.on_body_entered(p, true):
-                close_door()
-                return
         open()
 
 func on_exited(body: PhysicsBody2D) -> void:
@@ -63,7 +60,12 @@ func close() -> void:
 
 func on_animation_finished(anim_name: String) -> void:
     if _player and is_door_open():
-        _camera_transition.on_body_entered(_player)
+        for p in Global.get_players().values():
+            if not p.is_dead:
+                if _section_1.active:
+                    _section_2.on_body_entered(p)
+                else:
+                    _section_1.on_body_entered(p)
 
 func open_door() -> void:
     $StaticBody2D.set_collision_layer_bit(0, false)

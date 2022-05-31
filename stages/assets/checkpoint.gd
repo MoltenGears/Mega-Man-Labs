@@ -6,6 +6,8 @@ export(String, "Right", "Left") var direction := "Right" setget set_direction
 signal checkpoint_reached()
 
 func _ready() -> void:
+    add_to_group("Checkpoints")
+
     if Engine.editor_hint:
         $Sprite.visible = true
     else:

@@ -21,7 +21,7 @@ var is_blocking := false
 
 onready var _hit_sound: AudioStreamPlayer = get_node("SFX/Hit")
 onready var _animations: AnimationPlayer = $BaseAnimations
-onready var _start_pos: Vector2 = global_position
+onready var _start_pos: Vector2 = position
 
 signal change_state(state_name)
 signal queued_free()
@@ -42,7 +42,7 @@ func _replace_with_spawner() -> void:
 
     var spawner: Position2D = Spawner.instance()
     spawner.packed_scene_ref = load(filename)
-    spawner.global_position = _start_pos
+    spawner.position = _start_pos
     spawner.spawn_info = spawn_info
     spawner.spawn_count_max = spawn_count_max
     spawner.spawn_timer = spawn_timer

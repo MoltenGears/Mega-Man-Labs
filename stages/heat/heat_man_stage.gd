@@ -12,7 +12,9 @@ func _notification(what):
 
 func _ready() -> void:
     if Global.lighting_vfx:
-        $Lava.modulate = Color(1.7, 1, 1, 1)
+        for tilemap in get_tree().get_nodes_in_group("TileMaps"):
+            if tilemap.name == "Lava":
+                tilemap.modulate = Color(1.7, 1, 1, 1)
 
 func _connect_signals() -> void:
     ._connect_signals()

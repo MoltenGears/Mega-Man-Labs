@@ -40,7 +40,7 @@ func _spawn_enemy() -> void:
     var enemy: Node = _spawn_ref.instance()
     if spawn_count_max < 0 or GameState.get_enemy_count(enemy.enemy_name) < spawn_count_max:
         _can_respawn = false
-        enemy.global_position = global_position
+        enemy.position = position
         for key in spawn_info:
             enemy.set(key, spawn_info[key])
         get_parent().add_child(enemy)

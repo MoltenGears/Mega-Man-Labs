@@ -1143,6 +1143,7 @@ cast_to = Vector2( 0, -14 )
 [node name="StopperRayCast" type="RayCast2D" parent="CollisionShape2D"]
 enabled = true
 cast_to = Vector2( 13, 0 )
+collision_mask = 129
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 29 )

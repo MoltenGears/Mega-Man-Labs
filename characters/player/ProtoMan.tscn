@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/player/sprites/proto_man/Slide.png" type="Texture" id=2]
@@ -9,9 +9,13 @@
 [ext_resource path="res://characters/player/sprites/proto_man/Run.png" type="Texture" id=7]
 [ext_resource path="res://characters/player/sprites/proto_man/RunShoot.png" type="Texture" id=8]
 [ext_resource path="res://characters/player/sprites/proto_man/IdleMask.png" type="Texture" id=9]
+[ext_resource path="res://characters/player/sprites/mega_man/JumpShootAlt.png" type="Texture" id=10]
 [ext_resource path="res://characters/player/sprites/proto_man/Jump.png" type="Texture" id=11]
 [ext_resource path="res://characters/player/sprites/proto_man/JumpShoot.png" type="Texture" id=12]
 [ext_resource path="res://characters/player/sprites/proto_man/Climb.png" type="Texture" id=13]
+[ext_resource path="res://characters/player/sprites/mega_man/IdleShootAlt.png" type="Texture" id=14]
+[ext_resource path="res://characters/player/sprites/mega_man/RunShootAlt.png" type="Texture" id=15]
+[ext_resource path="res://characters/player/sprites/mega_man/Climb.png" type="Texture" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -63,19 +67,18 @@ uniform vec4 secondary_color: hint_color;
 uniform bool enabled;
 
 void fragment(){
-    if (!enabled)
-        return;
+    if (enabled){
+        vec4 color = texture(TEXTURE, UV);
 
-    vec4 color = texture(TEXTURE, UV);
+        if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
+            color = outline_color;
+        else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
+            color = primary_color;
+        else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
+            color = secondary_color;
 
-    if (color.r > 0.9 && color.a > 0.9 && color.g < 0.1 && color.b < 0.1)
-        color = outline_color;
-    else if (color.g > 0.9 && color.a > 0.9 && color.r < 0.1 && color.b < 0.1)
-        color = primary_color;
-    else if (color.b > 0.9 && color.a > 0.9 && color.r < 0.1 && color.g < 0.1)
-        color = secondary_color;
-
-    COLOR = color;
+        COLOR = color;
+       }
    }
 "
 
@@ -401,6 +404,48 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
+[sub_resource type="Animation" id=26]
+resource_local_to_scene = true
+resource_name = "climb_shoot_alt"
+length = 0.32
+step = 0.16
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 16 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
 [sub_resource type="Animation" id=14]
 resource_local_to_scene = true
 length = 0.9
@@ -548,6 +593,48 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
+[sub_resource type="Animation" id=27]
+resource_local_to_scene = true
+resource_name = "idle_shoot_alt"
+length = 0.32
+step = 0.16
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
 [sub_resource type="Animation" id=17]
 resource_local_to_scene = true
 length = 0.16
@@ -632,6 +719,49 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
+[sub_resource type="Animation" id=28]
+resource_local_to_scene = true
+resource_name = "jump_shoot_alt"
+length = 0.16
+loop = true
+step = 0.16
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
 [sub_resource type="Animation" id=19]
 resource_local_to_scene = true
 length = 0.48
@@ -690,6 +820,49 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+
+[sub_resource type="Animation" id=29]
+resource_local_to_scene = true
+resource_name = "move_shoot_alt"
+length = 0.48
+loop = true
+step = 0.12
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:hframes")
@@ -949,10 +1122,10 @@ shape = SubResource( 1 )
 
 [node name="ShieldArea" type="Area2D" parent="." index="1"]
 position = Vector2( 10, -1 )
-monitoring = false
-monitorable = false
 collision_layer = 0
 collision_mask = 8
+monitoring = false
+monitorable = false
 
 [node name="CollisionShapeShield" type="CollisionShape2D" parent="ShieldArea" index="0"]
 shape = SubResource( 2 )
@@ -975,13 +1148,17 @@ anims/climb_exit = SubResource( 10 )
 anims/climb_idle = SubResource( 11 )
 anims/climb_move = SubResource( 12 )
 anims/climb_shoot = SubResource( 13 )
+anims/climb_shoot_alt = SubResource( 26 )
 anims/exit = SubResource( 14 )
 anims/idle = SubResource( 15 )
 anims/idle_shoot = SubResource( 16 )
+anims/idle_shoot_alt = SubResource( 27 )
 anims/jump = SubResource( 17 )
 anims/jump_shoot = SubResource( 18 )
+anims/jump_shoot_alt = SubResource( 28 )
 anims/move = SubResource( 19 )
 anims/move_shoot = SubResource( 20 )
+anims/move_shoot_alt = SubResource( 29 )
 anims/ramp = SubResource( 21 )
 anims/slide = SubResource( 22 )
 anims/spawn = SubResource( 23 )

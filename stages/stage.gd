@@ -4,6 +4,13 @@ extends Node
 # Base class for all stages.
 class_name Stage
 
+const InstantDeathArea: Resource = preload("res://stages/assets/InstantDeathArea.tscn")
+const LadderArea: Resource = preload("res://stages/assets/Ladder.tscn")
+
+# Identifiers for different areas must not be combined for a single tile type.
+export(Array, String) var instant_death_identifiers := ["acid", "lava", "spike"]
+export(Array, String) var ladder_identifiers := ["ladder"]
+
 # Time constants in seconds.
 const START_DELAY: float = 2.0
 const DEATH_DELAY: float = 3.0
@@ -50,6 +57,9 @@ func _ready() -> void:
 
     if Engine.is_editor_hint():
         return
+
+    _add_instant_death_areas()
+    _add_ladder_areas()
 
     _connect_signals()
     get_tree().call_group("enemies", "_replace_with_spawner")
@@ -152,13 +162,12 @@ func _connect_signals() -> void:
     _try_connect(self, "restarted", _gui_fade_effects, "fade_in", [FADE_IN_DURATION])
     _try_connect(self, "restarted", _gui_bar, "on_restarted")
 
-    if has_node("CameraTransitions"):
-        for transition in $CameraTransitions.get_children():
-            _try_connect(self, "restarted", transition, "on_restarted")
-            _try_connect(transition, "transition_entered", get_current_camera(), "transition")
-            if has_node("Checkpoints"):
-                for checkpoint in $Checkpoints.get_children():
-                    _try_connect(checkpoint, "checkpoint_reached", transition, "on_checkpoint_reached")
+    if has_node("Sections"):
+        for section in $Sections.get_children():
+            _try_connect(self, "restarted", section, "on_restarted")
+            _try_connect(section, "transition_entered", get_current_camera(), "transition_section")
+            for checkpoint in get_tree().get_nodes_in_group("Checkpoints"):
+                _try_connect(checkpoint, "checkpoint_reached", section, "on_checkpoint_reached")
 
     for p in players.values():
         _try_connect(self, "player_ready", p, "on_ready")
@@ -203,3 +212,87 @@ func _try_connect(source: Object, signal_name: String, target: Object, method_na
         return true if source.connect(signal_name, target, method_name, binds, flags) else false
     else:
         return true
+
+# Iterate all tile types and place instant death areas at their positions
+# if their names contain one of the instant death identifiers.
+func _add_instant_death_areas() -> void:
+    var instant_death_areas_node := Node2D.new()
+    instant_death_areas_node.name = "InstantDeathAreas"
+    add_child(instant_death_areas_node)
+    
+    for tile_map in get_tree().get_nodes_in_group("TileMaps"):
+        var tile_set = tile_map.tile_set
+        for tile_id in tile_set.get_tiles_ids():
+            for identifier in instant_death_identifiers:
+                if identifier.to_lower() in tile_set.tile_get_name(tile_id).to_lower():
+                    for death_cell_pos in tile_map.get_used_cells_by_id(tile_id):
+                        var instant_death_area := InstantDeathArea.instance()
+                        var instant_death_area_local = \
+                                tile_map.map_to_world(death_cell_pos) + Constants.TILE_SIZE / 2
+                        var instant_death_area_global = tile_map.to_global(instant_death_area_local)
+                        instant_death_area.global_position = instant_death_area_global
+                        instant_death_areas_node.add_child(instant_death_area)
+                    break
+
+# Iterate all tile types and place ladder areas at their positions
+# if their names contain the ladder identifier.
+func _add_ladder_areas() -> void:
+    var ladder_node := Node2D.new()
+    ladder_node.name = "Ladders"
+    add_child(ladder_node)
+
+    # Collect ladder tiles from all tile maps first
+    # and transform all ladder tiles' grid coordinates to global positions.
+    # This is required for correctly building inter-section ladders.
+    var ladder_tiles: Array = []
+    for tile_map in get_tree().get_nodes_in_group("TileMaps"):
+        var tile_set = tile_map.tile_set
+        for tile_id in tile_set.get_tiles_ids():
+            for identifier in ladder_identifiers:
+                if identifier.to_lower() in tile_set.tile_get_name(tile_id).to_lower():
+                    var ladder_tiles_coords: Array = tile_map.get_used_cells_by_id(tile_id)
+                    for coord in ladder_tiles_coords:
+                        var ladder_tiles_local: Vector2 = tile_map.map_to_world(coord)
+                        var ladder_tiles_global: Vector2 = tile_map.to_global(ladder_tiles_local)
+                        ladder_tiles.append(ladder_tiles_global)
+    
+    while ladder_tiles.size() > 0:
+        ladder_node.add_child(_construct_ladder(ladder_tiles))
+
+# Returns a ladder node constructed from first set of contiguous ladder tiles
+# in array of grid based ladder tile positions. Removes the used ladder
+# position elements from the array.
+func _construct_ladder(ladder_tiles: Array) -> Node:
+    if not ladder_tiles or ladder_tiles.size() == 0:
+        printerr("Cannot construct ladder. Ladder tiles array is empty or null.")
+        return null
+
+    ladder_tiles.sort_custom(self, "_sort_ladder_tiles")
+    var ladder_pos: Vector2 = ladder_tiles[0]
+    ladder_pos.x += Constants.TILE_SIZE.x / 2
+    var ladder_tile_count := 1
+
+    while ladder_tiles.size() > 1:
+        if ladder_tiles[1].y == ladder_tiles[0].y + Constants.TILE_SIZE.y:
+            ladder_tile_count += 1
+            ladder_tiles.remove(0)
+        else:
+            break
+    ladder_tiles.remove(0)
+
+    var ladder_area := LadderArea.instance()
+    ladder_area.global_position = ladder_pos
+    ladder_area.size_in_tiles = ladder_tile_count
+    return ladder_area
+
+# Sort tiles in ascending order, where y -> inner and x -> outer.
+func _sort_ladder_tiles(item_1: Vector2, item_2: Vector2) -> bool:
+    if item_1.x < item_2.x:
+        return true
+    elif item_1.x > item_2.x:
+        return false
+    else:
+        if item_1.y < item_2.y:
+            return true
+        else:
+            return false

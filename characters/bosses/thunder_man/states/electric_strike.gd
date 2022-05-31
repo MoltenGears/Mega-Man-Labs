@@ -3,6 +3,7 @@ extends "common.gd"
 const ElectricStrike: Resource = preload("res://characters/bosses/thunder_man/ThunderManElectricStrike.tscn")
 
 var _electric_strike: Node2D
+var _strike_pos: Vector2
 
 onready var _animation_player := $"../../AnimationPlayer"
 onready var _timer_electric_strike := $"../../TimerElectricStrike"
@@ -35,8 +36,9 @@ func _get_strike_pos() -> Vector2:
     return Vector2(x, y)
 
 func _on_strike_pos_timeout() -> void:
-    _electric_strike.global_position = _get_strike_pos()
+    _strike_pos = _get_strike_pos()
 
 func _on_strike_timeout() -> void:
     if not owner.is_restarting:
         owner.get_parent().add_child(_electric_strike)
+        _electric_strike.global_position = _strike_pos

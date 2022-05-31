@@ -43,7 +43,7 @@ stream = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 18
+collision_mask = 130
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
@@ -55,6 +55,6 @@ collision_mask = 0
 shape = SubResource( 3 )
 
 [connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="on_animation_finished"]
-[connection signal="area_entered" from="Area2D" to="." method="on_transition_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="on_section_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="on_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="on_exited"]

@@ -31,7 +31,7 @@ func jump() -> void:
 func shoot() -> void:
     var electric_ball := ElectricBall.instance()
     _shoot_pos.position.x = abs(_shoot_pos.position.x) * owner.get_facing_direction().x
-    electric_ball.global_position = _shoot_pos.global_position
     electric_ball.direction = owner.get_facing_direction()
     if not owner.is_restarting:
         owner.get_parent().add_child(electric_ball)
+        electric_ball.global_position = _shoot_pos.global_position
