@@ -40,7 +40,7 @@ animations = [ {
 } ]
 
 [node name="ConveyorBelt" type="StaticBody2D"]
-constant_linear_velocity = Vector2( -64, 0 )
+constant_linear_velocity = Vector2( -60, 0 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

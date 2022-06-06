@@ -1,7 +1,7 @@
 tool
 extends StaticBody2D
 
-export(int) var velocity := 64 setget _set_velocity
+export(int) var velocity := 60 setget _set_velocity
 export(String, "Left", "Right") var direction := "Left" setget _set_direction
 export(int, 4, 24) var size := 8 setget _change_size
 export(bool) var active := true setget _set_active

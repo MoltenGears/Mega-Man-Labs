@@ -1,0 +1,145 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://stages/stage.gd" type="Script" id=1]
+[ext_resource path="res://characters/player/camera/PlayerCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gui/Bar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gui/Ready.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gui/Pause.tscn" type="PackedScene" id=6]
+[ext_resource path="res://effects/FadeEffects.tscn" type="PackedScene" id=7]
+[ext_resource path="res://gui/WeaponIconOverhead.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gui/GameOver.tscn" type="PackedScene" id=9]
+[ext_resource path="res://stages/Section.tscn" type="PackedScene" id=10]
+[ext_resource path="res://stages/tile_map_extended.gd" type="Script" id=11]
+[ext_resource path="res://stages/metal/MetalTileSet.tres" type="TileSet" id=12]
+[ext_resource path="res://stages/assets/ConveyorBelt.tscn" type="PackedScene" id=13]
+[ext_resource path="res://items/extra_life/ExtraLife.tscn" type="PackedScene" id=14]
+[ext_resource path="res://characters/enemies/metall/EnemyMetall.tscn" type="PackedScene" id=15]
+
+[node name="MetalManStage" type="Node"]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.25, 1 )
+motion_offset = Vector2( 227, 0 )
+motion_mirroring = Vector2( 384, 0 )
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
+margin_right = 384.0
+margin_bottom = 240.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="TileMapBackground" type="TileMap" parent="ParallaxBackground/ParallaxLayer"]
+tile_set = ExtResource( 12 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 65554, 10, 0, 65555, 10, 0, 65556, 10, 0, 65557, 10, 0, 65558, 10, 0, 131080, 9, 0, 131081, 7, 0, 196608, 12, 0, 196609, 12, 0, 196610, 12, 0, 196611, 12, 0, 196612, 12, 0, 196613, 12, 0, 196614, 12, 0, 196615, 12, 0, 196616, 8, 0, 196619, 9, 0, 196620, 8, 0, 196621, 12, 0, 196622, 12, 0, 196623, 12, 0, 196624, 12, 0, 196625, 12, 0, 196631, 12, 0, 524288, 12, 0, 524289, 12, 0, 524290, 12, 0, 524291, 12, 0, 524292, 11, 0, 524293, 11, 0, 524294, 11, 0, 524295, 11, 0, 524296, 11, 0, 524297, 12, 0, 524298, 12, 0, 524299, 12, 0, 524300, 12, 0, 524301, 12, 0, 524302, 12, 0, 524303, 12, 0, 524304, 12, 0, 524305, 12, 0, 524306, 12, 0, 524307, 12, 0, 524308, 12, 0, 524309, 12, 0, 524310, 12, 0, 524311, 12, 0, 655363, 9, 0, 655364, 8, 0, 655365, 7, 0, 655373, 7, 0, 720900, 9, 0 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 384, 0 )
+
+[node name="ConveyorBeltBG01" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource( 13 )]
+modulate = Color( 0.231373, 0.105882, 0.105882, 1 )
+position = Vector2( 128, 208 )
+
+[node name="Sections" type="Node2D" parent="."]
+
+[node name="Section01" parent="Sections" instance=ExtResource( 10 )]
+width = 2144
+
+[node name="TileMap" type="TileMap" parent="Sections/Section01"]
+tile_set = ExtResource( 12 )
+cell_size = Vector2( 16, 16 )
+collision_mask = 6
+format = 1
+tile_data = PoolIntArray( 40, 2, 0, 72, 2, 0, 65576, 2, 0, 65608, 2, 0, 131111, 15, 0, 131112, 15, 1, 131113, 15, 2, 131114, 15, 3, 131144, 2, 0, 196680, 2, 0, 262215, 15, 0, 262216, 15, 1, 262217, 15, 2, 262218, 15, 3, 327704, 14, 0, 327710, 14, 0, 393240, 14, 65536, 393243, 14, 0, 393246, 14, 65536, 458776, 14, 131072, 458777, 3, 0, 458778, 3, 0, 458779, 14, 65536, 458780, 3, 0, 458781, 3, 0, 458782, 14, 131072, 524312, 14, 131072, 524315, 14, 196608, 524318, 14, 131072, 589848, 14, 196608, 589851, 14, 262144, 589854, 14, 196608, 589892, 15, 0, 589893, 15, 1, 589894, 15, 2, 589895, 15, 3, 655384, 14, 262144, 655390, 14, 262144, 655391, 15, 0, 655392, 15, 1, 655393, 15, 2, 655394, 15, 3, 655429, 2, 0, 720920, 15, 0, 720921, 15, 3, 720926, 15, 0, 720927, 15, 3, 720928, 2, 0, 720930, 6, 0, 720931, 5, 0, 720932, 5, 1, 720933, 6, 1, 720934, 6, 0, 720935, 5, 0, 720936, 5, 1, 720937, 6, 1, 720938, 6, 0, 720939, 5, 0, 720940, 5, 1, 720941, 6, 1, 720942, 6, 0, 720943, 5, 0, 720944, 5, 1, 720945, 6, 1, 720946, 6, 0, 720947, 5, 0, 720948, 5, 1, 720949, 6, 1, 720950, 6, 0, 720951, 5, 0, 720952, 5, 1, 720953, 6, 1, 720957, 6, 0, 720958, 5, 0, 720959, 5, 1, 720960, 6, 1, 720965, 2, 0, 786435, 15, 0, 786436, 15, 1, 786437, 15, 2, 786438, 15, 3, 786444, 15, 0, 786445, 15, 1, 786446, 15, 2, 786447, 15, 3, 786450, 15, 0, 786451, 15, 1, 786452, 15, 2, 786453, 15, 3, 786457, 14, 0, 786463, 14, 0, 786464, 2, 0, 786466, 6, 0, 786467, 5, 65536, 786468, 5, 65537, 786469, 6, 1, 786470, 6, 0, 786471, 5, 65536, 786472, 5, 65537, 786473, 6, 1, 786474, 6, 0, 786475, 5, 65536, 786476, 5, 65537, 786477, 6, 1, 786478, 6, 0, 786479, 5, 65536, 786480, 5, 65537, 786481, 6, 1, 786482, 6, 0, 786483, 5, 65536, 786484, 5, 65537, 786485, 6, 1, 786486, 6, 0, 786487, 5, 65536, 786488, 5, 65537, 786489, 6, 1, 786493, 6, 0, 786494, 5, 65536, 786495, 5, 65537, 786496, 6, 1, 786501, 2, 0, 851968, 15, 0, 851969, 15, 1, 851970, 15, 2, 851971, 15, 3, 851972, 2, 0, 851974, 15, 0, 851975, 15, 1, 851976, 15, 2, 851977, 15, 3, 851981, 2, 0, 851983, 15, 0, 851984, 15, 1, 851985, 15, 2, 851986, 15, 3, 851987, 2, 0, 851993, 14, 65536, 851999, 14, 65536, 852000, 2, 0, 852002, 6, 0, 852003, 5, 0, 852004, 5, 1, 852005, 6, 1, 852006, 6, 0, 852007, 5, 0, 852008, 5, 1, 852009, 6, 1, 852010, 6, 0, 852011, 5, 0, 852012, 5, 1, 852013, 6, 1, 852014, 6, 0, 852015, 5, 0, 852016, 5, 1, 852017, 6, 1, 852018, 6, 0, 852019, 5, 0, 852020, 5, 1, 852021, 6, 1, 852022, 6, 0, 852023, 5, 0, 852024, 5, 1, 852025, 6, 1, 852029, 6, 0, 852030, 5, 0, 852031, 5, 1, 852032, 6, 1, 852037, 2, 0, 917505, 2, 0, 917507, 15, 0, 917508, 15, 1, 917509, 15, 2, 917510, 15, 3, 917511, 2, 0, 917517, 2, 0, 917520, 2, 0, 917523, 2, 0, 917529, 14, 196608, 917535, 14, 196608, 917536, 2, 0, 917538, 6, 0, 917539, 5, 65536, 917540, 5, 65537, 917541, 6, 1, 917542, 6, 0, 917543, 5, 65536, 917544, 5, 65537, 917545, 6, 1, 917546, 6, 0, 917547, 5, 65536, 917548, 5, 65537, 917549, 6, 1, 917550, 6, 0, 917551, 5, 65536, 917552, 5, 65537, 917553, 6, 1, 917554, 6, 0, 917555, 5, 65536, 917556, 5, 65537, 917557, 6, 1, 917558, 6, 0, 917559, 5, 65536, 917560, 5, 65537, 917561, 6, 1, 917565, 6, 0, 917566, 5, 65536, 917567, 5, 65537, 917568, 6, 1, 917573, 2, 0 )
+script = ExtResource( 11 )
+
+[node name="ConveyorBelt01" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 0, 176 )
+size = 24
+
+[node name="ConveyorBelt02" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 304, 128 )
+size = 4
+
+[node name="ConveyorBelt03" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 224, 80 )
+constant_linear_velocity = Vector2( 60, 0 )
+direction = "Right"
+size = 4
+
+[node name="ConveyorBelt04" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 352, 64 )
+constant_linear_velocity = Vector2( 60, 0 )
+direction = "Right"
+size = 13
+
+[node name="ConveyorBelt05" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 1232, 64 )
+size = 6
+
+[node name="ConveyorBelt06" parent="Sections/Section01" instance=ExtResource( 13 )]
+position = Vector2( 1200, 144 )
+constant_linear_velocity = Vector2( 60, 0 )
+direction = "Right"
+size = 11
+
+[node name="EnemyMetall01" parent="Sections/Section01" instance=ExtResource( 15 )]
+position = Vector2( 631, 28 )
+
+[node name="EnemyMetall02" parent="Sections/Section01" instance=ExtResource( 15 )]
+position = Vector2( 1096, 139 )
+
+[node name="EnemyMetall03" parent="Sections/Section01" instance=ExtResource( 15 )]
+position = Vector2( 1312, 59 )
+
+[node name="ExtraLife" parent="Sections/Section01" instance=ExtResource( 14 )]
+position = Vector2( 1144, 56 )
+persistent = true
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 192, 164 )
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 2 )]
+visible = false
+player_target_node = NodePath("../Player")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI"]
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+
+[node name="LifeEnergyBar" parent="GUI/MarginContainer" instance=ExtResource( 4 )]
+visible = false
+margin_right = 345.0
+margin_bottom = 216.0
+
+[node name="WeaponEnergyBar" parent="GUI/MarginContainer/LifeEnergyBar" instance=ExtResource( 4 )]
+visible = false
+margin_left = 12.0
+color = Color( 0.827451, 0.580392, 0.905882, 1 )
+
+[node name="Ready" parent="GUI" instance=ExtResource( 5 )]
+visible = false
+
+[node name="WeaponIconOverhead" parent="GUI" instance=ExtResource( 8 )]
+visible = false
+
+[node name="Pause" parent="GUI" instance=ExtResource( 6 )]
+visible = false
+
+[node name="FadeEffects" parent="GUI" instance=ExtResource( 7 )]
+visible = false
+
+[node name="GameOver" parent="GUI" instance=ExtResource( 9 )]
+visible = false
