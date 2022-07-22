@@ -45,7 +45,7 @@ func _handle_command(command: String) -> void:
     if (command == "jump"
         and _can_exit
         and _frame_count >= LOCKED_FRAME_COUNT
-        and not Global.is_action_pressed(get_parent().action_down)
+        and not inputs.is_action_pressed(InputHandler.Action.DOWN)
         ):
         emit_signal("finished", "jump")
 

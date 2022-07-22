@@ -6,6 +6,7 @@ onready var _player: Player = owner
 onready var _state_machine := _player.get_node("StateMachine")
 onready var _animation_player := _player.get_node("AnimationPlayer")
 onready var _effect_spawner := _player.get_node("EffectSpawner")
+onready var _inputs := _player.get_node("Inputs")
 
 func _ready() -> void:
     set_physics_process(false)
@@ -15,7 +16,7 @@ func _physics_process(delta: float) -> void:
     if abs(distance_to_center.x) < 2:
         _state_machine.input_direction = Vector2()
         owner.gravity = 6.0
-        _state_machine.send_command("jump")
+        _inputs.send("jump")
 
     if sign(distance_to_center.y) == -1 and sign(_distance_last_frame.y) == 1:
         _state_machine.current_state.velocity = Vector2()

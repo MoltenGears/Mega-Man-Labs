@@ -12,7 +12,6 @@ export(int, 1, 4) var knock_back_multiplier := 1
 export(int, 1, 10) var max_on_screen_projectiles := 3
 
 var hit_points: int
-var is_controllable := true setget set_controllable
 var is_invincible := false
 var is_dead := false
 var is_climbing := false
@@ -25,6 +24,7 @@ var charge_duration: float = 0
 var charge_level: int setget , _get_charge_level
 var buffering_charge: bool = false
 var has_in_air_jump: bool = false
+var input_controller: int
 
 onready var stopper_ray_cast: RayCast2D = $"CollisionShape2D/StopperRayCast";
 onready var _ray_cast: RayCast2D = $"CollisionShape2D/RayCast2D";
@@ -40,6 +40,14 @@ signal exited()
 
 func _ready() -> void:
     connect("change_state", $StateMachine, "_change_state")
+
+    match player_number:
+        1: $Inputs.controller = InputHandler.Controller.PLAYER_1
+        2: $Inputs.controller = InputHandler.Controller.PLAYER_2
+        3: $Inputs.controller = InputHandler.Controller.PLAYER_3
+        4: $Inputs.controller = InputHandler.Controller.PLAYER_4
+
+    input_controller = $Inputs.controller
 
 func _physics_process(delta: float) -> void:
     # Update direction of slide stopper ray cast.
@@ -78,7 +86,7 @@ func on_boss_entered() -> void:
 
 func on_boss_died() -> void:
     is_invincible = true
-    set_controllable(false)
+    $Inputs.controller = InputHandler.Controller.EMPTY
 
 func on_stage_cleared() -> void:
     $"Cutscenes/StageClear".start()
@@ -155,11 +163,6 @@ func check_for_space(dir: Vector2, transition_shape_extents: Vector2) -> bool:
     _ray_cast.position = ray_pos_temp
     _ray_cast.cast_to = cast_to_temp
     return is_space_empty
-
-func set_controllable(value: bool) -> void:
-    is_controllable = value
-    if value == false:
-        $StateMachine.input_direction = Vector2()
 
 func swap_color(main: Color, secondary: Color) -> void:
     $Sprite.material.set_shader_param("replace_0", main)

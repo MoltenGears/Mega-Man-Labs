@@ -40,8 +40,8 @@ func _physics_process(delta: float) -> void:
     for player in _players:
         if not player.is_climbing and not player.is_sliding and \
                 player.get_node("StateMachine").current_state != player.get_node("StateMachine/Stagger") and \
-                (Global.is_action_pressed(player.get_node("StateMachine").action_up) and not _is_above_ladder(player) or \
-                Global.is_action_pressed(player.get_node("StateMachine").action_down) and _is_above_ladder(player)):
+                (player.get_node("Inputs").is_action_pressed(InputHandler.Action.UP) and not _is_above_ladder(player) or \
+                player.get_node("Inputs").is_action_pressed(InputHandler.Action.DOWN) and _is_above_ladder(player)):
             var distance_to_center = $"Ladder/LadderCollision".global_position - player.global_position
             distance_to_center.y = 0
             player.climb(distance_to_center)

@@ -12,6 +12,6 @@ func _on_animation_finished(anim_name: String) -> void:
     if anim_name == "spawn":
         owner.is_dead = false
         owner.is_invincible = false
-        owner.is_controllable = true
+        inputs.controller = owner.input_controller
         get_parent().locked = false
         emit_signal("finished", "idle")

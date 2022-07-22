@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://stages/assets/appearing_block.gd"
 }, {
+"base": "Node",
+"class": "InputHandler",
+"language": "GDScript",
+"path": "res://scripts/input_handler.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -51,6 +56,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AppearingBlock": "",
+"InputHandler": "",
 "Player": "",
 "PreciseVisibilityNotifier2D": "",
 "Section": "",

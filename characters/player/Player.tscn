@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://characters/player/scripts/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://characters/player/sprites/mega_man/Idle.png" type="Texture" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://characters/player/cutscenes/stage_clear.gd" type="Script" id=31]
 [ext_resource path="res://characters/player/weapons/weapons_state_machine.gd" type="Script" id=32]
 [ext_resource path="res://characters/player/weapons/mega_buster_state.gd" type="Script" id=33]
+[ext_resource path="res://scripts/input_handler.gd" type="Script" id=34]
 [ext_resource path="res://characters/player/sounds/MegaBusterCharging.ogg" type="AudioStream" id=35]
 [ext_resource path="res://characters/player/sprites/mega_man/IdleMask.png" type="Texture" id=36]
 [ext_resource path="res://characters/player/shaders/SpecialEffects.tres" type="Material" id=37]
@@ -1282,5 +1283,8 @@ color_secondary = Color( 0.988235, 0.627451, 0.266667, 1 )
 
 [node name="StageClear" type="Node" parent="Cutscenes"]
 script = ExtResource( 31 )
+
+[node name="Inputs" type="Node" parent="."]
+script = ExtResource( 34 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine" method="_on_animation_finished"]

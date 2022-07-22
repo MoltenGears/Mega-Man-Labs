@@ -36,7 +36,7 @@ func _update(delta: float) -> void:
     elif get_input_direction().x != 0:
         emit_signal("finished", "move")
 
-    if owner.charge_level > 0 and not Global.is_action_pressed(get_parent().action_shoot):
+    if owner.charge_level > 0 and not inputs.is_action_pressed(InputHandler.Action.SHOOT):
         _handle_command("shoot")
 
 func _on_animation_finished(anim_name: String) -> void:

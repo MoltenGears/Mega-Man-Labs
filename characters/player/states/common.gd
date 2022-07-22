@@ -4,6 +4,7 @@ onready var sprite: Sprite = get_node("../../Sprite")
 onready var mega_buster: Position2D = get_node("../../MegaBusterPos")
 onready var animation_player: AnimationPlayer = get_node("../../AnimationPlayer")
 onready var weapons: Node = get_node("../../Weapons")
+onready var inputs: InputHandler = get_node("../../Inputs")
 
 func _handle_command(command: String) -> void:
     pass
