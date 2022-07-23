@@ -1,5 +1,5 @@
 tool
-extends Node2D
+extends KinematicBody2D
 
 const Spawner: Resource = preload("res://stages/assets/Spawner.tscn")
 
@@ -28,11 +28,11 @@ signal queued_free()
 
 func _ready() -> void:
     connect("change_state", $StateMachine, "_change_state")
-    if has_node("Area2D"):
-        _player_collision_area = $Area2D
+    if has_node("HitBox"):
+        _player_collision_area = $HitBox
         _player_collision_area.connect("body_entered", self, "_on_hit")
     _hit_points = hit_points_max
-    add_to_group("enemies")
+    add_to_group("Enemies")
 
 func _replace_with_spawner() -> void:
     spawn_info["flip_direction"] = flip_direction

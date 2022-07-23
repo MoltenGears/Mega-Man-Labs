@@ -21,4 +21,4 @@ func _update(delta: float) -> void:
         _animations.play("rotate")
         _rotating_left = true
     
-    owner.position += direction * VELOCITY * delta
+    owner.move_and_slide(direction * VELOCITY, Vector2.UP)

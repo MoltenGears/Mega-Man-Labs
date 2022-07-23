@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://characters/enemies/base/EnemyBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/enemies/shield_attacker/enemy_shield_attacker.gd" type="Script" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://characters/enemies/shield_attacker/shield_attacker_state_machine.gd" type="Script" id=4]
 [ext_resource path="res://characters/enemies/shield_attacker/move.gd" type="Script" id=5]
 [ext_resource path="res://characters/enemies/shield_attacker/turn.gd" type="Script" id=6]
+[ext_resource path="res://scripts/input_handler.gd" type="Script" id=7]
+[ext_resource path="res://characters/enemies/shield_attacker/shield_attacker_ai.gd" type="Script" id=8]
+
+[sub_resource type="RectangleShape2D" id=4]
+resource_local_to_scene = true
+extents = Vector2( 8, 16 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 16 )
@@ -73,22 +79,26 @@ script = ExtResource( 2 )
 enemy_name = "Shield Attacker"
 hit_points_max = 4
 contact_damage = 4
+max_distance = 192
 
-[node name="CollisionShape2D" parent="Area2D" index="0"]
+[node name="Collider" parent="." index="0"]
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource( 1 )
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="2"]
 texture = ExtResource( 3 )
 frame = 1
-
-[node name="PreciseVisibilityNotifier2D" parent="." index="3"]
-rect = Rect2( -16, -16, 32, 32 )
 
 [node name="EnemyAnimations" type="AnimationPlayer" parent="." index="4"]
 anims/move = SubResource( 2 )
 anims/turn = SubResource( 3 )
 
-[node name="StateMachine" parent="." index="7"]
+[node name="PreciseVisibilityNotifier2D" parent="." index="5"]
+rect = Rect2( -16, -16, 32, 32 )
+
+[node name="StateMachine" parent="." index="8"]
 script = ExtResource( 4 )
 start_state = NodePath("Move")
 
@@ -97,5 +107,11 @@ script = ExtResource( 5 )
 
 [node name="Turn" type="Node" parent="StateMachine" index="2"]
 script = ExtResource( 6 )
+
+[node name="Inputs" type="Node" parent="." index="10"]
+script = ExtResource( 7 )
+
+[node name="AI" type="Node" parent="." index="11"]
+script = ExtResource( 8 )
 
 [connection signal="animation_finished" from="EnemyAnimations" to="StateMachine/Turn" method="_on_animation_finished"]

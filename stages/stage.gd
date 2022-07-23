@@ -62,7 +62,7 @@ func _ready() -> void:
     _add_ladder_areas()
 
     _connect_signals()
-    get_tree().call_group("enemies", "_replace_with_spawner")
+    get_tree().call_group("Enemies", "_replace_with_spawner")
     _restart()
 
 func _get_configuration_warning() -> String:
@@ -97,7 +97,7 @@ func get_current_camera() -> Camera2D:
 func _restart() -> void:
     Global.can_toggle_pause = true
     get_tree().paused = true
-    get_tree().call_group("enemies", "queue_free")
+    get_tree().call_group("Enemies", "queue_free")
     GameState.reset_enemy_count()
     _set_stage_start_pos()
 

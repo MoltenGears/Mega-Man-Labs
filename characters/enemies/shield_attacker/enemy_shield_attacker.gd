@@ -3,6 +3,10 @@ extends "res://characters/enemies/base/enemy_base.gd"
 
 export(int) var max_distance := 192
 
+func _ready() -> void:
+    $Inputs.controller = InputHandler.Controller.AI
+    $Inputs.ai = $AI
+
 func _replace_with_spawner() -> void:
     spawn_info["max_distance"] = max_distance
     ._replace_with_spawner()
