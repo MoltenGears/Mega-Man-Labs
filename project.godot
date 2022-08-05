@@ -80,7 +80,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-PixelPerfectScaling="*res://scripts/pixel_perfect_scaling.gd"
 Global="*res://scripts/global.gd"
 Constants="*res://scripts/constants.gd"
 GameState="*res://scripts/game_state.gd"
@@ -96,12 +95,6 @@ gdscript/warnings/integer_division=false
 
 [display]
 
-window/size/width=384
-window/size/height=240
-window/size/test_width=1152
-window/size/test_height=720
-window/dpi/allow_hidpi=true
-window/vsync/vsync_via_compositor=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -239,7 +232,7 @@ action_debug_fullscreen={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-action_debug_crt={
+action_debug_filter={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777253,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
@@ -281,6 +274,11 @@ action_weapon_previous_p2={
  ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=false
+
 [layer_names]
 
 2d_physics/layer_1="Stage"
@@ -299,6 +297,7 @@ file_logging/enable_file_logging=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+vram_compression/import_etc=true
 environment/default_clear_color=Color( 0.486275, 0.486275, 0.486275, 1 )
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

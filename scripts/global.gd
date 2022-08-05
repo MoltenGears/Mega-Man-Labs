@@ -132,8 +132,4 @@ func get_projectile_speed() -> float:
 
 func set_wide_screen(value: bool) -> void:
     wide_screen = value
-    PixelPerfectScaling._base_width = get_base_size().x
-    PixelPerfectScaling._base_height = get_base_size().y
-    PixelPerfectScaling._base_size = Vector2(get_base_size().x, get_base_size().y)
-    get_tree().emit_signal("screen_resized")
     emit_signal("internal_res_changed")

@@ -1,0 +1,26 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "// Source:
+// https://csantosbh.wordpress.com/2014/01/25/manual-texture-filtering-for-pixelated-games-in-webgl/
+
+shader_type canvas_item;
+
+uniform vec2 texture_size;
+uniform float texels_per_pixel;
+
+vec2 uv_upscaled_pixel_art(vec2 uv) {
+    vec2 texel = uv * texture_size;
+
+    float lerp_edge_width = 0.7; // Interpolation edge width of 0.7 pixels looks nice.
+    vec2 alpha = vec2(texels_per_pixel * lerp_edge_width);
+    vec2 x = fract(texel);
+    vec2 x_ = clamp(0.5 / alpha * x, 0, 0.5) + clamp(0.5 / alpha * (x - 1.0) + 0.5, 0, 0.5);
+    
+    return (floor(texel) + x_) / texture_size;
+}
+
+void fragment() {
+    COLOR = texture(TEXTURE, uv_upscaled_pixel_art(UV));
+}
+"

@@ -6,15 +6,18 @@ code = "// Source:
 // https://www.shadertoy.com/view/MllBWf
 // Found in this article:
 // https://jorenjoestar.github.io/post/pixel_art_filtering/
+// Added 'blur' uniform to tune edge sharpness/blurriness.
 
 shader_type canvas_item;
+
+uniform float blur : hint_range(0, 3, 0.05) = 0;
 
 vec2 uv_iq(vec2 uv, ivec2 texture_size) {
     vec2 pixel = uv * vec2(texture_size);
 
     vec2 seam = floor(pixel + 0.5);
     vec2 dudv = fwidth(pixel);
-    pixel = seam + clamp((pixel - seam) / dudv, -0.5, 0.5);
+    pixel = seam + clamp((pixel - seam) / dudv / (blur + 1.0), -0.5, 0.5);
     
     return pixel / vec2(texture_size);
 }

@@ -1,9 +1,20 @@
 tool
-extends Node2D
+extends Node
 
-export(String) var start_scene_release := "res://menus/TitleScreen.tscn"
-export(String) var start_scene_debug := "res://stages/heat/HeatStage.tscn"
-export(String, "easymode", "lottes") var crt_shader := "lottes" setget _set_crt_shader
+enum Filter {
+    # Applicable to GLES2 and GLES3
+    PIXEL_ART_UPSCALE,
+    CRT_LOTTES,
+    LINEAR, # Keep as last GLES2 entry since its value is used in wrapi() for cycling through.
+
+    # GLES3 only.
+    PIXEL_ART_UPSCALE_GLES3,
+    CRT_EASYMODE # Keep as last entry since its value is used in wrapi() for cycling through.
+}
+
+export(PackedScene) var start_scene_release
+export(PackedScene) var start_scene_debug
+export(Filter) var filter setget _set_filter
 
 var _current_scene_path: String
 var current_scene: Node = null
@@ -11,30 +22,40 @@ var current_scene: Node = null
 onready var _game_vp: Viewport = _find_viewport_leaf(self)
 onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 
+func _physics_process(delta: float) -> void:
+    if not Engine.editor_hint and $Label.visible:
+        $Label.text = str(Engine.get_frames_per_second(), " FPS")
+
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
 
-    _game_vp.get_texture().flags = Texture.FLAG_FILTER
-
-    Global.connect("internal_res_changed", self, "on_internal_res_changed")
-    # get_tree().connect("screen_resized", self, "on_screen_resized")
-    Global.set_wide_screen(Global.wide_screen)  # Trigger pixel perfect scaling.
+    Global.connect("internal_res_changed", self, "_on_size_changed")
+    get_tree().get_root().connect("size_changed", self, "_on_size_changed")
+    _on_size_changed()
     _game_vpc.set_process_unhandled_input(true)
+    _game_vp.get_texture().flags = Texture.FLAG_FILTER # Required for pixel art upscaling shaders.
+    _set_filter(filter)
 
-    if OS.is_debug_build():
-        switch_scene(start_scene_debug)
+    if OS.is_debug_build() and start_scene_debug:
+        switch_scene(start_scene_debug.resource_path)
+    elif start_scene_release:
+        $Backdrop.visible = true
+        OS.window_fullscreen = true
+        switch_scene(start_scene_release.resource_path)
     else:
-        switch_scene(start_scene_release)
+        push_error("'%s' node has no startup scene set." % self.name)
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("action_screenshot"):
         Global.take_screenshot()
-    if event.is_action_pressed("action_debug_crt"):
-        _game_vpc.use_parent_material = !_game_vpc.use_parent_material
-        on_screen_resized()
+    if event.is_action_pressed("action_debug_filter"):
+        if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES2:
+            _set_filter(wrapi(filter + 1, 0, Filter.LINEAR + 1))
+        else:
+            _set_filter(wrapi(filter + 1, 0, Filter.CRT_EASYMODE + 1))
     if event.is_action_pressed("action_debug_fullscreen"):
-        PixelPerfectScaling.fullscreen = !PixelPerfectScaling.fullscreen
+        OS.window_fullscreen = !OS.window_fullscreen
 
 func switch_scene(path: String) -> void:
     call_deferred("_deferred_switch_scene", path)
@@ -63,51 +84,68 @@ func _find_viewport_leaf(node: Node) -> Viewport:
     print("No child Viewport node found below \'", name, "\'.")
     return null
 
-func on_internal_res_changed() -> void:
+func _set_filter(filter_value: int) -> void:
+    filter = filter_value
+
+    if not _game_vpc or Engine.editor_hint:
+        return
+
+    match filter_value:
+        Filter.PIXEL_ART_UPSCALE:
+            # print_debug("Setting filter to Pixel Art Upscale (GLES2).")
+            _game_vpc.material = ShaderMaterial.new()
+            _game_vpc.material.shader = load("res://shaders/pixel_art_upscale_filter_gles2.tres")
+            _game_vpc.material.set_shader_param("texture_size", Global.base_size)
+            _game_vpc.material.set_shader_param("texels_per_pixel", 1.0 / _game_vpc.rect_scale.x)
+        Filter.PIXEL_ART_UPSCALE_GLES3:
+            # print_debug("Setting filter to Pixel Art Upscale (GLES3).")
+            _game_vpc.material = ShaderMaterial.new()
+            _game_vpc.material.shader = load("res://shaders/pixel_art_upscale_filter_gles3.tres")
+            _game_vpc.material.set_shader_param("blur", 1)
+        Filter.CRT_LOTTES:
+            # print_debug("Setting filter to CRT Lottes.")
+            _game_vpc.material = load("res://effects/crt_lottes.tres")
+            _game_vpc.material.set_shader_param("InputSize", Global.base_size)
+            _game_vpc.material.set_shader_param("TextureSize", Global.base_size)
+        Filter.CRT_EASYMODE:
+            # print_debug("Setting filter to CRT Easymode.")
+            _game_vpc.material = load("res://effects/crt_easymode.tres")
+            _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y) # TODO: Needs to be fixed.
+        Filter.LINEAR:
+            # print_debug("Setting filter to Linear.")
+            _game_vpc.material = null
+
+func _on_size_changed() -> void:
+    var update_filter: bool = _game_vp.size != Global.base_size
     _game_vp.size = Global.base_size
-    _game_vpc.rect_size = Global.base_size
+    
     get_tree().set_screen_stretch(
         get_tree().STRETCH_MODE_2D,
         get_tree().STRETCH_ASPECT_KEEP,
-        Global.base_size,
+        OS.window_size,
         1)
+    
+    var window_aspect_ratio: float = OS.window_size.x / OS.window_size.y
+    var game_aspect_ratio: float = _game_vp.size.x / _game_vp.size.y
 
-func on_screen_resized() -> void:
-    # Force same behavior of internal game viewport as root viewport with strech mode '2d'.
-    # This allows upscaling of the internal game viewport and applying post-processing
-    # shaders to the upscaled image. Furthermore, sub-pixel precision sprite movement
-    # and camera scrolling is maintained if upscaled this way.
-    # Disable this behavior if CRT shader is enabled (_game_vpc.use_parent_material == false).
-    _game_vp.set_size_override(_game_vpc.use_parent_material, Global.base_size)
-    _game_vp.set_size_override_stretch(_game_vpc.use_parent_material)
+    var width: float
+    var height: float
+    
+    if window_aspect_ratio < game_aspect_ratio:
+        width = OS.window_size.x
+        height = width / game_aspect_ratio
+        _game_vpc.rect_position = Vector2(0, (OS.window_size.y - height) / 2)
+    else:
+        height = OS.window_size.y
+        width = height * game_aspect_ratio
+        _game_vpc.rect_position = Vector2((OS.window_size.x - width) / 2, 0)
 
-    # Sets root viewport stretch mode to 'viewport' instead of '2d' for this to work properly.
-    get_viewport().set_size_override(false)
+    _game_vpc.rect_size = Vector2(width, height)
+    _game_vpc.rect_scale = Vector2(width, height) / _game_vp.size
 
-    # Resize viewport container (vpc).
-    _game_vpc.rect_size = Global.base_size * Global.scale_factor
+    if update_filter:
+        _set_filter(filter)
 
-    # Upscale internal game viewport (vp) if desired.
-    var scale: float = Global.scale_factor if _game_vpc.use_parent_material else 1.0
-    _game_vp.size = Global.base_size * scale
-
-    # CRT shaders are intended to be used without upscaling of the input.
-    if crt_shader == "easymode":
-        _game_vpc.material.set_shader_param("screen_base_size", Global.base_size.y)
-    elif crt_shader == "lottes":
-        _game_vpc.material.set_shader_param("InputSize", Global.base_size)
-        _game_vpc.material.set_shader_param("TextureSize", Global.base_size)
-
-func _set_crt_shader(value: String) -> void:
-    crt_shader = value
-    if not _game_vpc:
-        return
-
-    match value:
-        "easymode":
-            _game_vpc.material = load("res://effects/crt_easymode.tres")
-        "lottes":
-            _game_vpc.material = load("res://effects/crt_lottes.tres")
-
-    if not Engine.is_editor_hint():
-        on_screen_resized()
+    if filter == Filter.PIXEL_ART_UPSCALE and _game_vpc.material:
+        # Always needs update on size change.
+        _game_vpc.material.set_shader_param("texels_per_pixel", 1.0 / _game_vpc.rect_scale.x)
