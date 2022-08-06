@@ -118,30 +118,31 @@ func _set_filter(filter_value: int) -> void:
 func _on_size_changed() -> void:
     var update_filter: bool = _game_vp.size != Global.base_size
     _game_vp.size = Global.base_size
-    
-    get_tree().set_screen_stretch(
-        get_tree().STRETCH_MODE_2D,
-        get_tree().STRETCH_ASPECT_KEEP,
-        OS.window_size,
-        1)
-    
-    var window_aspect_ratio: float = OS.window_size.x / OS.window_size.y
-    var game_aspect_ratio: float = _game_vp.size.x / _game_vp.size.y
 
+    var root_vp_res: Vector2 = get_viewport().get_size_override()
+    var window_size: Vector2 = OS.window_size
+    var window_aspect_ratio: float = window_size.x / window_size.y
+    var game_aspect_ratio: float = _game_vp.size.x / _game_vp.size.y
     var width: float
     var height: float
+    var scale_game: float
+    var offset: Vector2
     
     if window_aspect_ratio < game_aspect_ratio:
-        width = OS.window_size.x
+        width = window_size.x
         height = width / game_aspect_ratio
-        _game_vpc.rect_position = Vector2(0, (OS.window_size.y - height) / 2)
+        scale_game = root_vp_res.x / _game_vp.size.x
+        var scale_root: float = root_vp_res.x / width
+        offset = Vector2(0, (window_size.y - height) / 2 * scale_root)
     else:
-        height = OS.window_size.y
+        height = window_size.y
         width = height * game_aspect_ratio
-        _game_vpc.rect_position = Vector2((OS.window_size.x - width) / 2, 0)
+        scale_game = root_vp_res.y / _game_vp.size.y
+        var scale_root: float = root_vp_res.y / height
+        offset = Vector2((window_size.x - width) / 2 * scale_root, 0)
 
-    _game_vpc.rect_size = Vector2(width, height)
-    _game_vpc.rect_scale = Vector2(width, height) / _game_vp.size
+    _game_vpc.rect_scale = Vector2(scale_game, scale_game)
+    _game_vpc.rect_position = offset
 
     if update_filter:
         _set_filter(filter)
