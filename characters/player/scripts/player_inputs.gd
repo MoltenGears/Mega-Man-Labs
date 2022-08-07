@@ -6,7 +6,12 @@ func _unhandled_input(event: InputEvent) -> void:
         or not _get_state().has_method("_handle_command")):
         return
 
-    if event.is_action_pressed(_get_name(Action.JUMP)) and is_action_pressed(Action.DOWN):
+    if (event.is_action_pressed(_get_name(Action.JUMP))
+        and is_action_pressed(Action.DOWN)
+        and not Global.use_touch_controls):
+        _get_state()._handle_command("slide")
+    elif Input.is_action_just_pressed(_get_name(Action.SLIDE)):
+        # Using Input.is_action_just_pressed() for touch buttons to prevent continuous input events.
         _get_state()._handle_command("slide")
 
     if event.is_action_pressed(_get_name(Action.JUMP)):

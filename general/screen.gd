@@ -15,6 +15,7 @@ enum Filter {
 export(PackedScene) var start_scene_release
 export(PackedScene) var start_scene_debug
 export(Filter) var filter setget _set_filter
+export(bool) var touch_controls setget set_touch_controls
 
 var _current_scene_path: String
 var current_scene: Node = null
@@ -24,11 +25,17 @@ onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 
 func _physics_process(delta: float) -> void:
     if not Engine.editor_hint and $Label.visible:
-        $Label.text = str(Engine.get_frames_per_second(), " FPS")
-
+            $Label.text = str(Engine.get_frames_per_second(), " FPS")
+        
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
+
+    # Continuously pressed touch buttons need special handling.
+    if has_node("TouchControls/Buttons"):
+        Global.touch_buttons.clear()
+        for button in $"TouchControls/Buttons".get_children():
+            Global.touch_buttons.push_back(button)
 
     Global.connect("internal_res_changed", self, "_on_size_changed")
     get_tree().get_root().connect("size_changed", self, "_on_size_changed")
@@ -36,6 +43,7 @@ func _ready() -> void:
     _game_vpc.set_process_unhandled_input(true)
     _game_vp.get_texture().flags = Texture.FLAG_FILTER # Required for pixel art upscaling shaders.
     _set_filter(filter)
+    set_touch_controls(touch_controls)
 
     if OS.is_debug_build() and start_scene_debug:
         switch_scene(start_scene_debug.resource_path)
@@ -150,3 +158,12 @@ func _on_size_changed() -> void:
     if filter == Filter.PIXEL_ART_UPSCALE and _game_vpc.material:
         # Always needs update on size change.
         _game_vpc.material.set_shader_param("texels_per_pixel", 1.0 / _game_vpc.rect_scale.x)
+
+func set_touch_controls(state: bool) -> void:
+    touch_controls = state
+    if Engine.is_editor_hint() or not has_node("TouchControls"):
+        return
+
+    $TouchControls.visible = state
+    $"TouchControls/VirtualJoystick".use_input_actions = state
+    Global.use_touch_controls = state

@@ -12,11 +12,12 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - Weapon charging
   - Double jumping
 - Local multiplayer co-op mode (groundwork)
-- Flexible camera screen transition system
+- Flexible stage sections system with camera screen transitions.
 - Support for arbitrary base resolutions
   - Presets for regular (256 x 224) and wide-screen (384 x 240)
   - Dynamic in-game base resolution switching
-  - Anti-aliased fractional pixel-art upscaling
+  - Pixel-art upscaling filter for arbitrary
+    (non-integer factor) target resolutions without visual artifacts
 - Post-processing shaders
   - CRT-Easymode
   - CRT-Lottes
@@ -37,6 +38,10 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
 - Optional modern lighting effects
   - Glow
 - Modern gamepad support
+- Touch screen controls and menu support
+- Should work out of the box on various platforms
+  - Desktop (Linux, Windows, MacOS), Android, iOS, HTML5
+  - GLES2 support for low-end hardware, mobile, web, etc.
 - Stage building features
   - Automatic conversion of ladder tiles (just draw them)
   - Automatic conversion of insta-kill hazard tiles (just draw them)
@@ -54,6 +59,7 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - Example stages
     - Test lab stage
     - Wide-screen rebuild of Heat Man's stage (MM2)
+    - Re-envisioned Metal Man stage (MM2) (work-in-progress)
 
 ## Purpose and Scope
 
@@ -127,12 +133,30 @@ licensed under the [CC BY-NC-SA 3.0][CC BY-NC-SA 3.0] license.
 [Boberatu][Boberatu Deviant Art] and licensed under the
 [CC BY-NC 3.0][CC BY-NC 3.0] license.
 
+Some touch screen [UI elements][X-Box Buttons] are created by
+[Arks @Scissormarks][Arks] and licensed under the [CC BY 4.0][CC BY 4.0] license.
+
 Mega Man and all related content is copyrighted by Capcom Co., Ltd.  
 This project and its owner is not affiliated with Capcom in any way.
 
+## Credits
+
+### Assets
+
+[Godot Virtual Joystick](https://github.com/MarcoFazioRandom/Virtual-Joystick-Godot)
+
+### Resources
+
+- Understanding pixel-art upscaling filters/shaders
+  - [Pixel Art Filtering](https://jorenjoestar.github.io/post/pixel_art_filtering/)
+  - [Manual texture filtering for pixelated games in WebGL](https://csantosbh.wordpress.com/2014/01/25/manual-texture-filtering-for-pixelated-games-in-webgl/)
+
 [Boberatu Deviant Art]: https://www.deviantart.com/boberatu
 [Thunder Man Deviant Art]: https://www.deviantart.com/boberatu/art/MPN-001-Thunder-man-313453472
+[Arks]: https://twitter.com/ScissorMarks
+[X-Box Buttons]: https://arks.itch.io/xbox-buttons
 [CC BY-NC-SA 3.0]: https://creativecommons.org/licenses/by-nc-sa/3.0/
 [CC BY-NC 3.0]: https://creativecommons.org/licenses/by-nc/3.0/
+[CC BY 4.0]: https://creativecommons.org/licenses/by/4.0/
 [Best Practices]: https://docs.godotengine.org/en/stable/getting_started/workflow/best_practices/index.html
 [Style Guide]: https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_styleguide.html

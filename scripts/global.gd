@@ -12,13 +12,14 @@ var players_alive_count: int setget , get_players_alive_count
 var can_toggle_pause := true
 var in_pause_menu := false
 var base_size: Vector2 setget , get_base_size
-var scale_factor: float = 1
 var rng := RandomNumberGenerator.new()
+var touch_buttons: Array
 
 # Options
 var wide_screen := true setget set_wide_screen
 var bar_fill_pause := false
 var lighting_vfx := true  # Requires World Environment with glow effect.
+var use_touch_controls := true # Set by Screen node for now.
 
 signal internal_res_changed()
 
@@ -96,9 +97,14 @@ func is_action_pressed(action: String) -> bool:
         # Add more elif to treat the type accordingly.
         else:
             continue
-        
+
         if is_pressed:
             break
+
+    for touch_button in touch_buttons:
+        if is_pressed:
+            break
+        is_pressed = touch_button.action == action and touch_button.is_pressed()
 
     return is_pressed
 

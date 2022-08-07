@@ -1,13 +1,23 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://general/screen.gd" type="Script" id=1]
 [ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://stages/metal/MetalManStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://menus/TitleScreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gui/touch/joystick/VirtualJoystick.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gui/touch/buttons/textures/Button_A_Normal.svg" type="Texture" id=6]
+[ext_resource path="res://gui/touch/buttons/textures/Button_A_Pressed.svg" type="Texture" id=7]
+[ext_resource path="res://gui/touch/buttons/textures/Button_B_Normal.svg" type="Texture" id=8]
+[ext_resource path="res://gui/touch/buttons/textures/Button_B_Pressed.svg" type="Texture" id=9]
+[ext_resource path="res://gui/touch/buttons/textures/Button_X_Normal.svg" type="Texture" id=10]
+[ext_resource path="res://gui/touch/buttons/textures/Button_X_Pressed.svg" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=5]
 size = 32
 font_data = ExtResource( 2 )
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 80.0
 
 [node name="Screen" type="Node"]
 pause_mode = 2
@@ -40,3 +50,67 @@ anchor_bottom = 0.05
 custom_fonts/font = SubResource( 5 )
 text = "FPS Counter"
 align = 2
+
+[node name="TouchControls" type="CanvasLayer" parent="."]
+
+[node name="VirtualJoystick" parent="TouchControls" instance=ExtResource( 5 )]
+anchor_top = 0.4
+anchor_right = 0.4
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 0.0
+deadzone_size = 5.0
+joystick_mode = 1
+action_left = "action_left_p1"
+action_right = "action_right_p1"
+action_up = "action_up_p1"
+action_down = "action_down_p1"
+
+[node name="Base" parent="TouchControls/VirtualJoystick" index="0"]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 300.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = -300.0
+
+[node name="Buttons" type="Control" parent="TouchControls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="JumpButton" type="TouchScreenButton" parent="TouchControls/Buttons"]
+modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( -350, -350 )
+scale = Vector2( 1.5, 1.5 )
+normal = ExtResource( 6 )
+pressed = ExtResource( 7 )
+shape = SubResource( 6 )
+shape_visible = false
+passby_press = true
+action = "action_jump_p1"
+
+[node name="ShootButton" type="TouchScreenButton" parent="TouchControls/Buttons"]
+modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( -500, -450 )
+normal = ExtResource( 8 )
+pressed = ExtResource( 9 )
+shape = SubResource( 6 )
+shape_visible = false
+action = "action_shoot_p1"
+
+[node name="SlideButton" type="TouchScreenButton" parent="TouchControls/Buttons"]
+modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( -550, -250 )
+normal = ExtResource( 10 )
+pressed = ExtResource( 11 )
+shape = SubResource( 6 )
+shape_visible = false
+passby_press = true
+action = "action_slide_p1"
+
+[editable path="TouchControls/VirtualJoystick"]

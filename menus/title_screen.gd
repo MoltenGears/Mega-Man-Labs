@@ -11,7 +11,9 @@ func _ready() -> void:
         $TitleMusic.play()
 
 func _input(event: InputEvent) -> void:
-    if (event is InputEventJoypadButton or event is InputEventKey) and not event.pressed:
+    if (event is InputEventJoypadButton
+        or event is InputEventKey or
+        event is InputEventMouseButton) and not event.pressed:
         set_process_input(false)
         $"VBoxContainer/Buttons".remove_child($"VBoxContainer/Buttons/StartLabel")
         _show_main_buttons()
@@ -35,13 +37,19 @@ func _options() -> void:
     $SelectSound.play()
 
 func _exit() -> void:
-    exit_button.disconnect("focus_exited", self, "_on_focus_exited")
+    exit_button.disconnect("focus_entered", self, "_on_focus_entered")
     exit_button.release_focus()
     $SelectSound.play()
     yield($SelectSound, "finished")
     get_tree().quit()
 
-func _on_focus_exited() -> void:
+func _on_focus_entered(button: Button) -> void:
+    if button: # Handle mouse/touch.
+        if button.has_focus():
+            return
+        else:
+            button.grab_focus()
+
     $MoveCursorSound.play()
 
 func _create_main_buttons() -> void:
@@ -56,7 +64,8 @@ func _create_button(text: String, callback: String) -> Button:
     var button := Button.new()
     button.text = text
     button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-    button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    button.mouse_filter = Control.MOUSE_FILTER_STOP
     button.connect("button_down", self, callback)
-    button.connect("focus_exited", self, "_on_focus_exited")
+    button.connect("focus_entered", self, "_on_focus_entered", [null])
+    button.connect("mouse_entered", self, "_on_focus_entered", [button])
     return button

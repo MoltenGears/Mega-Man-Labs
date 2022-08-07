@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_74" data-name="Rectangle 74" width="120" height="120" transform="translate(0 3)"/>
+    </clipPath>
+    <clipPath id="clip-button_xbox_digital_x_9">
+      <rect width="120" height="120"/>
+    </clipPath>
+  </defs>
+  <g id="button_xbox_digital_x_9" clip-path="url(#clip-button_xbox_digital_x_9)">
+    <g id="button_xbox_X_7" transform="translate(0 3)">
+      <g id="Button_-_XBOX_X" data-name="Button - XBOX X" transform="translate(0 -3)" clip-path="url(#clip-path)">
+        <g id="Border_white_-_outer" data-name="Border white - outer" transform="translate(14 14)">
+          <g id="Border_white_-_outer-2" data-name="Border white - outer" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="46" cy="46" r="46" stroke="none"/>
+            <circle cx="46" cy="46" r="45" fill="none"/>
+          </g>
+        </g>
+        <g id="Border_white_-_inner" data-name="Border white - inner" transform="translate(14 14)">
+          <g id="Border_white_-_inner-2" data-name="Border white - inner" fill="none" stroke="#fff" stroke-width="4">
+            <circle cx="46" cy="46" r="46" stroke="none"/>
+            <circle cx="46" cy="46" r="48" fill="none"/>
+          </g>
+        </g>
+        <g id="Button_-_Base" data-name="Button - Base" transform="translate(14 14)">
+          <circle id="Button_-_Base-2" data-name="Button - Base" cx="46" cy="46" r="46" fill="#404040"/>
+        </g>
+        <g id="Button_-_Top" data-name="Button - Top" transform="translate(18 17)">
+          <circle id="Button_-_Top-2" data-name="Button - Top" cx="38" cy="38" r="38" transform="translate(4 4)" fill="#2a2a2a"/>
+        </g>
+        <path id="Path_124" data-name="Path 124" d="M18.009,0H8.675L-.29-14.581-9.255,0h-8.754L-5.221-19.881-17.191-38.549h9.018L.132-24.68,8.279-38.549h8.807L4.983-19.433Z" transform="translate(60 77)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

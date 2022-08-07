@@ -27,11 +27,18 @@ func _ready() -> void:
     var index: int = 0
     for button in $Buttons.get_children():
         _buttons.append(button)
-        button.connect("focus_entered", self, "_on_focus_entered", [index])
+        button.connect("focus_entered", self, "_on_focus_entered", [index, false])
+        button.connect("mouse_entered", self, "_on_focus_entered", [index, true])
         button.connect("pressed", self, "_on_pressed", [index])
         index += 1
 
-func _on_focus_entered(index: int) -> void:
+func _on_focus_entered(index: int, is_mouse: bool) -> void:
+    if is_mouse:
+        if _buttons[index].has_focus():
+            return
+        else:
+            _buttons[index].grab_focus()
+
     $MoveCursorSound.play()
     $"Mugshots/MugshotMidCenter".frame = index
 

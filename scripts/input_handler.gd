@@ -19,6 +19,7 @@ enum Action {
     LEFT,
     SHOOT,
     JUMP,
+    SLIDE,
     WEAPON_NEXT,
     WEAPON_PREVIOUS
 }
@@ -59,6 +60,8 @@ func _get_name(action: int) -> String:
             return "action_shoot_p%s" % controller
         Action.JUMP:
             return "action_jump_p%s" % controller
+        Action.SLIDE:
+            return "action_slide_p%s" % controller
         Action.WEAPON_NEXT:
             return "action_weapon_next_p%s" % controller
         Action.WEAPON_PREVIOUS:
