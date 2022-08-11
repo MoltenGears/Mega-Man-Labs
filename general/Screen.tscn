@@ -2,7 +2,7 @@
 
 [ext_resource path="res://general/screen.gd" type="Script" id=1]
 [ext_resource path="res://fonts/PressStart2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://stages/metal/MetalManStage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://stages/heat/HeatStage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://menus/TitleScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gui/touch/joystick/VirtualJoystick.tscn" type="PackedScene" id=5]
 [ext_resource path="res://gui/touch/buttons/textures/Button_A_Normal.svg" type="Texture" id=6]

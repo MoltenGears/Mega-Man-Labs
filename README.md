@@ -59,7 +59,6 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - Example stages
     - Test lab stage
     - Wide-screen rebuild of Heat Man's stage (MM2)
-    - Re-envisioned Metal Man stage (MM2) (work-in-progress)
 
 ## Purpose and Scope
 
