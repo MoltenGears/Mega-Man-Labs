@@ -19,7 +19,7 @@ var touch_buttons: Array
 var wide_screen := true setget set_wide_screen
 var bar_fill_pause := false
 var lighting_vfx := true  # Requires World Environment with glow effect.
-var use_touch_controls := true # Set by Screen node for now.
+var use_touch_controls: bool setget , _get_use_touch_controls
 
 signal internal_res_changed()
 
@@ -139,3 +139,6 @@ func get_projectile_speed() -> float:
 func set_wide_screen(value: bool) -> void:
     wide_screen = value
     emit_signal("internal_res_changed")
+
+func _get_use_touch_controls() -> bool:
+    return ProjectSettings.get_setting("custom/gui/touch_controls")

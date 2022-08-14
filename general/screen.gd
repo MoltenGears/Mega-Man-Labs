@@ -12,11 +12,7 @@ enum Filter {
     CRT_EASYMODE # Keep as last entry since its value is used in wrapi() for cycling through.
 }
 
-export(PackedScene) var start_scene_release
-export(PackedScene) var start_scene_debug
-export(Filter) var filter setget _set_filter
-export(bool) var touch_controls setget set_touch_controls
-
+var _filter: int
 var _current_scene_path: String
 var current_scene: Node = null
 
@@ -24,8 +20,8 @@ onready var _game_vp: Viewport = _find_viewport_leaf(self)
 onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 
 func _physics_process(delta: float) -> void:
-    if not Engine.editor_hint and $Label.visible:
-            $Label.text = str(Engine.get_frames_per_second(), " FPS")
+    if not Engine.editor_hint and $LabelFPS.visible:
+            $LabelFPS.text = str(Engine.get_frames_per_second(), " FPS")
         
 func _ready() -> void:
     if Engine.is_editor_hint():
@@ -42,26 +38,32 @@ func _ready() -> void:
     _on_size_changed()
     _game_vpc.set_process_unhandled_input(true)
     _game_vp.get_texture().flags = Texture.FLAG_FILTER # Required for pixel art upscaling shaders.
-    _set_filter(filter)
-    set_touch_controls(touch_controls)
+    _set_filter(ProjectSettings.get_setting("custom/rendering/filter"))
+    _set_touch_controls()
+    $Backdrop.visible = true
+    $LabelFPS.visible = ProjectSettings.get_setting("custom/gui/show_fps")
 
-    if OS.is_debug_build() and start_scene_debug:
-        switch_scene(start_scene_debug.resource_path)
-    elif start_scene_release:
-        $Backdrop.visible = true
+    assert(
+        ProjectSettings.get_setting("custom/startup/entry_game_scene"),
+        "Entry Game Scene needs to be defined in Project Settings."
+    )
+
+    if OS.has_feature("release"):
         OS.window_fullscreen = true
-        switch_scene(start_scene_release.resource_path)
-    else:
-        push_error("'%s' node has no startup scene set." % self.name)
+        if ProjectSettings.get_setting("custom/startup/entry_game_scene") != "res://menus/TitleScreen.tscn":
+            push_error("Release build entry game scene 'Title Screen' may not be changed.")
+            get_tree().quit() # Prevent changing the game entry point in release builds via config overrides.
+
+    switch_scene(ProjectSettings.get_setting("custom/startup/entry_game_scene"))
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("action_screenshot"):
         Global.take_screenshot()
     if event.is_action_pressed("action_debug_filter"):
         if OS.get_current_video_driver() == OS.VIDEO_DRIVER_GLES2:
-            _set_filter(wrapi(filter + 1, 0, Filter.LINEAR + 1))
+            _set_filter(wrapi(_filter + 1, 0, Filter.LINEAR + 1))
         else:
-            _set_filter(wrapi(filter + 1, 0, Filter.CRT_EASYMODE + 1))
+            _set_filter(wrapi(_filter + 1, 0, Filter.CRT_EASYMODE + 1))
     if event.is_action_pressed("action_debug_fullscreen"):
         OS.window_fullscreen = !OS.window_fullscreen
 
@@ -93,7 +95,7 @@ func _find_viewport_leaf(node: Node) -> Viewport:
     return null
 
 func _set_filter(filter_value: int) -> void:
-    filter = filter_value
+    _filter = filter_value
 
     if not _game_vpc or Engine.editor_hint:
         return
@@ -153,17 +155,16 @@ func _on_size_changed() -> void:
     _game_vpc.rect_position = offset
 
     if update_filter:
-        _set_filter(filter)
+        _set_filter(_filter)
 
-    if filter == Filter.PIXEL_ART_UPSCALE and _game_vpc.material:
+    if _filter == Filter.PIXEL_ART_UPSCALE and _game_vpc.material:
         # Always needs update on size change.
         _game_vpc.material.set_shader_param("texels_per_pixel", 1.0 / _game_vpc.rect_scale.x)
 
-func set_touch_controls(state: bool) -> void:
-    touch_controls = state
-    if Engine.is_editor_hint() or not has_node("TouchControls"):
+func _set_touch_controls() -> void:
+    if (Engine.is_editor_hint() or not has_node("TouchControls")):
         return
 
+    var state: bool = ProjectSettings.get_setting("custom/gui/touch_controls")
     $TouchControls.visible = state
     $"TouchControls/VirtualJoystick".use_input_actions = state
-    Global.use_touch_controls = state
