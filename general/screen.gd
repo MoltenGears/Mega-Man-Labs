@@ -131,8 +131,8 @@ func _on_size_changed() -> void:
 
     var root_vp_res: Vector2 = get_viewport().get_size_override()
     var window_size: Vector2 = OS.window_size
-    var window_aspect_ratio: float = window_size.x / window_size.y
-    var game_aspect_ratio: float = _game_vp.size.x / _game_vp.size.y
+    var window_aspect_ratio: float = window_size.aspect()
+    var game_aspect_ratio: float = _game_vp.size.aspect()
     var width: float
     var height: float
     var scale_game: float

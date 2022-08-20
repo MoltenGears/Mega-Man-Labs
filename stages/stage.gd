@@ -27,6 +27,7 @@ var start_dir: Vector2
 var stage_exited: bool
 var player: Player
 var players: Dictionary
+var restarting: bool
 
 onready var _gui_ready := $"GUI/Ready"
 onready var _gui_fade_effects := $"GUI/FadeEffects"
@@ -95,6 +96,7 @@ func get_current_camera() -> Camera2D:
     return current_camera
 
 func _restart() -> void:
+    restarting = true
     Global.can_toggle_pause = true
     get_tree().paused = true
     get_tree().call_group("Enemies", "queue_free")
@@ -106,8 +108,12 @@ func _restart() -> void:
     emit_signal("player_ready")
     get_tree().paused = false
 
+    # The following delay is also important for the camera to be able to update sections
+    # and transition instantly on restart.
     yield(get_tree().create_timer(SPECIALS_RESET_DELAY), "timeout")
     get_tree().call_group("SpecialsReset", "on_restarted")
+
+    restarting = false
 
 func _on_died() -> void:
     for p in players.values():

@@ -181,10 +181,15 @@ func _set_active_section(value: Section) -> void:
     if active_section:
         active_section.active = false
 
+        if not value:
+            print("Cleared Active Section: %s" % active_section)
+            active_section = null
+            return
+
     active_section = value
     active_section.active = true
     update_limits()
-    print("New Active Section: ", value.name)
+    # print("New Active Section: ", value.name)
 
 func update_limits() -> void:
     limit_left = active_section.limit_left

@@ -15,7 +15,6 @@ var limit_right: float
 var limit_bottom: float
 
 var transition_dir: Vector2
-var transition_pos: Vector2
 
 var active: bool
 
@@ -23,7 +22,7 @@ var _remove_seal_on_restart: bool = true
 var _can_seal_previous: bool
 var _players_ready_count := 0
 
-signal transition_entered(dir, transition)
+signal transition_entered(transition)
 
 func _ready() -> void:
     if Engine.editor_hint:
@@ -44,14 +43,16 @@ func on_body_entered(body: Node) -> void:
     if not body is Player or active:
         return
 
-    print(body.name, " entered ", name, " at ", to_local(body.global_position).round())
-
-    transition_pos = to_local(body.global_position).round()
-    _update_direction()
+    # print(body.name, " entered ", name, " at ", to_local(body.global_position).round())
 
     var cam: Camera2D = Global.get_current_stage().get_current_camera()
-    if transition_dir == Vector2.ZERO or not cam.active_section:
+    if not cam.active_section or Global.get_current_stage().restarting:
         cam.active_section = self
+        return
+    else:
+        _update_direction(cam.active_section)
+
+    if transition_dir == Vector2.ZERO:
         return
 
     if transition_dir == Vector2.UP and not body.is_climbing:
@@ -70,7 +71,7 @@ func _on_body_exited(body: Node) -> void:
     if not active:
         _decrement_players_ready_count()
 
-    print(body.name, " exited ", name, " at ", to_local(body.global_position).round())
+    # print(body.name, " exited ", name, " at ", to_local(body.global_position).round())
 
 func on_restarted() -> void:
     _reset_players_ready_count()
@@ -89,24 +90,27 @@ func _seal(value: bool) -> void:
     $BlockingWall.set_collision_layer_bit(7, sealed)
     $Area2D.set_collision_mask_bit(1, !sealed)
 
-func _update_direction() -> void:
+func _update_direction(previous_section: Section) -> void:
     transition_dir = Vector2.ZERO
-    var margin: int = 24
+    var is_vertical: bool = true
 
-    if abs(transition_pos.x) < margin:
-        transition_dir = Vector2.RIGHT
-        print("Transition Direction: RIGHT")
-    elif abs(transition_pos.y) < margin:
-        transition_dir = Vector2.DOWN
-        print("Transition Direction: DOWN")
-    elif abs($"Area2D/CollisionShape2D".shape.extents.x * 2 - transition_pos.x) < margin:
-        transition_dir = Vector2.LEFT
-        print("Transition Direction: LEFT")
-    elif abs($"Area2D/CollisionShape2D".shape.extents.y * 2 - transition_pos.y) < margin:
-        transition_dir = Vector2.UP
-        print("Transition Direction: UP")
+    if limit_left >= previous_section.limit_right or limit_right <= previous_section.limit_left:
+        is_vertical = false
+
+    if is_vertical:
+        if global_position.y > previous_section.global_position.y:
+            transition_dir = Vector2.DOWN
+            # print("Transition Direction: DOWN")
+        else:
+            transition_dir = Vector2.UP
+            # print("Transition Direction: UP")
     else:
-        print("UNDEFINED TRANSITION DIRECTION")
+        if global_position.x > previous_section.global_position.x:
+            transition_dir = Vector2.RIGHT
+            # print("Transition Direction: RIGHT")
+        else:
+            transition_dir = Vector2.LEFT
+            # print("Transition Direction: LEFT")
 
 func _set_width(value: int) -> void:
     width = value
