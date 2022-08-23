@@ -9,7 +9,7 @@ func _enter() -> void:
 func _update(delta: float) -> void:
     get_parent().velocity.y = \
         clamp(get_parent().velocity.y + Constants.GRAVITY, -Constants.FALL_SPEED_MAX, Constants.FALL_SPEED_MAX)
-    owner.move_and_slide(get_parent().velocity, Vector2.UP)
+    owner.move_and_slide(get_parent().velocity, Constants.FLOOR_NORMAL)
     if owner.is_on_floor():
         get_parent().velocity = Vector2.ZERO
 

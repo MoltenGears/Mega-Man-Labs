@@ -36,12 +36,13 @@ func on_camera_exited() -> void:
     queue_free()
 
 func _physics_process(delta: float) -> void:
-    _velocity = move_and_slide(_velocity, Constants.FLOOR_NORMAL)
+    _velocity.x = 0
     _velocity.y = clamp(
-        _velocity.y + Constants.GRAVITY,
-        -Constants.FALL_SPEED_MAX,
-        Constants.FALL_SPEED_MAX)
-
+        _velocity.y + Constants.GRAVITY, -Constants.FALL_SPEED_MAX, Constants.FALL_SPEED_MAX)
+    _velocity = move_and_slide(_velocity, Constants.FLOOR_NORMAL)
+    if is_on_floor():
+        _velocity = Vector2.ZERO
+    
 func on_body_entered(body: PhysicsBody2D) -> void:
     if body is Player:
         _on_picked_up_effect(body as Player)

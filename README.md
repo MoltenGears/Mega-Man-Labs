@@ -1,8 +1,8 @@
 # Mega Man Labs
 
-Implementation of the classic Mega Man in the [Godot Engine](https://godotengine.org).
+Framework for classic Mega Man games to build upon using [Godot Engine](https://godotengine.org).
 
-![In-game screenshot](/.resources/screenshot-01.png)
+![In-game screenshot](/.resources/screenshot-02.png)
 
 ## Features
 
@@ -11,7 +11,7 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - Sliding
   - Weapon charging
   - Double jumping
-- Local multiplayer co-op mode (groundwork)
+- Local multiplayer co-op (groundwork)
 - Flexible stage sections system with camera screen transitions.
 - Support for arbitrary base resolutions
   - Presets for regular (256 x 224) and wide-screen (384 x 240)
@@ -22,7 +22,7 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
   - CRT-Easymode
   - CRT-Lottes
 - Special weapons system
-  - Quick switch methods (MM10 and MM11 style)
+  - Quick switch method (MM10 style)
 - UI, menus, and screens
   - Title screen
   - Stage-select screen
@@ -60,40 +60,6 @@ Implementation of the classic Mega Man in the [Godot Engine](https://godotengine
     - Test lab stage
     - Wide-screen rebuild of Heat Man's stage (MM2)
 
-## Purpose and Scope
-
-Always wanting to try out game development, I aimlessly read about and fiddled
-with current mainstream game engines. As a beginner and without a concrete
-project, I felt overwhelmed and quit several times.
-
-Finding out about Godot Engine at some point rekindled my interest in game
-development. Its simplicity, coherence, permissive license, and being so
-lightweight convinced me to try once more. From the philosophy of the engine
-developers, helpful community resources, and the engine documentation I could
-draw enough motivation and knowledge to work towards a clearly defined aim this
-time around: Create a complete Mega Man (NES) stage.
-
-Apart from being my favorite childhood video game, in my opinion, Mega Man
-qualifies as a perfect game to reimplement for learning purpose as a beginner
-in terms of complexity.
-
-I put this on GitHub for anyone who might be interested in this stuff.
-Be it for educational purpose, a Godot Engine test project to play around with,
-an entry point for your own project, or something you might want to contribute
-to in some way.
-
-Depending on general interest, or lack thereof, my own motivation, and the
-spare time I am able to spend, I might continue to expand this project beyond
-the single stage.
-
-I would like to mention that I do not intend for this project to become a
-super easy to use Mega Man stage creator with a large amount of assets.
-Because for this and more, there is already the awesome
-[Mega Man Maker](https://megamanmaker.com/). However, I could imagine it to
-become a kind of template or framework for Mega Man style games that offers
-more flexibility but requires to accept a learning curve before being able to
-create something playable.
-
 ## Installation and Usage
 
 To be able to take a look at, edit, test, and build this project, you need
@@ -107,9 +73,7 @@ use the above-mentioned version of the Godot Engine.
 
 In general, all kinds of contributions are appreciated, e.g., bug reports,
 bug fixes, feature implementations like additional enemy types, etc.
-However, most valuable to me would be coding and program architecture advice
-from more experienced programmers, since this is first and foremost a learning
-project for myself. As I am mostly focused on coding, I would be glad if there
+As I am mostly focused on coding, I would be glad if there
 are pixel-artists interested in creating original Mega Man artwork for this
 project like stage tilesets, enemy designs, and so on.
 
