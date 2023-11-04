@@ -64,7 +64,7 @@ Framework for classic Mega Man games to build upon using [Godot Engine](https://
 
 To be able to take a look at, edit, test, and build this project, you need
 **version 3.5** of the Godot Engine Editor, which you can download from the
-[official website](https://godotengine.org/download). Just clone or download
+[official website](https://godotengine.org/download/3.x). Just clone or download
 this repository and import its `project.godot` file from within the Godot
 editor project manager. Other versions might work, but it is recommended to
 use the above-mentioned version of the Godot Engine.
