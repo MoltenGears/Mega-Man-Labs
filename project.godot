@@ -83,6 +83,7 @@ _global_script_class_icons={
 config/name="Mega Man Labs"
 run/main_scene="res://general/Screen.tscn"
 config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
