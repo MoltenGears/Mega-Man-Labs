@@ -90,7 +90,7 @@ func get_current_camera() -> Camera2D:
             if child is Camera2D:
                 current_camera = child
                 break
-    
+
     if not current_camera:
         printerr("No camera found in current stage.")
     return current_camera
@@ -149,7 +149,7 @@ func _game_over() -> void:
 func _set_stage_start_pos() -> void:
     if not player:
         return
-    
+
     if start_pos:
         for p in players.values():
             p.global_position = start_pos
@@ -181,7 +181,7 @@ func _connect_signals() -> void:
     _try_connect(self, "player_ready", _gui_pause, "set_can_pause", [true])
     _try_connect(self, "player_died", _gui_fade_effects, "fade_out", [FADE_OUT_DURATION])
     _try_connect(self, "stage_cleared", player, "on_stage_cleared")
-    
+
     # Connect children signals to stage methods.
     for p in players.values():
         _try_connect(p, "died", self, "_on_died")
@@ -213,7 +213,7 @@ func _try_connect(source: Object, signal_name: String, target: Object, method_na
     if not target.has_method(method_name):
         printerr(error_msg, " Method on %s does not exist." % target.name)
         return false
-    
+
     if not source.is_connected(signal_name, target, method_name):
         return true if source.connect(signal_name, target, method_name, binds, flags) else false
     else:
@@ -225,7 +225,7 @@ func _add_instant_death_areas() -> void:
     var instant_death_areas_node := Node2D.new()
     instant_death_areas_node.name = "InstantDeathAreas"
     add_child(instant_death_areas_node)
-    
+
     for tile_map in get_tree().get_nodes_in_group("TileMaps"):
         var tile_set = tile_map.tile_set
         for tile_id in tile_set.get_tiles_ids():
@@ -261,7 +261,7 @@ func _add_ladder_areas() -> void:
                         var ladder_tiles_local: Vector2 = tile_map.map_to_world(coord)
                         var ladder_tiles_global: Vector2 = tile_map.to_global(ladder_tiles_local)
                         ladder_tiles.append(ladder_tiles_global)
-    
+
     while ladder_tiles.size() > 0:
         ladder_node.add_child(_construct_ladder(ladder_tiles))
 

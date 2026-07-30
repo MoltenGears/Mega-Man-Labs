@@ -13,12 +13,12 @@ func _enter() -> void:
 func _handle_command(command: String) -> void:
     if command == "jump_stop" and velocity.y < 0:
         velocity.y = 0
-        
+
     if command == "shoot":
         animation_player.play(
             "jump_shoot_alt" if weapons.current_state.use_alt_anim else "jump_shoot")
         shoot()
-    
+
     if command.begins_with("weapon_"):
         weapons.change_weapon(command)
 

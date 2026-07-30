@@ -18,4 +18,4 @@ func _on_body_exited(body: PhysicsBody2D) -> void:
         _player = null
 
 func _physics_process(delta: float) -> void:
-    _player.on_hit(99)        
+    _player.on_hit(99)

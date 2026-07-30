@@ -111,11 +111,11 @@ func is_action_pressed(action: String) -> bool:
 func get_action_strength(action: String) -> float:
     # Temporary workaround until the following engine issue will be fixed.
     # https://github.com/godotengine/godot/issues/45628
-    
+
     var action_strength := Input.get_action_strength(action)
     if action_strength == 0:
         action_strength = 1 if is_action_pressed(action) else 0
-    
+
     return action_strength
 
 func get_base_size() -> Vector2:

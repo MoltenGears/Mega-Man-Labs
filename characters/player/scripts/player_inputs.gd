@@ -16,7 +16,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
     if event.is_action_pressed(_get_name(Action.JUMP)):
         _get_state()._handle_command("jump")
-    
+
     if event.is_action_released(_get_name(Action.JUMP)):
         _get_state()._handle_command("jump_stop")
 

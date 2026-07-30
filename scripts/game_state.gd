@@ -29,7 +29,7 @@ func decrease_enemy_count(enemy_name: String) -> void:
     if enemies_count.has(enemy_name):
         enemies_count[enemy_name] -= 1
         # print_debug("Enemy Count-- (%s): %s" % [enemy_name, enemies_count[enemy_name]])
-    
+
         if enemies_count[enemy_name] < 0:
             printerr("Enemy Count (%s) is smaller than 0: %s" % [enemy_name, enemies_count[enemy_name]])
 

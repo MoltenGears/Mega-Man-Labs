@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
         emit_signal("camera_entered")
     elif _was_on_screen and not _is_on_screen:
         emit_signal("camera_exited")
-    
+
     _was_on_screen = _is_on_screen
 
 func is_on_screen() -> bool:

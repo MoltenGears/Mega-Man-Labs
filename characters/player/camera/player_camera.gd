@@ -37,7 +37,7 @@ func transition_section(section: Section) -> void:
     set_physics_process(false)
     var direction: Vector2 = section.transition_dir
     var old_cam_pos: Vector2 = get_camera_screen_center()
-    
+
     limit_left = -10000
     limit_top = -10000
     limit_right = 10000
@@ -63,7 +63,7 @@ func transition_section(section: Section) -> void:
         target_position = Vector2(transition_pos + _base_width / 2 * direction.x, position.y)
     else:
         target_position = Vector2(position.x, transition_pos + _base_height / 2 * direction.y)
-                
+
     var tween: SceneTreeTween = create_tween()
     tween \
         .tween_property(self, "position", target_position, transition_time) \
@@ -80,14 +80,14 @@ func transition_section(section: Section) -> void:
             else:
                 player_movement = player_collision_extents.y * 2 * direction + \
                 Vector2(0, transition_pos - p.global_position.y) * 1.6
-        
+
             tween \
                 .parallel() \
                 .tween_property(p, "global_position", player_movement, transition_time) \
                 .as_relative() \
                 .set_trans(Tween.TRANS_LINEAR) \
                 .set_ease(Tween.EASE_IN_OUT)
-        
+
     yield(tween, "finished")
 
     if section.seal_previous_section:
@@ -109,7 +109,7 @@ func on_restarted() -> void:
             connect("transition_start", p, "on_camera_transition_start")
         if not is_connected("transition_end", p, "on_camera_transition_end"):
             connect("transition_end", p, "on_camera_transition_end")
-    
+
     global_position = _get_target_pos()
 
 func on_died() -> void:

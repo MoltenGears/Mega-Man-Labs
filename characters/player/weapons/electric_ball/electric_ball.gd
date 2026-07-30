@@ -4,7 +4,7 @@ export(int) var damage := 1
 
 var direction: Vector2
 var consumed := false
-    
+
 func _ready() -> void:
     if not $PreciseVisibilityNotifier2D.is_on_screen():
         queue_free()

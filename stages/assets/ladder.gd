@@ -25,7 +25,7 @@ func _on_body_exited(body: PhysicsBody2D) -> void:
 
     if _is_above_ladder(_players[index]) and _players[index].is_climbing:
         _players[index].move_and_collide(Vector2(0, -_get_distance_to_ladder_top(_players[index]) - 1))
-    
+
     # _players[index].get_node("Sprite").offset.y = 0
     # _players[index].get_node("CollisionShape2D").shape.extents.y = 12
     _players[index].stop_climb()
@@ -67,7 +67,7 @@ func _get_distance_to_ladder_top(player: Player) -> float:
 func _set_size(value: int) -> void:
     if not has_node("Ladder"):
         return
-    
+
     size_in_tiles = value
     $"Ladder/LadderCollision".shape.extents.y = size_in_tiles * TILE_SIZE / 2
     $"Ladder/LadderCollision".position.y = size_in_tiles * TILE_SIZE / 2 - 1
