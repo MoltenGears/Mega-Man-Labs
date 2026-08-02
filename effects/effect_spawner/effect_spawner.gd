@@ -53,5 +53,12 @@ func spawn_energy_particles(spawn_pos: Vector2 = global_position) -> void:
                 -Vector2(1, 0).rotated(i * PI / 4), distance / lifetime)
         effects_node.call_deferred("add_child", energy_particle)
 
+func clear_particles() -> void:
+    if is_instance_valid(effects_node):
+        for p in effects_node.get_children():
+            if is_instance_valid(p):
+                p.queue_free()
+        emit_signal("energy_particles_vanished")
+
 func _on_timeout() -> void:
     emit_signal("energy_particles_vanished")
