@@ -103,6 +103,12 @@ func _restart() -> void:
     GameState.reset_enemy_count()
     _set_stage_start_pos()
 
+    # workaround to align camera to start/checkpoint section during "ready" animation
+    var active_section = _get_player_section()
+    if active_section:
+        current_camera.limit_left = active_section.position.x
+        current_camera.limit_bottom = active_section.position.y + active_section.height
+
     emit_signal("restarted")
     yield(get_tree().create_timer(0.0 if OS.is_debug_build() else START_DELAY), "timeout")
     emit_signal("player_ready")
@@ -302,3 +308,14 @@ func _sort_ladder_tiles(item_1: Vector2, item_2: Vector2) -> bool:
             return true
         else:
             return false
+
+# Retrieves section node based on player's position.
+func _get_player_section() -> Section:
+    var sections = get_node_or_null("Sections")
+    if sections:
+        for section in sections.get_children():
+            if section is Section:
+                var rect = Rect2(section.global_position, Vector2(section.width, section.height))
+                if rect.has_point(player.global_position):
+                    return section
+    return null
