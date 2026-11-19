@@ -23,7 +23,7 @@ func _ready() -> void:
 
     if not OS.is_debug_build():
         $Music.play()
-    
+
     var index: int = 0
     for button in $Buttons.get_children():
         _buttons.append(button)

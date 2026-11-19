@@ -36,7 +36,7 @@ func _update(delta: float) -> void:
             _is_move_anim = true
             # collision_shape.shape.extents.y = 12
             animation_player.play("climb_move")
-        
+
         # Exit when touching the floor while climbing.
         if (direction.y > 0
                 and owner.test_move(owner.transform, Vector2(0, direction.y) * delta)):

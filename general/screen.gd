@@ -22,7 +22,7 @@ onready var _game_vpc: ViewportContainer = _game_vp.get_parent()
 func _physics_process(delta: float) -> void:
     if not Engine.editor_hint and $LabelFPS.visible:
             $LabelFPS.text = str(Engine.get_frames_per_second(), " FPS")
-        
+
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
@@ -90,7 +90,7 @@ func _find_viewport_leaf(node: Node) -> Viewport:
             var viewport = _find_viewport_leaf(child_node)
             if viewport:
                 return viewport
-    
+
     print("No child Viewport node found below \'", name, "\'.")
     return null
 
@@ -137,7 +137,7 @@ func _on_size_changed() -> void:
     var height: float
     var scale_game: float
     var offset: Vector2
-    
+
     if window_aspect_ratio < game_aspect_ratio:
         width = window_size.x
         height = width / game_aspect_ratio

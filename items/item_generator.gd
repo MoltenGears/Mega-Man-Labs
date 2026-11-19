@@ -45,7 +45,7 @@ func _roll_item() -> Node:
     var roll: int = 0
     if total_weight > 0:
         roll += Global.rng.randi_range(1, total_weight)
-    
+
     _accumulated_weight = weight_no_drop
     if (roll <= _accumulated_weight):
         return null

@@ -66,7 +66,7 @@ func _update(delta: float) -> void:
     if _cancel_on_next_frame:
         emit_signal("finished", "idle")
         return
-    
+
     # Enough empty space above.
     _can_exit = !_ray_cast.is_colliding()
 
@@ -89,7 +89,7 @@ func _update(delta: float) -> void:
 
     if not _can_exit:
         update_sprite_direction(input_direction)
-    
+
     _frame_count += 1
 
     if not owner.is_on_floor() and _can_exit:

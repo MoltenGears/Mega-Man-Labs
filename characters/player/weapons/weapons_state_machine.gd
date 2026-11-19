@@ -32,7 +32,7 @@ func _get_adjacent_key(previous: bool = false) -> String:
     for key in keys:
         if states_map[key] == current_state:
             current_key = key
-    
+
     var adjacent_index: int = 0
     var current_index: int = keys.find(current_key)
 

@@ -25,6 +25,6 @@ func _update(delta: float) -> void:
     distance_traveled.push_front(owner.global_position.distance_to(last_pos))
     distance_traveled.pop_back()
     last_pos = owner.global_position
-    
+
     if distance_traveled[0] + distance_traveled[1] + distance_traveled[2] < DISTANCE_MIN:
         owner.set_facing_direction(-owner.get_facing_direction())

@@ -54,7 +54,7 @@ func update_gradual(hit_points) -> void:
 
     if _is_updating:
         return
-    
+
     Global.can_toggle_pause = false
     _is_updating = true
     var was_paused: bool = get_tree().paused

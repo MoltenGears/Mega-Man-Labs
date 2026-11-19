@@ -20,7 +20,7 @@ func _handle_command(command: String) -> void:
         emit_signal("finished", "jump")
     if command.begins_with("weapon_"):
         weapons.change_weapon(command)
-        
+
 func _update(delta: float) -> void:
     # collision_shape.shape.extents.y = 12
     var direction: Vector2 = get_input_direction()

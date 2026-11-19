@@ -19,7 +19,7 @@ func on_Timer_timeout() -> void:
         var vector_to_player: Vector2 = _trigger_area.player.global_position - $"../../HitBox".global_position
         if sign(owner.get_facing_direction().x) != sign(vector_to_player.x):
             owner.toggle_flip_h()
-            
+
         emit_signal("finished", "shoot")
     else:
         _trigger_area.is_shot_ready = true

@@ -13,7 +13,7 @@ func _enter() -> void:
 
 func _handle_command(command: String) -> void:
     ._handle_command(command)
-    
+
     if command == "shoot":
         animation_player.stop()
         animation_player.play(
@@ -27,10 +27,10 @@ func _update(delta: float) -> void:
     _frame_count += 1
     if _frame_count > STILL_FRAME_COUNT:
         owner.is_still = true
-    
+
     # To check if on floor
     owner.move_and_slide(Vector2.DOWN * owner.gravity, Constants.FLOOR_NORMAL)
-    
+
     if not owner.is_on_floor():
         emit_signal("finished", "jump")
     elif get_input_direction().x != 0:

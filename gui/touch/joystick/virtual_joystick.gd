@@ -112,16 +112,16 @@ func _update_joystick(touch_position: Vector2) -> void:
     var center : Vector2 = _base.rect_global_position + _base_radius
     var vector : Vector2 = touch_position - center
     vector = vector.limit_length(clampzone_size)
-    
+
     _move_tip(center + vector)
-    
+
     if vector.length_squared() > deadzone_size * deadzone_size:
         _pressed = true
         _output = (vector - (vector.normalized() * deadzone_size)) / (clampzone_size - deadzone_size)
     else:
         _pressed = false
         _output = Vector2.ZERO
-    
+
     if use_input_actions:
         _update_input_actions()
 

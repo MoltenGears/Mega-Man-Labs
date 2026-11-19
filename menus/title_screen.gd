@@ -17,7 +17,7 @@ func _input(event: InputEvent) -> void:
         set_process_input(false)
         $"VBoxContainer/Buttons".remove_child($"VBoxContainer/Buttons/StartLabel")
         _show_main_buttons()
-    
+
 func _show_main_buttons() -> void:
     for button in main_buttons:
         $"VBoxContainer/Buttons".add_child(button)

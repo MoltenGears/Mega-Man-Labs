@@ -24,7 +24,7 @@ func _exit() -> void:
 
 func _handle_command(command: String) -> void:
     ._handle_command(command)
-    
+
     if command == "shoot":
         _shoot_frame_count = -1
         if not animation_player.current_animation.begins_with("move_shoot"):
@@ -36,7 +36,7 @@ func _handle_command(command: String) -> void:
 
     if command.begins_with("weapon_"):
         weapons.change_weapon(command)
-    
+
 func _update(delta: float) -> void:
     _frame_count += 1
     _shoot_frame_count += 1
@@ -48,7 +48,7 @@ func _update(delta: float) -> void:
         return
     elif _frame_count == 0 and _shoot_frame_count > SHOOT_FRAME_COUNT_MAX:
         animation_player.play("ramp")
-    
+
     _velocity.y += owner.gravity
 
     if _frame_count < 1 and _stall_frame_count > 0:

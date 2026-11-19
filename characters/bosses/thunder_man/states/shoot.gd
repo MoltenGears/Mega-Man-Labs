@@ -11,7 +11,7 @@ func _enter() -> void:
         _timer_shoot_delay.start()
     else:
         emit_signal("finished", "idle")
-    
+
 func _on_timeout() -> void:
     shoot()
     if randf() > 0.66:

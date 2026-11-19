@@ -6,7 +6,7 @@ func _ready() -> void:
 
 # Initializes project settings custom properties.
 func _init_custom_project_settings() -> void:
-    
+
     if not ProjectSettings.has_setting("custom/startup/entry_game_scene"):
         ProjectSettings.set_setting("custom/startup/entry_game_scene", "res://menus/TitleScreen.tscn")
     if not ProjectSettings.has_setting("custom/startup/entry_game_scene.debug"):

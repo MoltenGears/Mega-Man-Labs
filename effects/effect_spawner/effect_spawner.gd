@@ -25,7 +25,7 @@ func spawn_death_particles(spawn_pos: Vector2 = global_position) -> void:
         death_particle.initialize(
             spawn_pos, Vector2(1, 0).rotated(i * PI / 4), DEATH_PARTICLE_VELOCITY)
         effects_node.call_deferred("add_child", death_particle)
-        
+
         death_particle = DeathParticle.instance()
         death_particle.initialize(
             spawn_pos, Vector2(1, 0).rotated(i * PI / 4), DEATH_PARTICLE_VELOCITY * 2)
@@ -45,7 +45,7 @@ func spawn_energy_particles(spawn_pos: Vector2 = global_position) -> void:
                 spawn_pos + Vector2(distance, 0).rotated(i * PI / 4),
                 -Vector2(1, 0).rotated(i * PI / 4), distance / lifetime / factor )
         effects_node.call_deferred("add_child", energy_particle)
-        
+
         energy_particle = DeathParticle.instance()
         energy_particle.set_lifetime(lifetime)
         energy_particle.initialize(

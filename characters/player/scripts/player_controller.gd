@@ -148,7 +148,7 @@ func check_for_space(dir: Vector2, transition_shape_extents: Vector2) -> bool:
     var player_extents: Vector2 = $CollisionShape2D.shape.extents
     var cast_to_temp: Vector2 = _ray_cast.cast_to
     var ray_pos_temp: Vector2 = _ray_cast.position
-    
+
     _ray_cast.cast_to = dir * (player_extents + \
             2 * transition_shape_extents + Vector2(16, 32))    # 16 => one tile horizontal
     _ray_cast.force_raycast_update()
